@@ -1,0 +1,26 @@
+# Standalone alternative when CSI works on the host but container camera
+# plugins do not match the host JetPack. Start scripts/stream_csi_camera.sh first.
+services:
+  assamese-ocr:
+    image: assamese-ocr:jetpack6
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        BASE_IMAGE: ${BASE_IMAGE:-nvcr.io/nvidia/l4t-jetpack:r36.4.0}
+        ONNXRUNTIME_WHEEL_URL: ${ONNXRUNTIME_WHEEL_URL:-https://pypi.jetson-ai-lab.io/jp6/cu126/+f/4eb/e6a8902dc7708/onnxruntime_gpu-1.23.0-cp310-cp310-linux_aarch64.whl}
+    platform: linux/arm64
+    runtime: nvidia
+    # Reach the host sender on loopback. The web viewer also listens on host :8000.
+    network_mode: host
+    environment:
+      CAMERA_GSTREAMER: "1"
+      CAMERA_SOURCE: >-
+        tcpclientsrc host=127.0.0.1 port=${CAMERA_STREAM_PORT:-8554} !
+        jpegparse ! jpegdec ! videoconvert ! video/x-raw,format=BGR !
+        appsink drop=true max-buffers=1 sync=false
+    command: ["python", "web_app.py", "--port", "${WEB_PORT:-8000}"]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:${WEB_PORT:-8000}/healthz', timeout=3)"]
+    restart: unless-stopped
+    stop_grace_period: 15s
