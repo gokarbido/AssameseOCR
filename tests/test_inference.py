@@ -1,10 +1,10 @@
 """Provider safety checks and NumPy CTC decoding regression tests."""
 import unittest
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 import numpy as np
 
-from app import AssameseTextRecognizer
+from app import AssameseTextRecognizer, LiveTextDetectionApp
 from inference_runtime import create_session
 
 
@@ -53,6 +53,23 @@ class DecodeTests(unittest.TestCase):
     def test_all_blank(self):
         logits = np.zeros((1, 4, 3), dtype=np.float32)
         self.assertEqual(self.recognizer.ctc_decode(logits), '')
+
+
+class QuietOcrTests(unittest.TestCase):
+    def test_processing_does_not_print_frame_counts_or_periodic_status(self):
+        app = LiveTextDetectionApp.__new__(LiveTextDetectionApp)
+        app.frame_counter = 0
+        app.log_interval = 1
+        app.detector = Mock()
+        app.recognizer = Mock()
+        app.recognizer.recognize.return_value = 'ক'
+        frame = np.zeros((32, 64, 3), dtype=np.uint8)
+        for boxes in (np.array([]), np.array([[1, 1, 10, 10]])):
+            with self.subTest(detections=len(boxes)):
+                app.detector.detect_one.return_value = (boxes, np.ones(len(boxes)))
+                with patch('builtins.print') as output:
+                    app.process_frame(frame)
+                    output.assert_not_called()
 
 
 if __name__ == '__main__':

@@ -12,9 +12,12 @@ from pathlib import Path
 from typing import List, Tuple, Optional
 import time
 import argparse
+import logging
 from detector import YoloObjectDetector
 from PIL import Image, ImageDraw, ImageFont
 import os
+
+logger = logging.getLogger(__name__)
 
 class AssameseTextRecognizer:
     """ONNX-based Assamese text recognizer"""
@@ -231,13 +234,6 @@ class LiveTextDetectionApp:
                     print(f"Using font for Assamese text: {font_used}")
                     self._font_debug_printed = True
                 
-                # Additional debug for first few calls
-                if not hasattr(self, '_draw_text_call_count'):
-                    self._draw_text_call_count = 0
-                self._draw_text_call_count += 1
-                
-                if self._draw_text_call_count <= 3:
-                    print(f"Draw text call #{self._draw_text_call_count}: text=[Assamese text], font={font_used}")
             
             # Get text bounding box
             text_bbox = draw.textbbox((x, y), text, font=font)
@@ -273,13 +269,17 @@ class LiveTextDetectionApp:
         if current_time - self.last_translation_time < self.translation_interval:
             return ""  # Skip translation this frame
         
+        started = time.perf_counter()
         try:
             translated = self.translator.translate(text)
             self.translation_cache[text] = translated
             self.last_translation_time = current_time
+            logger.info('Translation completed | processing_ms=%.1f | Assamese=%r | English=%r',
+                        (time.perf_counter() - started) * 1000, text, translated)
             return translated
         except Exception as e:
-            print(f"Translation error: {e}")
+            logger.warning('Translation failed | processing_ms=%.1f | error=%s',
+                           (time.perf_counter() - started) * 1000, e)
             return ""
     
     def draw_detections(self, frame: np.ndarray, boxes: np.ndarray, scores: np.ndarray, texts: List[str],
@@ -302,12 +302,6 @@ class LiveTextDetectionApp:
                 # Calculate text position (above the box)
                 text_y = max(y1 - 30, 20)
                 
-                # Debug: Print the text being drawn (only for first few frames)
-                if self.frame_counter <= 3:
-                    print(f"Drawing text: [Assamese text] (length: {len(texts[i])})")
-                    print(f"Text bytes: {texts[i].encode('utf-8')}")
-                    print(f"Text position: ({x1}, {text_y})")
-                
                 # Use improved text drawing with white background for original text
                 result_frame = self.draw_text(result_frame, texts[i], x1, text_y, lang='as')
                 
@@ -320,10 +314,6 @@ class LiveTextDetectionApp:
                     trans_y = text_y - 25  # Position above original text
                     result_frame = self.draw_text(result_frame, translated, x1, trans_y, lang='en')
                 
-                # Save debug frame for first detection
-                if self.frame_counter == 1 and i == 0:
-                    cv2.imwrite(f'debug_frame_{self.frame_counter}.jpg', result_frame)
-                    print("Saved debug frame")
         
         return result_frame
     
@@ -351,8 +341,7 @@ class LiveTextDetectionApp:
         
         if len(boxes) > 0:
             if should_log:
-                print(f"\n--- Frame {self.frame_counter} ---")
-                print(f"Detected {len(boxes)} text regions in {detection_time*1000:.1f}ms")
+                logger.debug('Detected %s text regions in %.1f ms', len(boxes), detection_time * 1000)
             
             # Process each detected region
             for i, box in enumerate(boxes):
@@ -374,30 +363,29 @@ class LiveTextDetectionApp:
                         # Log recognition result
                         if should_log:
                             if text.strip():
-                                print(f"  Region {i+1}: '{text}' ({rec_time*1000:.1f}ms)")
+                                logger.debug('Recognized %r in %.1f ms', text, rec_time * 1000)
                             else:
-                                print(f"  Region {i+1}: No text detected ({rec_time*1000:.1f}ms)")
+                                logger.debug('No text recognized (%.1f ms)', rec_time * 1000)
                             
                     except Exception as e:
                         if should_log:
-                            print(f"  Region {i+1}: Recognition error: {e}")
+                            logger.warning('Recognition error: %s', e)
                         recognized_texts.append("")
                         recognition_times.append(0)
                 else:
                     if should_log:
-                        print(f"  Region {i+1}: Empty ROI")
+                        logger.debug('Empty text region')
                     recognized_texts.append("")
                     recognition_times.append(0)
             
             # Log total processing time
             if should_log:
                 total_recognition_time = sum(recognition_times)
-                print(f"Total recognition time: {total_recognition_time*1000:.1f}ms")
-                print(f"Total processing time: {(detection_time + total_recognition_time)*1000:.1f}ms")
+                logger.debug('Recognition processing_ms=%.1f', total_recognition_time * 1000)
+                logger.debug('OCR processing_ms=%.1f', (detection_time + total_recognition_time) * 1000)
         else:
             if should_log:
-                print(f"\n--- Frame {self.frame_counter} ---")
-                print("No text regions detected")
+                logger.debug('No text regions detected')
         
         return boxes, scores, recognized_texts
     
@@ -495,6 +483,7 @@ class LiveTextDetectionApp:
 
 def main():
     """Main function"""
+    logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
     parser = argparse.ArgumentParser(description='Live Assamese Text Detection and Recognition (720p)')
     root = Path(__file__).resolve().parent
     parser.add_argument('--detector', type=str, default=str(root / 'det_asm.onnx'),
@@ -510,7 +499,7 @@ def main():
     parser.add_argument('--translate', action='store_true', help='Enable local ONNX English translation')
     parser.add_argument('--smoke-test', action='store_true', help='Run both models on synthetic inputs without camera or GUI')
     parser.add_argument('--log-interval', type=int, default=30, 
-                       help='Log processing details every N frames (default: 30)')
+                       help='Sample OCR debug details every N frames; hidden at the default INFO level')
     parser.add_argument('--no-fps', action='store_true', 
                        help='Disable FPS display')
     

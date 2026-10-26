@@ -23,8 +23,12 @@ class TranslationService:
 
     def start(self):
         if self.enabled:
+            logging.info('Offline translation enabled.')
+            logging.info('Offline translation waiting for recognized text.')
             self.thread = threading.Thread(target=self._run, daemon=True)
             self.thread.start()
+        else:
+            logging.info('Offline translation disabled.')
 
     def stop(self):
         with self.condition:
@@ -36,8 +40,15 @@ class TranslationService:
     def submit(self, texts):
         if self.enabled:
             with self.condition:
-                self.desired = tuple(dict.fromkeys(text.strip() for text in texts if text.strip()))
+                desired = tuple(dict.fromkeys(text.strip() for text in texts if text.strip()))
+                changed = frozenset(desired) != frozenset(self.desired)
+                cached = [(text, self.cache[text]) for text in desired if text in self.cache] if changed else []
+                self.desired = desired
                 self.condition.notify_all()
+            for source, english in cached:
+                logging.info('Offline translation cache hit: input=%r; output=%r', source, english)
+            if changed and not desired:
+                logging.info('Offline translation waiting for recognized text.')
 
     def snapshot(self, texts):
         with self.condition:
@@ -61,12 +72,22 @@ class TranslationService:
                     self.condition.wait(timeout=max(delay, retry, 0.01) if pending else None)
                 if self.stopped:
                     return
+            started = time.perf_counter()
+            phase = 'translation'
             try:
                 if self.provider is None and self.model is None:
+                    phase = 'model loading'
+                    logging.info('Offline translation model loading.')
                     self.model = OfflineTranslator()
+                    logging.info('Offline translation model ready; load_ms=%.1f',
+                                 (time.perf_counter() - started) * 1000)
+                    started = time.perf_counter()
+                    phase = 'translation'
                 translated = (self.provider or self.model.translate)(text)
                 if not isinstance(translated, str) or not translated.strip():
                     raise RuntimeError('Translation service returned an empty result.')
+                logging.info('Offline translation: input=%r; output=%r; processing_ms=%.1f',
+                             text, translated, (time.perf_counter() - started) * 1000)
                 with self.condition:
                     self.cache[text] = translated
                     self.cache.move_to_end(text)
@@ -77,6 +98,10 @@ class TranslationService:
                     next_attempt = time.monotonic() + self.interval
                     self.condition.notify_all()
             except Exception as exc:
+                logging.warning('Offline translation failed: input=%r; phase=%s; elapsed_ms=%.1f; '
+                                'retry_in_s=%.1f; error=%s',
+                                text, phase, (time.perf_counter() - started) * 1000,
+                                self.retry_delay, exc)
                 with self.condition:
                     self.error = str(exc)
                     self.failures[text] = (time.monotonic() + self.retry_delay, self.error)
@@ -85,4 +110,3 @@ class TranslationService:
                         self.failures.popitem(last=False)
                     next_attempt = time.monotonic() + self.interval
                     self.condition.notify_all()
-                logging.warning('English translation unavailable: %s', exc)

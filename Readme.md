@@ -69,6 +69,15 @@ available. Translation runs in a background worker and caches repeated text,
 so model inference does not block the camera worker. Missing weights or a
 translation failure appear separately from camera errors.
 
+View translation logs with `docker compose logs -f assamese-ocr`. Routine OCR
+frame counters are suppressed. Logs show enabled/disabled and waiting states,
+then model loading with `load_ms`, and each new translation with Assamese
+`input`, English `output`, and `processing_ms`. Model loading is excluded from
+`processing_ms`. A cache hit reuses an existing result without model inference
+and logs only when the visible source text changes. Failures include elapsed
+time and the retry delay. If logs remain at "waiting for recognized text", OCR
+has not produced a nonempty text region to translate yet.
+
 The default model is a public MIT-licensed INT8 ONNX export of IndicTrans2's
 200M Indic-to-English model. The required files total about 262 MB (the full
 repository is about 270 MB). They are downloaded once to
