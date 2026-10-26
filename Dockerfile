@@ -5,11 +5,9 @@ ARG BASE_IMAGE=nvcr.io/nvidia/l4t-jetpack:r36.4.0
 FROM ${BASE_IMAGE}
 
 ARG DEBIAN_FRONTEND=noninteractive
-ARG ONNXRUNTIME_WHEEL_URL="https://pypi.jetson-ai-lab.io/jp6/cu126/+f/4eb/e6a8902dc7708/onnxruntime_gpu-1.23.0-cp310-cp310-linux_aarch64.whl"
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
-    PIP_NO_CACHE_DIR=1 \
     CUDA_MODULE_LOADING=LAZY \
     NVIDIA_VISIBLE_DEVICES=all \
     NVIDIA_DRIVER_CAPABILITIES=all \
@@ -35,13 +33,22 @@ RUN python3 -m venv --system-site-packages /opt/ocr-venv
 ENV PATH=/opt/ocr-venv/bin:${PATH} \
     PIP_INDEX_URL=https://pypi.org/simple
 
-WORKDIR /opt/assamese-ocr
-COPY requirements-jetson.txt ./
-RUN set -eux; \
+# Keep the GPU runtime before application requirements so dependency changes
+# do not invalidate its layer. Downloads also persist across rebuilt pip layers.
+RUN --mount=type=cache,id=assamese-ocr-pip,target=/root/.cache/pip,sharing=locked \
+    set -eux; \
     python -c "import sys; assert sys.version_info[:2] == (3, 10), sys.version"; \
     python -m pip install --upgrade pip setuptools wheel; \
-    python -m pip install -r requirements-jetson.txt; \
-    python -m pip install "${ONNXRUNTIME_WHEEL_URL}"; \
+    python -m pip install numpy==1.26.4
+
+ARG ONNXRUNTIME_WHEEL_URL="https://pypi.jetson-ai-lab.io/jp6/cu126/+f/4eb/e6a8902dc7708/onnxruntime_gpu-1.23.0-cp310-cp310-linux_aarch64.whl"
+RUN --mount=type=cache,id=assamese-ocr-pip,target=/root/.cache/pip,sharing=locked \
+    python -m pip install "${ONNXRUNTIME_WHEEL_URL}"
+
+WORKDIR /opt/assamese-ocr
+COPY requirements-jetson.txt ./
+RUN --mount=type=cache,id=assamese-ocr-pip,target=/root/.cache/pip,sharing=locked \
+    python -m pip install -r requirements-jetson.txt && \
     python -m pip check
 
 COPY app.py detector.py inference_runtime.py web_app.py jpeg_stream.py translation_service.py offline_translation.py config.yaml det_asm.onnx model.onnx ./

@@ -29,6 +29,12 @@ docker compose -f docker-compose.yml up -d --build --force-recreate
 docker compose -f docker-compose.yml logs -f
 ```
 
+After the image is built, use `docker compose up -d` for normal starts.
+Use `--build` when source or dependencies change. The GPU runtime has its own
+cached layer before application requirements; pip downloads use a persistent
+BuildKit cache. A requirements change reinstalls the application dependency
+layer, while an ordinary container restart installs nothing.
+
 Open **http://JETSON_IP:8000**. Expected logs:
 
 ```text
