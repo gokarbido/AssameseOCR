@@ -14,6 +14,7 @@ from flask import Flask, Response, jsonify, render_template
 from waitress import serve
 
 from app import LiveTextDetectionApp
+from jpeg_stream import TcpJpegCapture
 
 
 class LiveFeed:
@@ -46,6 +47,17 @@ class LiveFeed:
             self.thread.join(timeout=5)
 
     def _open_camera(self):
+        if self.camera.startswith('tcpjpeg://'):
+            cap = TcpJpegCapture(self.camera)
+            try:
+                ok, first_frame = cap.read()
+                if not ok or first_frame is None:
+                    raise RuntimeError('Host camera sender provided no frame.')
+                logging.info('Host JPEG camera connected at %s; capture does not use GStreamer', self.camera)
+                return cap, first_frame
+            except Exception:
+                cap.release()
+                raise
         if self.gstreamer and not re.search(r'GStreamer:\s+YES', cv2.getBuildInformation()):
             raise RuntimeError('OpenCV has no GStreamer support. Use JetPack system OpenCV (python3-opencv).')
         source = int(self.camera) if self.camera.isdecimal() and not self.gstreamer else self.camera

@@ -14,11 +14,8 @@ services:
     # Reach the host sender on loopback. The web viewer also listens on host :8000.
     network_mode: host
     environment:
-      CAMERA_GSTREAMER: "1"
-      CAMERA_SOURCE: >-
-        tcpclientsrc host=127.0.0.1 port=${CAMERA_STREAM_PORT:-8554} !
-        jpegparse ! jpegdec ! videoconvert ! video/x-raw,format=BGR !
-        appsink drop=true max-buffers=1 sync=false
+      CAMERA_GSTREAMER: "0"
+      CAMERA_SOURCE: tcpjpeg://127.0.0.1:${CAMERA_STREAM_PORT:-8554}
     command: ["python", "web_app.py", "--port", "${WEB_PORT:-8000}"]
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:${WEB_PORT:-8000}/healthz', timeout=3)"]

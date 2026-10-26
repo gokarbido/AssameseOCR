@@ -136,6 +136,18 @@ class WebTests(unittest.TestCase):
             LiveFeed(camera='nvarguscamerasrc ! appsink', gstreamer=True)._open_camera()
         capture.assert_not_called()
 
+    @patch('web_app.cv2.getBuildInformation')
+    @patch('web_app.cv2.VideoCapture')
+    @patch('web_app.TcpJpegCapture')
+    def test_host_jpeg_bypasses_all_gstreamer_and_video_capture(self, jpeg_capture, capture, build_info):
+        frame = np.zeros((32, 64, 3), dtype=np.uint8)
+        jpeg_capture.return_value.read.return_value = (True, frame)
+        cap, first = LiveFeed(camera='tcpjpeg://127.0.0.1:8554')._open_camera()
+        self.assertIs(first, frame)
+        self.assertIs(cap, jpeg_capture.return_value)
+        capture.assert_not_called()
+        build_info.assert_not_called()
+
     @patch('web_app.LiveTextDetectionApp', side_effect=RuntimeError('Missing CUDA'))
     @patch('web_app.cv2.VideoCapture')
     def test_model_failure_is_reported_without_opening_camera(self, capture, pipeline):

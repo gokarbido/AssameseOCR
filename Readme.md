@@ -24,15 +24,22 @@ bash scripts/stream_csi_camera.sh
 In another host terminal:
 
 ```bash
-docker compose -f docker-compose.host-camera.yml up -d --build
+docker compose -f docker-compose.host-camera.yml up -d --build --force-recreate
 docker compose -f docker-compose.host-camera.yml logs -f
 ```
 
 Open **http://JETSON_IP:8000**. This mode uses host networking to receive JPEG
-frames from `127.0.0.1:8554`; it does not use container NVIDIA camera plugins or
-mount the Argus socket. The host needs GStreamer `jpegenc` and `tcpserversink`.
+frames from `127.0.0.1:8554`. The container uses a Python TCP receiver and JPEG
+decoding, without OpenCV VideoCapture, GStreamer, or the Argus socket. It keeps
+the newest frame instead of queuing old frames during slower OCR. The host
+needs GStreamer `jpegenc` and `tcpserversink`.
 Stop other camera capture commands before starting the sender. If the sender
 stops, restart it and then restart the OCR service.
+
+Confirm the active capture path in logs: `Host JPEG camera connected ...;
+capture does not use GStreamer`. If plugin-scanner warnings still appear,
+check that this Compose file was selected and the image was rebuilt. Direct
+CSI capture with the default Compose file still requires compatible plugins.
 
 Optional settings: `SENSOR_ID=1 bash scripts/stream_csi_camera.sh` selects another
 sensor. Set `CAMERA_STREAM_PORT` in both host terminals to change the sender
