@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-import onnxruntime as ort
+from inference_runtime import create_session
 from typing import Sequence, Union, Tuple, List
 
 # Define custom types for clarity
@@ -134,12 +134,8 @@ class YoloObjectDetector:
         if path is None:
             raise InvalidModelParamException("Model path must be provided to load the ONNX model.")
         
-        # Default providers if none are given
-        if providers is None or len(providers) == 0:
-            providers = ['CPUExecutionProvider'] # Fallback to CPU
-        
         try:
-            return ort.InferenceSession(path, providers=providers)
+            return create_session(path, providers)
         except Exception as e:
             raise InvalidModelParamException(f"Failed to load ONNX model at '{path}': {e}")
 

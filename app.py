@@ -6,24 +6,23 @@ With proper Unicode text rendering support
 
 import cv2
 import numpy as np
-import onnxruntime as ort
 import yaml
-import torch
+from inference_runtime import create_session
+from pathlib import Path
 from typing import List, Tuple, Optional
 import time
 import argparse
 from detector import YoloObjectDetector
 from PIL import Image, ImageDraw, ImageFont
 import os
-from deep_translator import GoogleTranslator
 
 class AssameseTextRecognizer:
     """ONNX-based Assamese text recognizer"""
     
-    def __init__(self, onnx_path: str, config_path: str):
+    def __init__(self, onnx_path: str, config_path: str, providers=None):
         """Initialize the text recognizer"""
         # Load ONNX model
-        self.session = ort.InferenceSession(onnx_path, providers=['DmlExecutionProvider', 'CPUExecutionProvider'])
+        self.session = create_session(onnx_path, providers)
         self.input_name = self.session.get_inputs()[0].name
         self.output_name = self.session.get_outputs()[0].name
         
@@ -69,8 +68,8 @@ class AssameseTextRecognizer:
     
     def ctc_decode(self, logits: np.ndarray) -> str:
         """Decode CTC output to text"""
-        probs = torch.softmax(torch.from_numpy(logits), dim=-1)
-        pred_indices = torch.argmax(probs, dim=-1)
+        # Softmax preserves argmax, so greedy CTC decoding needs only NumPy.
+        pred_indices = np.argmax(logits, axis=-1)
         
         # CTC decoding - remove blanks and duplicates
         decoded_indices = []
@@ -108,26 +107,32 @@ class AssameseTextRecognizer:
 class LiveTextDetectionApp:
     """Main application class for live text detection and recognition"""
     
-    def __init__(self, detector_model_path: str, recognizer_model_path: str, config_path: str):
+    def __init__(self, detector_model_path: str, recognizer_model_path: str, config_path: str,
+                 device: str = 'cuda', translate: bool = False):
         """Initialize the application"""
         print("Initializing Live Text Detection App...")
         
+        providers = (['CUDAExecutionProvider', 'CPUExecutionProvider']
+                     if device == 'cuda' else ['CPUExecutionProvider'])
         # Initialize detector
         self.detector = YoloObjectDetector(
             size=640,
             batched=True,
             path=detector_model_path,
-            providers=['DmlExecutionProvider', 'CPUExecutionProvider'],
+            providers=providers,
             score_threshold=0.25,
             iou_threshold=0.45,
             target_class_id=0  # Assuming class 0 is text/plate
         )
         
         # Initialize text recognizer
-        self.recognizer = AssameseTextRecognizer(recognizer_model_path, config_path)
+        self.recognizer = AssameseTextRecognizer(recognizer_model_path, config_path, providers)
         
         # Initialize translator (Assamese to English)
-        self.translator = GoogleTranslator(source='as', target='en')
+        self.translator = None
+        if translate:
+            from deep_translator import GoogleTranslator
+            self.translator = GoogleTranslator(source='as', target='en')
         self.translation_cache = {}  # Cache translations to avoid repeated API calls
         self.last_translation_time = 0
         self.translation_interval = 0.5  # Only translate every 0.5 seconds to avoid slowing down
@@ -144,7 +149,7 @@ class LiveTextDetectionApp:
         self.font_loaded = False
         try:
             # Try to load Lohit Assamese font first
-            lohit_font_path = "font/Lohit-Assamese.ttf"
+            lohit_font_path = str(Path(__file__).resolve().parent / "font/Lohit-Assamese.ttf")
             if os.path.exists(lohit_font_path):
                 # Test if font can actually load
                 try:
@@ -158,6 +163,9 @@ class LiveTextDetectionApp:
             # Try fallback fonts if Lohit failed
             if not self.font_loaded:
                 fallback_fonts = [
+                    "/usr/share/fonts/truetype/lohit-assamese/Lohit-Assamese.ttf",
+                    "/usr/share/fonts/truetype/lohit-assamese/lohit_assamese.ttf",
+                    "/usr/share/fonts/truetype/noto/NotoSansBengali-Regular.ttf",
                     "C:/Windows/Fonts/NotoSansBengali.ttf",
                     "C:/Windows/Fonts/NotoSans.ttf",
                     "C:/Windows/Fonts/arial.ttf",
@@ -253,7 +261,7 @@ class LiveTextDetectionApp:
     
     def translate_text(self, text: str) -> str:
         """Translate text with caching and rate limiting to avoid slowing down"""
-        if not text or not text.strip():
+        if self.translator is None or not text or not text.strip():
             return ""
         
         # Check cache first
@@ -389,12 +397,17 @@ class LiveTextDetectionApp:
         
         return boxes, scores, recognized_texts
     
-    def run(self, camera_id: int = 0, show_fps: bool = True):
+    def run(self, camera_id=0, show_fps: bool = True, gstreamer: bool = False):
         """Run the live camera application"""
         print(f"Starting camera {camera_id}...")
         
         # Initialize camera with timeout
-        cap = cv2.VideoCapture(camera_id)
+        if gstreamer:
+            import re
+            if not re.search(r'GStreamer:\s+YES', cv2.getBuildInformation()):
+                raise RuntimeError('OpenCV has no GStreamer support. See the CSI camera setup in Readme.md.')
+        cap = (cv2.VideoCapture(camera_id, cv2.CAP_GSTREAMER) if gstreamer
+               else cv2.VideoCapture(camera_id))
         
         # Set camera properties to 720p
         cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
@@ -421,7 +434,7 @@ class LiveTextDetectionApp:
                 print("2. Check if camera is being used by another application")
                 print("3. Restart the application")
                 cap.release()
-                return
+                raise RuntimeError(f'Camera {camera_id} is not accessible')
         
         print("Camera started successfully! Resolution: 720p")
         print("Press 'q' to quit, 's' to save current frame")
@@ -479,47 +492,64 @@ class LiveTextDetectionApp:
 def main():
     """Main function"""
     parser = argparse.ArgumentParser(description='Live Assamese Text Detection and Recognition (720p)')
-    parser.add_argument('--detector', type=str, default='det_asm.onnx', 
+    root = Path(__file__).resolve().parent
+    parser.add_argument('--detector', type=str, default=str(root / 'det_asm.onnx'),
                        help='Path to detector ONNX model')
-    parser.add_argument('--recognizer', type=str, default='model.onnx', 
+    parser.add_argument('--recognizer', type=str, default=str(root / 'model.onnx'),
                        help='Path to text recognizer ONNX model')
-    parser.add_argument('--config', type=str, default='config.yaml', 
+    parser.add_argument('--config', type=str, default=str(root / 'config.yaml'),
                        help='Path to config file')
-    parser.add_argument('--camera', type=int, default=0, 
-                       help='Camera ID (default: 0)')
+    parser.add_argument('--camera', default='0',
+                       help='Camera ID, video path, stream URL, or GStreamer pipeline')
+    parser.add_argument('--gstreamer', action='store_true', help='Open --camera as a GStreamer pipeline')
+    parser.add_argument('--device', choices=['cuda', 'cpu'], default='cuda', help='Inference device (default: cuda)')
+    parser.add_argument('--translate', action='store_true', help='Enable online Google translation (requires internet)')
+    parser.add_argument('--smoke-test', action='store_true', help='Run both models on synthetic inputs without camera or GUI')
     parser.add_argument('--log-interval', type=int, default=30, 
                        help='Log processing details every N frames (default: 30)')
     parser.add_argument('--no-fps', action='store_true', 
                        help='Disable FPS display')
     
     args = parser.parse_args()
+    if args.log_interval < 1:
+        parser.error('--log-interval must be at least 1')
     
     # Check if files exist
     import os
     if not os.path.exists(args.detector):
         print(f"Error: Detector model not found: {args.detector}")
         print("Please provide the correct path to your detector ONNX model")
-        return
+        return 1
     
     if not os.path.exists(args.recognizer):
         print(f"Error: Recognizer model not found: {args.recognizer}")
         print("Please provide the correct path to your recognizer ONNX model")
-        return
+        return 1
     
     if not os.path.exists(args.config):
         print(f"Error: Config file not found: {args.config}")
-        return
+        return 1
     
     try:
         # Initialize and run the app
-        app = LiveTextDetectionApp(args.detector, args.recognizer, args.config)
+        app = LiveTextDetectionApp(args.detector, args.recognizer, args.config,
+                                   device=args.device, translate=args.translate and not args.smoke_test)
         app.log_interval = args.log_interval  # Set logging interval
-        app.run(camera_id=args.camera, show_fps=not args.no_fps)
+        if args.smoke_test:
+            frame = np.zeros((360, 640, 3), dtype=np.uint8)
+            boxes, scores = app.detector.detect_one(frame, fit_to_image=True)
+            text = app.recognizer.recognize(np.zeros((32, 128, 3), dtype=np.uint8))
+            print(f'Smoke test passed ({args.device}): boxes={boxes.shape}, scores={scores.shape}, text={text!r}')
+        else:
+            source = int(args.camera) if args.camera.isdecimal() and not args.gstreamer else args.camera
+            app.run(camera_id=source, show_fps=not args.no_fps, gstreamer=args.gstreamer)
+        return 0
     
     except Exception as e:
         print(f"Error running application: {e}")
         import traceback
         traceback.print_exc()
+        return 1
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
