@@ -115,6 +115,27 @@ class WebTests(unittest.TestCase):
         self.assertNotIn(cv2.CAP_PROP_FRAME_WIDTH,
                          [call.args[0] for call in capture.return_value.set.call_args_list])
 
+    @patch('web_app.cv2.getBuildInformation', return_value='Video I/O:\n    GStreamer: YES (1.20)')
+    @patch('web_app.cv2.VideoCapture')
+    def test_csi_pipeline_uses_gstreamer_without_usb_mode_changes(self, capture, build_info):
+        pipeline = ('nvarguscamerasrc sensor-id=0 ! nvvidconv ! video/x-raw,format=BGRx ! '
+                    'videoconvert ! video/x-raw,format=BGR ! appsink drop=true max-buffers=1 sync=false')
+        frame = np.zeros((480, 640, 3), dtype=np.uint8)
+        capture.return_value.read.return_value = (True, frame)
+        cap, first = LiveFeed(camera=pipeline, gstreamer=True)._open_camera()
+        capture.assert_called_once_with(pipeline, cv2.CAP_GSTREAMER)
+        self.assertIs(first, frame)
+        properties = [call.args[0] for call in cap.set.call_args_list]
+        self.assertNotIn(cv2.CAP_PROP_FOURCC, properties)
+        self.assertNotIn(cv2.CAP_PROP_FRAME_WIDTH, properties)
+
+    @patch('web_app.cv2.getBuildInformation', return_value='GStreamer: NO')
+    @patch('web_app.cv2.VideoCapture')
+    def test_csi_reports_opencv_without_gstreamer(self, capture, build_info):
+        with self.assertRaisesRegex(RuntimeError, 'OpenCV has no GStreamer support'):
+            LiveFeed(camera='nvarguscamerasrc ! appsink', gstreamer=True)._open_camera()
+        capture.assert_not_called()
+
     @patch('web_app.LiveTextDetectionApp', side_effect=RuntimeError('Missing CUDA'))
     @patch('web_app.cv2.VideoCapture')
     def test_model_failure_is_reported_without_opening_camera(self, capture, pipeline):

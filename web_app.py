@@ -3,6 +3,7 @@ import argparse
 import logging
 import os
 from pathlib import Path
+import re
 import signal
 import sys
 import threading
@@ -45,6 +46,8 @@ class LiveFeed:
             self.thread.join(timeout=5)
 
     def _open_camera(self):
+        if self.gstreamer and not re.search(r'GStreamer:\s+YES', cv2.getBuildInformation()):
+            raise RuntimeError('OpenCV has no GStreamer support. Use JetPack system OpenCV (python3-opencv).')
         source = int(self.camera) if self.camera.isdecimal() and not self.gstreamer else self.camera
         usb = (not self.gstreamer and sys.platform.startswith('linux')
                and (isinstance(source, int) or str(source).startswith('/dev/video')))
@@ -177,7 +180,9 @@ def main():
     parser.add_argument('--port', type=int, default=8000)
     parser.add_argument('--camera', default=os.environ.get('CAMERA_SOURCE', '0'))
     parser.add_argument('--device', choices=['cuda', 'cpu'], default='cuda')
-    parser.add_argument('--gstreamer', action='store_true')
+    parser.add_argument('--gstreamer', action='store_true',
+                        default=os.environ.get('CAMERA_GSTREAMER', '0').lower() in ('1', 'true', 'yes'),
+                        help='Use a GStreamer pipeline (also CAMERA_GSTREAMER=1)')
     parser.add_argument('--width', type=int, default=int(os.environ.get('CAMERA_WIDTH', '640')))
     parser.add_argument('--height', type=int, default=int(os.environ.get('CAMERA_HEIGHT', '480')))
     parser.add_argument('--fps', type=int, default=int(os.environ.get('CAMERA_FPS', '30')))
