@@ -1,6 +1,8 @@
-# Python 3.12 application dependencies. Install ONNX Runtime separately: Readme.md.
+# Application dependencies. Install ONNX Runtime separately: Readme.md.
 # For Jetson CSI/GStreamer use requirements-jetson.txt and Ubuntu's OpenCV instead.
 numpy==1.26.4
 PyYAML>=6.0.2,<7
 Pillow>=10.4,<13
 opencv-python==4.10.0.84
+Flask>=3.1,<4
+waitress>=3.0.2,<4

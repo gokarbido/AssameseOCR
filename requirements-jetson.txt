@@ -1,5 +1,7 @@
-# Python 3.12 + JetPack 7.2.1. OpenCV comes from apt (python3-opencv).
+# OpenCV comes from apt (python3-opencv) for the selected JetPack/Python version.
 # GPU ONNX Runtime is installed separately; never overwrite it with the CPU package.
 numpy==1.26.4
 PyYAML>=6.0.2,<7
 Pillow>=10.4,<13
+Flask>=3.1,<4
+waitress>=3.0.2,<4

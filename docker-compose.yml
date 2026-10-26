@@ -1,0 +1,19 @@
+services:
+  assamese-ocr:
+    image: assamese-ocr:jetpack6
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        BASE_IMAGE: ${BASE_IMAGE:-nvcr.io/nvidia/l4t-jetpack:r36.4.0}
+        ONNXRUNTIME_WHEEL_URL: ${ONNXRUNTIME_WHEEL_URL:-https://pypi.jetson-ai-lab.io/jp6/cu126/+f/4eb/e6a8902dc7708/onnxruntime_gpu-1.23.0-cp310-cp310-linux_aarch64.whl}
+    platform: linux/arm64
+    runtime: nvidia
+    ports:
+      - "${WEB_PORT:-8000}:8000"
+    devices:
+      - ${CAMERA_DEVICE:-/dev/video0}:/dev/video0
+    environment:
+      CAMERA_SOURCE: ${CAMERA_SOURCE:-0}
+    restart: unless-stopped
+    stop_grace_period: 15s

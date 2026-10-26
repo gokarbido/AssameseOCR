@@ -1,0 +1,91 @@
+"""Exercise shared streaming and readiness without a camera or GPU."""
+import time
+import unittest
+from unittest.mock import patch
+
+import numpy as np
+
+from web_app import LiveFeed, create_app
+
+
+class WebTests(unittest.TestCase):
+    def setUp(self):
+        self.feed = LiveFeed(device='cpu')
+        self.client = create_app(self.feed).test_client()
+
+    def publish(self):
+        with self.feed.condition:
+            self.feed.jpeg = b'jpeg-frame'
+            self.feed.sequence += 1
+            self.feed.updated = time.monotonic()
+            self.feed.texts = ['অসমীয়া']
+            self.feed.fps = 12.5
+            self.feed.condition.notify_all()
+
+    def test_page_and_initial_readiness(self):
+        response = self.client.get('/')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b'Recognized text', response.data)
+        self.assertEqual(self.client.get('/healthz').status_code, 503)
+        self.assertEqual(self.client.get('/api/status').json['state'], 'waiting')
+
+    def test_health_requires_recent_frames_and_no_error(self):
+        self.publish()
+        self.assertEqual(self.client.get('/healthz').status_code, 200)
+        self.assertEqual(self.client.get('/api/status').json['texts'], ['অসমীয়া'])
+        self.feed.updated -= 16
+        self.assertEqual(self.client.get('/healthz').status_code, 503)
+        self.assertEqual(self.client.get('/api/status').json['texts'], [])
+        self.feed.error = 'Camera disconnected'
+        self.assertEqual(self.client.get('/api/status').json['state'], 'error')
+
+    def test_viewers_share_frame_without_consuming_it(self):
+        self.publish()
+        first, second = self.feed.frames(), self.feed.frames()
+        self.assertEqual(next(first), next(second))
+        self.publish()
+        self.assertIn(b'Content-Length: 10\r\n', next(first))
+        first.close()
+        self.assertIn(b'jpeg-frame', next(second))
+        self.feed.stop()
+        with self.assertRaises(StopIteration):
+            next(second)
+
+    def test_stream_response_has_multipart_and_no_cache(self):
+        self.publish()
+        response = self.client.get('/video', buffered=False)
+        self.assertIn('boundary=frame', response.content_type)
+        self.assertEqual(response.headers['Cache-Control'], 'no-store')
+        self.assertIn(b'Content-Type: image/jpeg', next(response.response))
+        response.close()
+
+    @patch('web_app.LiveTextDetectionApp')
+    @patch('web_app.cv2.VideoCapture')
+    def test_worker_encodes_inference_and_releases_camera(self, capture, pipeline):
+        camera = capture.return_value
+        camera.isOpened.return_value = True
+        camera.read.side_effect = [(True, np.zeros((32, 64, 3), dtype=np.uint8)), (False, None)]
+        pipeline.return_value.process_frame.return_value = ([], [], ['অসমীয়া'])
+        pipeline.return_value.draw_detections.side_effect = lambda frame, *args: frame
+        with self.assertLogs(level='ERROR'):
+            self.feed.start()
+            self.feed.thread.join(timeout=5)
+        self.assertFalse(self.feed.thread.is_alive())
+        self.assertEqual(self.feed.sequence, 1)
+        self.assertTrue(self.feed.jpeg.startswith(b'\xff\xd8'))
+        self.assertIn('stopped delivering', self.feed.error)
+        camera.release.assert_called_once()
+        capture.assert_called_once_with(0)
+
+    @patch('web_app.LiveTextDetectionApp', side_effect=RuntimeError('Missing CUDA'))
+    @patch('web_app.cv2.VideoCapture')
+    def test_model_failure_is_reported_without_opening_camera(self, capture, pipeline):
+        with self.assertLogs(level='ERROR'):
+            self.feed._capture()
+        capture.assert_not_called()
+        self.assertEqual(self.client.get('/api/status').json['error'], 'Missing CUDA')
+        self.assertEqual(self.client.get('/healthz').status_code, 503)
+
+
+if __name__ == '__main__':
+    unittest.main()
