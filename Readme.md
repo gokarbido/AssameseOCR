@@ -42,6 +42,10 @@ Optional overrides in a local `.env` file:
 ```dotenv
 CAMERA_DEVICE=/dev/video0
 CAMERA_SOURCE=0
+CAMERA_WIDTH=640
+CAMERA_HEIGHT=480
+CAMERA_FPS=30
+CAMERA_FOURCC=MJPG
 WEB_PORT=8000
 ```
 
@@ -51,6 +55,24 @@ stream, set `CAMERA_SOURCE` to its container path or URL. Mount video files as
 needed. Remove the Compose `devices` entry when no USB camera is attached,
 including for a camera-free smoke test. CSI cameras additionally require host
 Argus access and a GStreamer pipeline; the default Compose file targets USB.
+
+Linux USB capture uses V4L2 directly and tests an actual frame before starting
+OCR. It tries the configured mode, then YUYV 640×480 at 30 FPS, then device
+defaults. Change the settings above to a mode supported by your camera:
+
+```bash
+v4l2-ctl --device=/dev/video0 --list-formats-ext
+docker compose up -d --build --force-recreate
+docker compose logs -f
+```
+
+If frames still time out, check the selected `/dev/video*` node, USB connection,
+and other processes using the camera. A container health check does not
+automatically restart an unhealthy service; restart it after fixing the device.
+GStreamer errors mentioning `g_once_init_enter_pointer` or
+`g_once_init_leave_pointer` indicate incompatible GLib/plugin libraries. Align
+the host JetPack and container stack before using CSI/NVIDIA GStreamer plugins;
+the V4L2 path bypasses these plugins for USB cameras.
 
 The web viewer has no authentication. Use it on a trusted local network;
 restrict access or add an authenticated proxy before exposing it externally.

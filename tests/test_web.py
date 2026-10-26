@@ -1,9 +1,11 @@
 """Exercise shared streaming and readiness without a camera or GPU."""
 import time
+import sys
 import unittest
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 import numpy as np
+import cv2
 
 from web_app import LiveFeed, create_app
 
@@ -75,7 +77,43 @@ class WebTests(unittest.TestCase):
         self.assertTrue(self.feed.jpeg.startswith(b'\xff\xd8'))
         self.assertIn('stopped delivering', self.feed.error)
         camera.release.assert_called_once()
-        capture.assert_called_once_with(0)
+        capture.assert_called_once_with(0, cv2.CAP_V4L2 if sys.platform.startswith('linux') else cv2.CAP_ANY)
+
+    @patch('web_app.sys.platform', 'linux')
+    @patch('web_app.cv2.VideoCapture')
+    def test_linux_usb_bypasses_gstreamer_and_retries_failed_mode(self, capture):
+        failed, working = Mock(), Mock()
+        failed.isOpened.return_value = working.isOpened.return_value = True
+        failed.read.return_value = (False, None)
+        frame = np.zeros((480, 640, 3), dtype=np.uint8)
+        working.read.return_value = (True, frame)
+        capture.side_effect = [failed, working]
+        with self.assertLogs(level='WARNING'):
+            cap, first = self.feed._open_camera()
+        self.assertIs(cap, working)
+        self.assertIs(first, frame)
+        self.assertEqual(capture.call_args_list[0].args, (0, cv2.CAP_V4L2))
+        failed.release.assert_called_once()
+        working.release.assert_not_called()
+        working.set.assert_any_call(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'YUYV'))
+
+    @patch('web_app.sys.platform', 'linux')
+    @patch('web_app.cv2.VideoCapture')
+    def test_unavailable_camera_releases_all_attempts(self, capture):
+        capture.return_value.isOpened.return_value = False
+        with self.assertRaisesRegex(RuntimeError, 'Cannot read camera'):
+            self.feed._open_camera()
+        self.assertEqual(capture.return_value.release.call_count, 3)
+
+    @patch('web_app.sys.platform', 'linux')
+    @patch('web_app.cv2.VideoCapture')
+    def test_stream_keeps_automatic_backend_and_source_resolution(self, capture):
+        frame = np.zeros((32, 64, 3), dtype=np.uint8)
+        capture.return_value.read.return_value = (True, frame)
+        LiveFeed(camera='rtsp://camera/live')._open_camera()
+        capture.assert_called_once_with('rtsp://camera/live', cv2.CAP_ANY)
+        self.assertNotIn(cv2.CAP_PROP_FRAME_WIDTH,
+                         [call.args[0] for call in capture.return_value.set.call_args_list])
 
     @patch('web_app.LiveTextDetectionApp', side_effect=RuntimeError('Missing CUDA'))
     @patch('web_app.cv2.VideoCapture')

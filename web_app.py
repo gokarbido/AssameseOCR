@@ -4,6 +4,7 @@ import logging
 import os
 from pathlib import Path
 import signal
+import sys
 import threading
 import time
 
@@ -15,10 +16,13 @@ from app import LiveTextDetectionApp
 
 
 class LiveFeed:
-    def __init__(self, camera='0', device='cuda', gstreamer=False):
+    def __init__(self, camera='0', device='cuda', gstreamer=False,
+                 width=640, height=480, fps=30, fourcc='MJPG'):
         self.camera = camera
         self.device = device
         self.gstreamer = gstreamer
+        self.width, self.height, self.capture_fps = width, height, fps
+        self.fourcc = fourcc
         self.condition = threading.Condition()
         self.stopped = threading.Event()
         self.jpeg = None
@@ -40,6 +44,45 @@ class LiveFeed:
         if self.thread:
             self.thread.join(timeout=5)
 
+    def _open_camera(self):
+        source = int(self.camera) if self.camera.isdecimal() and not self.gstreamer else self.camera
+        usb = (not self.gstreamer and sys.platform.startswith('linux')
+               and (isinstance(source, int) or str(source).startswith('/dev/video')))
+        backend = cv2.CAP_GSTREAMER if self.gstreamer else cv2.CAP_V4L2 if usb else cv2.CAP_ANY
+        # Probe an actual frame, since isOpened() can succeed for an unusable mode.
+        modes = [(self.fourcc, self.width, self.height, self.capture_fps),
+                 ('YUYV', 640, 480, 30), None] if usb else [None]
+        for mode in modes:
+            cap = cv2.VideoCapture(source, backend)
+            try:
+                if not cap.isOpened():
+                    cap.release()
+                    continue
+                if mode:
+                    codec, width, height, fps = mode
+                    cap.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*codec))
+                    cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)
+                    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
+                    cap.set(cv2.CAP_PROP_FPS, fps)
+                cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
+                ok, first_frame = cap.read()
+                if ok and first_frame is not None:
+                    logging.info('Camera %s opened with backend=%s, mode=%s, actual=%sx%s @ %s FPS',
+                                 source, backend, mode or 'source defaults',
+                                 cap.get(cv2.CAP_PROP_FRAME_WIDTH), cap.get(cv2.CAP_PROP_FRAME_HEIGHT),
+                                 cap.get(cv2.CAP_PROP_FPS))
+                    return cap, first_frame
+                logging.warning('Camera %s produced no frame with mode %s', source, mode)
+            except Exception:
+                cap.release()
+                raise
+            # Release a failed attempt before trying another format.
+            cap.release()
+        raise RuntimeError(
+            f'Cannot read camera {source}. Check CAMERA_DEVICE, supported formats '
+            '(v4l2-ctl --list-formats-ext), and whether another process owns the camera. '
+            'For CSI/GStreamer, the host JetPack and container libraries must match.')
+
     def _capture(self):
         cap = None
         try:
@@ -47,17 +90,13 @@ class LiveFeed:
             pipeline = LiveTextDetectionApp(str(root / 'det_asm.onnx'),
                                             str(root / 'model.onnx'),
                                             str(root / 'config.yaml'), device=self.device)
-            source = int(self.camera) if self.camera.isdecimal() and not self.gstreamer else self.camera
-            cap = (cv2.VideoCapture(source, cv2.CAP_GSTREAMER) if self.gstreamer
-                   else cv2.VideoCapture(source))
-            if not cap.isOpened():
-                raise RuntimeError('Cannot open camera. Check the camera source and device access.')
-            cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
-            cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
-            cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
+            cap, first_frame = self._open_camera()
             while not self.stopped.is_set():
                 started = time.monotonic()
-                ok, frame = cap.read()
+                if first_frame is not None:
+                    ok, frame, first_frame = True, first_frame, None
+                else:
+                    ok, frame = cap.read()
                 if not ok or frame is None:
                     raise RuntimeError('Camera stopped delivering frames. Check it and restart the service.')
                 boxes, scores, texts = pipeline.process_frame(frame)
@@ -132,14 +171,22 @@ def create_app(feed):
 
 
 def main():
+    logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
     parser = argparse.ArgumentParser(description='Assamese OCR browser viewer')
     parser.add_argument('--host', default='0.0.0.0')
     parser.add_argument('--port', type=int, default=8000)
     parser.add_argument('--camera', default=os.environ.get('CAMERA_SOURCE', '0'))
     parser.add_argument('--device', choices=['cuda', 'cpu'], default='cuda')
     parser.add_argument('--gstreamer', action='store_true')
+    parser.add_argument('--width', type=int, default=int(os.environ.get('CAMERA_WIDTH', '640')))
+    parser.add_argument('--height', type=int, default=int(os.environ.get('CAMERA_HEIGHT', '480')))
+    parser.add_argument('--fps', type=int, default=int(os.environ.get('CAMERA_FPS', '30')))
+    parser.add_argument('--fourcc', default=os.environ.get('CAMERA_FOURCC', 'MJPG'))
     args = parser.parse_args()
-    feed = LiveFeed(args.camera, args.device, args.gstreamer)
+    if min(args.width, args.height, args.fps) < 1 or len(args.fourcc) != 4:
+        parser.error('width, height and fps must be positive; fourcc must be four characters')
+    feed = LiveFeed(args.camera, args.device, args.gstreamer,
+                    args.width, args.height, args.fps, args.fourcc)
 
     def shutdown(signum, frame):
         raise KeyboardInterrupt
