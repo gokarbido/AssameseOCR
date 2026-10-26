@@ -51,7 +51,7 @@ RUN --mount=type=cache,id=assamese-ocr-pip,target=/root/.cache/pip,sharing=locke
     python -m pip install -r requirements-jetson.txt && \
     python -m pip check
 
-COPY app.py detector.py inference_runtime.py web_app.py jpeg_stream.py translation_service.py offline_translation.py config.yaml det_asm.onnx model.onnx ./
+COPY app.py detector.py inference_runtime.py web_app.py jpeg_stream.py translation_service.py offline_translation.py reading_order.py overlay_labels.py config.yaml det_asm.onnx model.onnx ./
 COPY templates ./templates
 
 # Actual GPU inference is checked at runtime, when the GPU is available.

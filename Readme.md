@@ -3,6 +3,14 @@
 Live Assamese text recognition from a Jetson CSI camera, with an annotated
 browser feed, recognized text, FPS, and pause/resume.
 
+Detected regions are grouped into horizontal lines and read left to right,
+then top to bottom. The same order is used for OCR and paired English results.
+Video labels use larger scalable fonts (48 px at 1080p), with Assamese above
+English. Long labels wrap to two lines; the sidebar keeps the full text in
+larger type. Bounding-box coordinates and sizes are unchanged.
+Label blocks avoid each other. When a crowded frame has no room for another
+large label, that region's full Assamese and English results remain in the sidebar.
+
 ## Run on the Jetson
 
 The default Docker configuration receives CSI frames from a host-side sender.

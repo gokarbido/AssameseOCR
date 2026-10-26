@@ -11,7 +11,7 @@
   .tag{font-size:12px;letter-spacing:2px;color:#71d9b1;margin-bottom:12px}
   #status{border:1px solid #36424f;border-radius:30px;padding:8px 14px;white-space:nowrap;font-size:14px}
   #status[data-state=live]{color:#71d9b1;border-color:#376d5a}#status[data-state=error]{color:#ffadad}
-  .layout{display:grid;grid-template-columns:minmax(0,3fr) minmax(260px,1fr);gap:20px}
+  .layout{display:grid;grid-template-columns:minmax(0,2.5fr) minmax(320px,1fr);gap:20px}
   .panel{background:#19222c;border:1px solid #2c3845;border-radius:16px;overflow:hidden}
   .video{position:relative;aspect-ratio:16/9;background:#090e13;display:grid;place-items:center}
   #feed{display:block;width:100%;height:100%;object-fit:contain;position:absolute}
@@ -19,8 +19,8 @@
   .bar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 20px}
   button{font:inherit;background:#71d9b1;color:#0e2720;border:0;border-radius:8px;padding:8px 16px;cursor:pointer}
   button:focus-visible{outline:3px solid white;outline-offset:3px}
-  aside{padding:22px}h2{font-size:16px;margin:0 0 12px}#texts{padding-left:22px;line-height:1.8;overflow-wrap:anywhere}
-  #texts li{padding:10px 0;border-bottom:1px solid #2c3845}.source{color:#ecf1f5}.translation{color:#71d9b1;font-size:14px;line-height:1.5;margin-top:6px}.translation.pending{color:#a5b3c0;font-style:italic}#message,#translation-status{margin-top:16px;font-size:14px}#translation-status[data-state=error]{color:#ffadad}
+  aside{padding:22px;min-width:0}h2{font-size:16px;margin:0 0 12px}.reading-order{font-size:13px;margin-bottom:12px}#texts{padding-left:22px;line-height:1.5;overflow-wrap:anywhere}
+  #texts li{padding:10px 0;border-bottom:1px solid #2c3845}.source{color:#ecf1f5;font-size:22px;line-height:1.5}.translation{color:#71d9b1;font-size:20px;line-height:1.5;margin-top:6px}.translation.pending{color:#a5b3c0;font-style:italic}#message,#translation-status{margin-top:16px;font-size:14px}#translation-status[data-state=error]{color:#ffadad}
   footer{margin-top:20px;color:#8495a6;font-size:13px}a{color:#71d9b1}
   [hidden]{display:none!important}@media(max-width:850px){main{padding:20px}.layout{grid-template-columns:1fr}header{align-items:flex-start}.bar{flex-wrap:wrap}}
 </style>
@@ -34,7 +34,7 @@
       <div class="video"><span id="placeholder">Waiting for the camera…</span><img id="feed" alt="Live camera with detected Assamese text" hidden></div>
       <div class="bar"><span><strong id="fps">—</strong> FPS · annotated feed</span><button id="toggle" type="button">Pause view</button></div>
     </section>
-    <aside class="panel"><h2>Recognized text</h2><p id="empty">Detected text and English translations will appear here.</p><ol id="texts"></ol><p id="translation-status" role="status"></p><p id="message" role="status"></p></aside>
+    <aside class="panel"><h2>Recognized text</h2><p class="reading-order">Reading order: left to right, then top to bottom.</p><p id="empty">Detected text and English translations will appear here.</p><ol id="texts"></ol><p id="translation-status" role="status"></p><p id="message" role="status"></p></aside>
   </div>
   <footer>OCR and English translation run locally on your device. Pause affects only this browser view.</footer>
 </main>

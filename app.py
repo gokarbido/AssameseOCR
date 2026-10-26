@@ -15,6 +15,8 @@ import argparse
 import logging
 from detector import YoloObjectDetector
 from PIL import Image, ImageDraw, ImageFont
+from reading_order import sort_detections
+from overlay_labels import label_layout, place_label
 import os
 
 logger = logging.getLogger(__name__)
@@ -200,50 +202,20 @@ class LiveTextDetectionApp:
     
     def draw_text(self, frame, text, x, y, lang='as'):
         """
-        Draws text on the frame using PIL with a white background.
+        Draw large, wrapped text on a padded background inside the video.
         """
         try:
             # Convert BGR to RGB for PIL
             pil_image = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
             draw = ImageDraw.Draw(pil_image)
             
-            font_size = 24
-            
-            # Choose font based on language and availability
-            if lang == 'en':
-                try:
-                    font = ImageFont.truetype("arial.ttf", font_size)
-                except:
-                    font = ImageFont.load_default()
-            else:
-                # For Assamese text, use the verified font
-                if self.font_loaded and self.font_path:
-                    try:
-                        font = ImageFont.truetype(self.font_path, font_size)
-                        font_used = "verified font"
-                    except Exception as e:
-                        print(f"Failed to load verified font: {e}")
-                        font = ImageFont.load_default()
-                        font_used = "default"
-                else:
-                    font = ImageFont.load_default()
-                    font_used = "default"
-                
-                # Debug: Print font being used (only once per session)
-                if not hasattr(self, '_font_debug_printed'):
-                    print(f"Using font for Assamese text: {font_used}")
-                    self._font_debug_printed = True
-                
-            
-            # Get text bounding box
-            text_bbox = draw.textbbox((x, y), text, font=font)
-            
-            # Draw white background rectangle
-            background_box = [(text_bbox[0], text_bbox[1]), (text_bbox[2], text_bbox[3])]
-            draw.rectangle(background_box, fill='white')
-            
-            # Draw text on the white background
-            draw.text((x, y), text, font=font, fill='blue')
+            layout = label_layout(draw, text, frame.shape, lang, getattr(self, 'font_path', None))
+            x = int(max(0, min(x, frame.shape[1] - layout['width'])))
+            y = int(max(0, min(y, frame.shape[0] - layout['height'])))
+            draw.rectangle((x, y, x + layout['width'] - 1, y + layout['height'] - 1), fill='white')
+            left, top = layout['bounds'][:2]
+            draw.multiline_text((x + layout['padding'] - left, y + layout['padding'] - top),
+                                layout['text'], font=layout['font'], spacing=layout['spacing'], fill='blue')
             
             # Convert back to BGR for OpenCV
             frame = cv2.cvtColor(np.array(pil_image), cv2.COLOR_RGB2BGR)
@@ -286,35 +258,39 @@ class LiveTextDetectionApp:
                         translations: Optional[List[str]] = None) -> np.ndarray:
         """Draw bounding boxes and recognized text on frame"""
         result_frame = frame.copy()
+        occupied_labels = []
         
         for i, (box, score) in enumerate(zip(boxes, scores)):
             x1, y1, x2, y2 = box
             
-            # Draw bounding box
-            cv2.rectangle(result_frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
-            
-            # Draw confidence score
-            cv2.putText(result_frame, f"{float(score):.2f}", (x1, y1 - 10), 
-                       cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1)
-            
             # Draw recognized text with Unicode support
             if i < len(texts) and texts[i]:
-                # Calculate text position (above the box)
-                text_y = max(y1 - 30, 20)
-                
-                # Use improved text drawing with white background for original text
-                result_frame = self.draw_text(result_frame, texts[i], x1, text_y, lang='as')
-                
-                # Translate and draw English translation below
                 if translations is None:
                     translated = self.translate_text(texts[i])
                 else:
                     translated = translations[i] if i < len(translations) else None
+                # Keep Assamese above English and position them as one block.
+                measure = ImageDraw.Draw(Image.new('RGB', (1, 1)))
+                source_label = label_layout(measure, texts[i], frame.shape, 'as', getattr(self, 'font_path', None))
+                english_label = label_layout(measure, translated, frame.shape, 'en', getattr(self, 'font_path', None)) if translated else None
+                total_height = source_label['height'] + (english_label['height'] + 4 if english_label else 0)
+                label_width = max(source_label['width'], english_label['width'] if english_label else 0)
+                position = place_label(box, frame.shape, label_width, total_height, occupied_labels, boxes)
+                if position is None:
+                    continue  # Full text remains visible in the browser sidebar.
+                label_x, text_y = position
+                result_frame = self.draw_text(result_frame, texts[i], label_x, text_y, lang='as')
                 if translated:
-                    trans_y = text_y - 25  # Position above original text
-                    result_frame = self.draw_text(result_frame, translated, x1, trans_y, lang='en')
+                    trans_y = text_y + source_label['height'] + 4
+                    result_frame = self.draw_text(result_frame, translated, label_x, trans_y, lang='en')
                 
         
+        # Draw outlines last so enlarged labels cannot hide the original boxes.
+        for box, score in zip(boxes, scores):
+            x1, y1, x2, y2 = box
+            cv2.rectangle(result_frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
+            cv2.putText(result_frame, f"{float(score):.2f}", (x1, y1 - 10),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1)
         return result_frame
     
     def update_fps(self):
@@ -334,6 +310,7 @@ class LiveTextDetectionApp:
         # Detect text regions
         detection_start = time.time()
         boxes, scores = self.detector.detect_one(frame, fit_to_image=True)
+        boxes, scores = sort_detections(boxes, scores)
         detection_time = time.time() - detection_start
         
         recognized_texts = []
