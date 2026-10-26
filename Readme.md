@@ -1,132 +1,111 @@
 # Assamese OCR
 
-Live Assamese text detection and recognition with an annotated browser feed,
-recognized text, FPS, and pause/resume. The camera is attached to the Jetson;
-no desktop or X11 session is required by the viewer.
+Live Assamese text recognition from a Jetson CSI camera, with an annotated
+browser feed, recognized text, FPS, and pause/resume.
 
-## CSI camera: use the working host camera stack
+## Run on the Jetson
 
-If `nvarguscamerasrc` works on the host but container plugins report GLib
-symbol errors, use the host to capture frames and the container for OCR.
+The default Docker configuration receives CSI frames from a host-side sender.
+The host uses its working NVIDIA camera stack; the container runs OCR without
+loading GStreamer camera plugins.
 
-Stop the existing service:
+Stop the old container first:
 
 ```bash
 docker compose down
 ```
 
-In one host terminal, start the local JPEG sender and leave it running:
+Terminal 1 — start the CSI camera sender and leave it running:
 
 ```bash
 bash scripts/stream_csi_camera.sh
 ```
 
-In another host terminal:
+Terminal 2 — build and start OCR:
 
 ```bash
-docker compose -f docker-compose.host-camera.yml up -d --build --force-recreate
-docker compose -f docker-compose.host-camera.yml logs -f
+docker compose -f docker-compose.yml up -d --build --force-recreate
+docker compose -f docker-compose.yml logs -f
 ```
 
-Open **http://JETSON_IP:8000**. This mode uses host networking to receive JPEG
-frames from `127.0.0.1:8554`. The container uses a Python TCP receiver and JPEG
-decoding, without OpenCV VideoCapture, GStreamer, or the Argus socket. It keeps
-the newest frame instead of queuing old frames during slower OCR. The host
-needs GStreamer `jpegenc` and `tcpserversink`.
-Stop other camera capture commands before starting the sender. If the sender
-stops, restart it and then restart the OCR service.
+Open **http://JETSON_IP:8000**. Expected logs:
 
-Confirm the active capture path in logs: `Host JPEG camera connected ...;
-capture does not use GStreamer`. If plugin-scanner warnings still appear,
-check that this Compose file was selected and the image was rebuilt. Direct
-CSI capture with the default Compose file still requires compatible plugins.
-
-Optional settings: `SENSOR_ID=1 bash scripts/stream_csi_camera.sh` selects another
-sensor. Set `CAMERA_STREAM_PORT` in both host terminals to change the sender
-port; `WEB_PORT` selects the browser port. The sender captures 1920×1080 at
-30 FPS and converts to JPEG before transmission; OCR throughput depends on
-the device. Pause affects only the current browser view.
-
-## Direct CSI capture in Docker
-
-The default `docker-compose.yml` uses `nvarguscamerasrc sensor-id=0`, captures
-1920×1080 at 30 FPS, converts BGRx to BGR, and reads frames through OpenCV's
-GStreamer backend. It mounts `/tmp/argus_socket` to reach the host Argus daemon.
-This mode requires compatible host and container camera libraries.
-
-```bash
-docker compose -f docker-compose.host-camera.yml down
-docker compose config --quiet
-docker compose up -d --build --force-recreate
-docker compose logs -f
+```text
+Capture mode: host JPEG; source: tcpjpeg://127.0.0.1:8554
+Host JPEG camera connected ... capture does not use GStreamer
 ```
 
-The host Argus daemon must already be running and its socket must exist.
-Set `CAMERA_SOURCE` in `.env` to replace the complete pipeline. Keep
-`CAMERA_GSTREAMER=1`. GStreamer errors mentioning `g_once_init_enter_pointer`
-or `g_once_init_leave_pointer` indicate incompatible GLib/plugin libraries;
-use the host-stream mode above or align the host and container stack.
+The sender uses `nvarguscamerasrc sensor-id=0` at 1920×1080, 30 FPS, converts
+to JPEG, and serves on host loopback port 8554. The container uses host
+networking and decodes JPEG directly, keeping the latest frame for OCR.
+No X11 session or Argus mount is required by the container. The host needs
+GStreamer `jpegenc` and `tcpserversink`. Stop other camera applications first.
 
-The supplied image targets **JetPack 6 / L4T r36.4.0 / Python 3.10** with a
-matching GPU ONNX Runtime wheel. It does not target JetPack 7 / CUDA 13.
-The host-stream workaround avoids camera plugin dependencies; it does not
-establish full GPU/driver compatibility across JetPack versions.
+If the sender stops, restart it, then run `docker compose restart`. Health
+checks report missing frames but do not automatically restart the worker.
+`docker-compose.host-camera.yml` remains an alias for the default setup.
 
-## Checks and other camera sources
+Optional settings:
+
+- `SENSOR_ID=1 bash scripts/stream_csi_camera.sh` selects another CSI sensor.
+- Set `CAMERA_STREAM_PORT` in both terminals to change port 8554.
+- Set `WEB_PORT` before starting Compose to change the browser port.
+
+The image uses the supplied **JetPack 6 / L4T r36.4.0 / Python 3.10** base and
+GPU ONNX Runtime wheel. Camera capture on the host avoids plugin mismatches;
+it does not establish GPU compatibility with JetPack 7 / CUDA 13.
+
+## Verify inference
 
 ```bash
 docker compose run --rm assamese-ocr python app.py --smoke-test
 ```
 
-This executes both models without a camera window. Confirm that it passes and
-both sessions include `CUDAExecutionProvider`. `/healthz` is healthy only while
-frames are arriving. A health failure does not automatically restart a service;
-restart it after correcting the camera problem.
+Both models must pass with `CUDAExecutionProvider`. `/healthz` is healthy only
+while frames are arriving. Pause affects only the current browser view.
+The viewer is intended for a few viewers on a trusted network; add an
+authenticated proxy before exposing it externally.
 
-For a USB camera in Docker, replace the Argus `volumes` block with:
+## Direct CSI capture (optional)
 
-```yaml
-devices:
-  - /dev/video0:/dev/video0
+`docker-compose.csi.yml` contains the direct Argus/GStreamer configuration.
+Use it only when host and container camera libraries match:
+
+```bash
+docker compose down
+# Stop the host camera sender before using direct CSI capture.
+docker compose -f docker-compose.csi.yml up -d --build
 ```
 
-Then set `CAMERA_GSTREAMER=0` and `CAMERA_SOURCE=0` in `.env` and recreate the
-service. Linux USB capture uses V4L2, initially MJPG 640×480 at 30 FPS, with
-fallback modes. Run `v4l2-ctl --device=/dev/video0 --list-formats-ext` to check
-supported formats. Native USB settings can be selected with `--width`,
-`--height`, `--fps`, and `--fourcc`. For a video file or RTSP URL, use
-`CAMERA_GSTREAMER=0` and set `CAMERA_SOURCE` to its container path or URL.
-Remove Argus mounts for these sources and mount video files as needed.
-
-The viewer has no authentication. Use it on a trusted network or behind an
-authenticated proxy. It is sized for a few simultaneous viewers, sharing one
-camera/inference worker.
+This mounts `/tmp/argus_socket` and uses OpenCV's GStreamer backend. Missing
+`g_once_init_enter_pointer` / `g_once_init_leave_pointer` symbols indicate
+incompatible plugin/GLib libraries. Use the default host sender setup in that
+case. `CAMERA_SOURCE` can override the direct CSI pipeline.
 
 ## Native Python
 
-Use the system Python supported by your JetPack installation:
+Install system OpenCV and fonts, then use the Python version supported by
+JetPack:
 
 ```bash
 sudo apt update
 sudo apt install -y python3-venv python3-pip python3-opencv fonts-lohit-beng-assamese fonts-noto-core
 python3 -m venv --system-site-packages .venv
 source .venv/bin/activate
-python -m pip install --upgrade pip
 python -m pip install -r requirements-jetson.txt
 python -m pip install /absolute/path/to/compatible-onnxruntime-gpu.whl
 python app.py --smoke-test
-python web_app.py
+python web_app.py --camera tcpjpeg://127.0.0.1:8554
 ```
 
-The GPU wheel must match Python, ARM64, CUDA, cuDNN, and Orin. For native
-Python 3.12 / CUDA 13, `scripts/build_onnxruntime_jetson.sh` provides an optional
-source build requiring development headers; it is not verified on hardware.
-For CPU use, install `requirements.txt` and `onnxruntime` in a separate
-environment, then run `python web_app.py --device cpu`.
+The GPU wheel must match Python, ARM64, CUDA, cuDNN, and Orin. The optional
+`scripts/build_onnxruntime_jetson.sh` targets native Python 3.12 / CUDA 13 and
+requires development headers; it has not been verified on hardware.
 
-`python web_app.py --help` lists camera options. `python app.py --camera 0`
-opens the desktop viewer instead. Optional desktop translation requires
-`deep-translator==1.11.4` and `--translate`; it sends text to Google.
+For native USB capture, run `python web_app.py --camera 0`. For CPU use in a
+separate environment, install `requirements.txt` and `onnxruntime`, then add
+`--device cpu`. `python web_app.py --help` lists camera and stream options.
+`python app.py --camera 0` opens the desktop viewer instead.
 
-References: [NVIDIA CSI containers](https://developer.nvidia.com/embedded/learn/tutorials/first-picture-csi-usb-camera),
+References: [NVIDIA CSI cameras](https://developer.nvidia.com/embedded/learn/tutorials/first-picture-csi-usb-camera),
 [NVIDIA Docker setup](https://docs.nvidia.com/jetson/orin-nano-devkit/user-guide/latest/setup_docker.html).

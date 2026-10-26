@@ -1,3 +1,5 @@
+# Default: host CSI capture with container OCR. Start the sender first.
+# bash scripts/stream_csi_camera.sh
 services:
   assamese-ocr:
     image: assamese-ocr:jetpack6
@@ -9,20 +11,13 @@ services:
         ONNXRUNTIME_WHEEL_URL: ${ONNXRUNTIME_WHEEL_URL:-https://pypi.jetson-ai-lab.io/jp6/cu126/+f/4eb/e6a8902dc7708/onnxruntime_gpu-1.23.0-cp310-cp310-linux_aarch64.whl}
     platform: linux/arm64
     runtime: nvidia
-    ports:
-      - "${WEB_PORT:-8000}:8000"
-    volumes:
-      - type: bind
-        source: /tmp/argus_socket
-        target: /tmp/argus_socket
-        bind:
-          create_host_path: false
+    # Reach the host sender on loopback. The web viewer also listens on host :8000.
+    network_mode: host
     environment:
-      CAMERA_GSTREAMER: ${CAMERA_GSTREAMER:-1}
-      CAMERA_SOURCE: >-
-        ${CAMERA_SOURCE:-nvarguscamerasrc sensor-id=0 !
-        video/x-raw(memory:NVMM),width=1920,height=1080,framerate=30/1 !
-        nvvidconv ! video/x-raw,format=BGRx ! videoconvert !
-        video/x-raw,format=BGR ! appsink drop=true max-buffers=1 sync=false}
+      CAMERA_GSTREAMER: "0"
+      CAMERA_SOURCE: tcpjpeg://127.0.0.1:${CAMERA_STREAM_PORT:-8554}
+    command: ["python", "web_app.py", "--port", "${WEB_PORT:-8000}"]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:${WEB_PORT:-8000}/healthz', timeout=3)"]
     restart: unless-stopped
     stop_grace_period: 15s

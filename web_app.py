@@ -101,6 +101,9 @@ class LiveFeed:
     def _capture(self):
         cap = None
         try:
+            capture_mode = ('host JPEG' if self.camera.startswith('tcpjpeg://') else
+                            'GStreamer' if self.gstreamer else 'video device / stream')
+            logging.info('Capture mode: %s; source: %s', capture_mode, self.camera)
             root = Path(__file__).resolve().parent
             pipeline = LiveTextDetectionApp(str(root / 'det_asm.onnx'),
                                             str(root / 'model.onnx'),
