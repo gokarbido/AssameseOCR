@@ -5,3 +5,6 @@ PyYAML>=6.0.2,<7
 Pillow>=10.4,<13
 Flask>=3.1,<4
 waitress>=3.0.2,<4
+tokenizers>=0.21,<0.23
+indic-nlp-library-itt==0.1.1
+sacremoses==0.1.1

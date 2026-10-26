@@ -15,11 +15,12 @@ from waitress import serve
 
 from app import LiveTextDetectionApp
 from jpeg_stream import TcpJpegCapture
+from translation_service import TranslationService
 
 
 class LiveFeed:
     def __init__(self, camera='0', device='cuda', gstreamer=False,
-                 width=640, height=480, fps=30, fourcc='MJPG'):
+                 width=640, height=480, fps=30, fourcc='MJPG', translate=False):
         self.camera = camera
         self.device = device
         self.gstreamer = gstreamer
@@ -34,8 +35,10 @@ class LiveFeed:
         self.fps = 0.0
         self.error = None
         self.thread = None
+        self.translation = TranslationService(enabled=translate)
 
     def start(self):
+        self.translation.start()
         self.thread = threading.Thread(target=self._capture, daemon=True)
         self.thread.start()
 
@@ -45,6 +48,7 @@ class LiveFeed:
             self.condition.notify_all()
         if self.thread:
             self.thread.join(timeout=5)
+        self.translation.stop()
 
     def _open_camera(self):
         if self.camera.startswith('tcpjpeg://'):
@@ -118,7 +122,9 @@ class LiveFeed:
                 if not ok or frame is None:
                     raise RuntimeError('Camera stopped delivering frames. Check it and restart the service.')
                 boxes, scores, texts = pipeline.process_frame(frame)
-                annotated = pipeline.draw_detections(frame, boxes, scores, texts)
+                self.translation.submit(texts)
+                translations, _ = self.translation.snapshot(texts)
+                annotated = pipeline.draw_detections(frame, boxes, scores, texts, translations)
                 ok, encoded = cv2.imencode('.jpg', annotated, [cv2.IMWRITE_JPEG_QUALITY, 80])
                 if not ok:
                     raise RuntimeError('Could not encode the camera frame.')
@@ -143,8 +149,11 @@ class LiveFeed:
             live = (self.jpeg is not None and not self.error and not self.stopped.is_set()
                     and time.monotonic() - self.updated < 15)
             state = 'live' if live else ('error' if self.error else 'waiting')
-            return dict(state=state, error=self.error, fps=self.fps if live else 0,
-                        texts=list(self.texts) if live else [], frames=self.sequence)
+            state = dict(state=state, error=self.error, fps=self.fps if live else 0,
+                         texts=list(self.texts) if live else [], frames=self.sequence)
+        translations, error = self.translation.snapshot(state['texts'])
+        return dict(state, translations=translations, translation_enabled=self.translation.enabled,
+                    translation_error=error)
 
     def frames(self):
         previous = -1
@@ -202,11 +211,16 @@ def main():
     parser.add_argument('--height', type=int, default=int(os.environ.get('CAMERA_HEIGHT', '480')))
     parser.add_argument('--fps', type=int, default=int(os.environ.get('CAMERA_FPS', '30')))
     parser.add_argument('--fourcc', default=os.environ.get('CAMERA_FOURCC', 'MJPG'))
+    parser.add_argument('--translate', dest='translate', action='store_true',
+                        default=os.environ.get('ENABLE_TRANSLATION', '1').lower() in ('1', 'true', 'yes'),
+                        help='Translate Assamese to English using the local INT8 ONNX model')
+    parser.add_argument('--no-translate', dest='translate', action='store_false',
+                        help='Disable offline English translation')
     args = parser.parse_args()
     if min(args.width, args.height, args.fps) < 1 or len(args.fourcc) != 4:
         parser.error('width, height and fps must be positive; fourcc must be four characters')
     feed = LiveFeed(args.camera, args.device, args.gstreamer,
-                    args.width, args.height, args.fps, args.fourcc)
+                    args.width, args.height, args.fps, args.fourcc, translate=args.translate)
 
     def shutdown(signum, frame):
         raise KeyboardInterrupt

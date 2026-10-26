@@ -131,8 +131,8 @@ class LiveTextDetectionApp:
         # Initialize translator (Assamese to English)
         self.translator = None
         if translate:
-            from deep_translator import GoogleTranslator
-            self.translator = GoogleTranslator(source='as', target='en')
+            from offline_translation import OfflineTranslator
+            self.translator = OfflineTranslator()
         self.translation_cache = {}  # Cache translations to avoid repeated API calls
         self.last_translation_time = 0
         self.translation_interval = 0.5  # Only translate every 0.5 seconds to avoid slowing down
@@ -282,7 +282,8 @@ class LiveTextDetectionApp:
             print(f"Translation error: {e}")
             return ""
     
-    def draw_detections(self, frame: np.ndarray, boxes: np.ndarray, scores: np.ndarray, texts: List[str]) -> np.ndarray:
+    def draw_detections(self, frame: np.ndarray, boxes: np.ndarray, scores: np.ndarray, texts: List[str],
+                        translations: Optional[List[str]] = None) -> np.ndarray:
         """Draw bounding boxes and recognized text on frame"""
         result_frame = frame.copy()
         
@@ -311,7 +312,10 @@ class LiveTextDetectionApp:
                 result_frame = self.draw_text(result_frame, texts[i], x1, text_y, lang='as')
                 
                 # Translate and draw English translation below
-                translated = self.translate_text(texts[i])
+                if translations is None:
+                    translated = self.translate_text(texts[i])
+                else:
+                    translated = translations[i] if i < len(translations) else None
                 if translated:
                     trans_y = text_y - 25  # Position above original text
                     result_frame = self.draw_text(result_frame, translated, x1, trans_y, lang='en')
@@ -503,7 +507,7 @@ def main():
                        help='Camera ID, video path, stream URL, or GStreamer pipeline')
     parser.add_argument('--gstreamer', action='store_true', help='Open --camera as a GStreamer pipeline')
     parser.add_argument('--device', choices=['cuda', 'cpu'], default='cuda', help='Inference device (default: cuda)')
-    parser.add_argument('--translate', action='store_true', help='Enable online Google translation (requires internet)')
+    parser.add_argument('--translate', action='store_true', help='Enable local ONNX English translation')
     parser.add_argument('--smoke-test', action='store_true', help='Run both models on synthetic inputs without camera or GUI')
     parser.add_argument('--log-interval', type=int, default=30, 
                        help='Log processing details every N frames (default: 30)')

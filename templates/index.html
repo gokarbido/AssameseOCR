@@ -20,7 +20,7 @@
   button{font:inherit;background:#71d9b1;color:#0e2720;border:0;border-radius:8px;padding:8px 16px;cursor:pointer}
   button:focus-visible{outline:3px solid white;outline-offset:3px}
   aside{padding:22px}h2{font-size:16px;margin:0 0 12px}#texts{padding-left:22px;line-height:1.8;overflow-wrap:anywhere}
-  #texts li{padding:10px 0;border-bottom:1px solid #2c3845}#message{margin-top:16px;font-size:14px}
+  #texts li{padding:10px 0;border-bottom:1px solid #2c3845}.source{color:#ecf1f5}.translation{color:#71d9b1;font-size:14px;line-height:1.5;margin-top:6px}.translation.pending{color:#a5b3c0;font-style:italic}#message,#translation-status{margin-top:16px;font-size:14px}#translation-status[data-state=error]{color:#ffadad}
   footer{margin-top:20px;color:#8495a6;font-size:13px}a{color:#71d9b1}
   [hidden]{display:none!important}@media(max-width:850px){main{padding:20px}.layout{grid-template-columns:1fr}header{align-items:flex-start}.bar{flex-wrap:wrap}}
 </style>
@@ -34,13 +34,14 @@
       <div class="video"><span id="placeholder">Waiting for the camera…</span><img id="feed" alt="Live camera with detected Assamese text" hidden></div>
       <div class="bar"><span><strong id="fps">—</strong> FPS · annotated feed</span><button id="toggle" type="button">Pause view</button></div>
     </section>
-    <aside class="panel"><h2>Recognized text</h2><p id="empty">Detected text will appear here.</p><ol id="texts" lang="as"></ol><p id="message" role="status"></p></aside>
+    <aside class="panel"><h2>Recognized text</h2><p id="empty">Detected text and English translations will appear here.</p><ol id="texts"></ol><p id="translation-status" role="status"></p><p id="message" role="status"></p></aside>
   </div>
-  <footer>Processed on your device · Pause affects only this browser view.</footer>
+  <footer>OCR and English translation run locally on your device. Pause affects only this browser view.</footer>
 </main>
 <script>
   const feed=document.getElementById('feed'),badge=document.getElementById('status');
   const placeholder=document.getElementById('placeholder'),message=document.getElementById('message');
+  const translationStatus=document.getElementById('translation-status');
   let paused=false,streamOpen=false;
   function disconnect(){feed.removeAttribute('src');feed.hidden=true;streamOpen=false;placeholder.hidden=false}
   function connect(){if(!paused&&!streamOpen){streamOpen=true;feed.src='/video?t='+Date.now()}}
@@ -57,10 +58,22 @@
       badge.textContent=data.state==='live'?'● Live':data.state==='error'?'Camera offline':'Starting…';
       document.getElementById('fps').textContent=data.state==='live'?data.fps:'—';
       message.textContent=data.error||(data.state==='waiting'?'Loading models or waiting for frames…':'');
-      document.getElementById('texts').replaceChildren(...data.texts.map(text=>{const li=document.createElement('li');li.textContent=text;return li}));
+      const translations=Array.isArray(data.translations)?data.translations:[];
+      document.getElementById('texts').replaceChildren(...data.texts.map((text,index)=>{
+        const li=document.createElement('li'),source=document.createElement('div'),english=document.createElement('div');
+        source.className='source';source.lang='as';source.textContent=text;
+        english.className='translation';english.lang='en';
+        english.textContent=translations[index]||(data.translation_enabled?(data.translation_error?'Translation unavailable':'Translating…'):'Translation disabled');
+        english.classList.toggle('pending',!translations[index]);
+        li.append(source,english);return li;
+      }));
+      translationStatus.dataset.state=data.translation_error?'error':'ready';
+      translationStatus.textContent=data.translation_error?('English translation: '+data.translation_error):
+        !data.translation_enabled?'English translation disabled':
+        data.texts.length&&data.texts.some((text,index)=>!translations[index])?'Offline English translation in progress…':'Offline English translation enabled';
       document.getElementById('empty').hidden=data.texts.length>0;
       if(data.state==='live')connect();else{disconnect();placeholder.textContent=paused?'View paused':data.state==='error'?'Camera unavailable':'Waiting for the camera…'}
-    }catch(error){badge.textContent='Disconnected';badge.dataset.state='error';message.textContent='Cannot reach the server. Retrying…';disconnect()}
+    }catch(error){badge.textContent='Disconnected';badge.dataset.state='error';message.textContent='Cannot reach the server. Retrying…';translationStatus.textContent='';disconnect()}
     setTimeout(poll,1000);
   }
   poll();

@@ -24,6 +24,7 @@ bash scripts/stream_csi_camera.sh
 Terminal 2 — build and start OCR:
 
 ```bash
+python3 scripts/download_translation_model.py
 docker compose -f docker-compose.yml up -d --build --force-recreate
 docker compose -f docker-compose.yml logs -f
 ```
@@ -54,6 +55,42 @@ Optional settings:
 The image uses the supplied **JetPack 6 / L4T r36.4.0 / Python 3.10** base and
 GPU ONNX Runtime wheel. Camera capture on the host avoids plugin mismatches;
 it does not establish GPU compatibility with JetPack 7 / CUDA 13.
+
+## Offline English translation
+
+English appears below each Assamese result and on the annotated video once
+available. Translation runs in a background worker and caches repeated text,
+so model inference does not block the camera worker. Missing weights or a
+translation failure appear separately from camera errors.
+
+The default model is a public MIT-licensed INT8 ONNX export of IndicTrans2's
+200M Indic-to-English model. The required files total about 262 MB (the full
+repository is about 270 MB). They are downloaded once to
+`models/translation/indictrans2-int8`, verified against a pinned revision, and
+mounted read-only. Translation thereafter loads only local files and sends no
+text online. ONNX INT8 translation uses CPU with two threads; OCR still uses
+CUDA. RAM usage exceeds the download size, and Jetson throughput is unverified.
+This is intended for short text regions, with a 64-token output limit.
+
+```bash
+# One-time download; internet is needed only for setup, not translation.
+python3 scripts/download_translation_model.py
+```
+
+Native smoke test (after installing requirements):
+
+```bash
+python offline_translation.py 'মোৰ নাম ৰাহুল।'
+```
+
+Set `ENABLE_TRANSLATION=0` in `.env` or pass `--no-translate` to the native web
+viewer to disable translation. There is no automatic model download at runtime.
+The model uses Assamese normalization and script conversion before tokenization;
+the narrow Assamese preprocessing adapter does not claim full toolkit parity.
+OCR mistakes, model limitations, and INT8 quantization can affect English output.
+
+Sources: [ONNX model and files](https://huggingface.co/hari31416/indictrans2-indic-en-dist-200M-ONNX-int8/tree/main),
+[AI4Bharat IndicTrans2](https://github.com/AI4Bharat/IndicTrans2).
 
 ## Verify inference
 

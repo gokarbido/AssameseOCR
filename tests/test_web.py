@@ -8,6 +8,7 @@ import numpy as np
 import cv2
 
 from web_app import LiveFeed, create_app
+from app import LiveTextDetectionApp
 
 
 class WebTests(unittest.TestCase):
@@ -40,6 +41,33 @@ class WebTests(unittest.TestCase):
         self.assertEqual(self.client.get('/api/status').json['texts'], [])
         self.feed.error = 'Camera disconnected'
         self.assertEqual(self.client.get('/api/status').json['state'], 'error')
+
+    def test_english_results_and_translation_errors_do_not_change_camera_health(self):
+        self.publish()
+        self.feed.translation.enabled = True
+        self.feed.translation.cache['অসমীয়া'] = 'Assamese'
+        state = self.client.get('/api/status').json
+        self.assertEqual(state['translations'], ['Assamese'])
+        self.assertTrue(state['translation_enabled'])
+        self.feed.translation.cache.clear()
+        self.feed.translation.error = 'Offline model missing'
+        self.feed.translation.failures['অসমীয়া'] = (time.monotonic() + 30, 'Offline model missing')
+        state = self.client.get('/api/status').json
+        self.assertEqual(state['translation_error'], 'Offline model missing')
+        self.assertIsNone(state['error'])
+        self.assertEqual(self.client.get('/healthz').status_code, 200)
+
+    def test_cached_english_overlay_never_calls_online_translator(self):
+        pipeline = LiveTextDetectionApp.__new__(LiveTextDetectionApp)
+        pipeline.frame_counter = 4
+        pipeline.draw_text = Mock(side_effect=lambda frame, *args, **kwargs: frame)
+        pipeline.translate_text = Mock(side_effect=AssertionError('Online translation must not be used'))
+        frame = np.zeros((120, 160, 3), dtype=np.uint8)
+        pipeline.draw_detections(frame, np.array([[10, 60, 100, 100]]), np.array([0.9]),
+                                 ['অসমীয়া'], ['Assamese'])
+        pipeline.translate_text.assert_not_called()
+        self.assertEqual(pipeline.draw_text.call_args.args[1], 'Assamese')
+        self.assertEqual(pipeline.draw_text.call_args.kwargs['lang'], 'en')
 
     def test_viewers_share_frame_without_consuming_it(self):
         self.publish()

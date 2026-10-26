@@ -44,7 +44,7 @@ RUN set -eux; \
     python -m pip install "${ONNXRUNTIME_WHEEL_URL}"; \
     python -m pip check
 
-COPY app.py detector.py inference_runtime.py web_app.py jpeg_stream.py config.yaml det_asm.onnx model.onnx ./
+COPY app.py detector.py inference_runtime.py web_app.py jpeg_stream.py translation_service.py offline_translation.py config.yaml det_asm.onnx model.onnx ./
 COPY templates ./templates
 
 # Actual GPU inference is checked at runtime, when the GPU is available.

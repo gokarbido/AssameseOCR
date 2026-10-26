@@ -3,3 +3,4 @@ __pycache__/
 .venv/
 captured_frame_*.jpg
 debug_frame_*.jpg
+models/translation/

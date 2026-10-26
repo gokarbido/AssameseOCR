@@ -6,3 +6,6 @@ Pillow>=10.4,<13
 opencv-python==4.10.0.84
 Flask>=3.1,<4
 waitress>=3.0.2,<4
+tokenizers>=0.21,<0.23
+indic-nlp-library-itt==0.1.1
+sacremoses==0.1.1

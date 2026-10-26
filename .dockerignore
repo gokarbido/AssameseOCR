@@ -5,3 +5,4 @@ __pycache__
 *.py[cod]
 captured_frame_*.jpg
 debug_frame_*.jpg
+models/translation/

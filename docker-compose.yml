@@ -13,9 +13,13 @@ services:
     runtime: nvidia
     # Reach the host sender on loopback. The web viewer also listens on host :8000.
     network_mode: host
+    volumes:
+      - ./models/translation:/opt/translation-models:ro
     environment:
       CAMERA_GSTREAMER: "0"
       CAMERA_SOURCE: tcpjpeg://127.0.0.1:${CAMERA_STREAM_PORT:-8554}
+      ENABLE_TRANSLATION: ${ENABLE_TRANSLATION:-1}
+      TRANSLATION_MODEL_DIR: /opt/translation-models/indictrans2-int8
     command: ["python", "web_app.py", "--port", "${WEB_PORT:-8000}"]
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:${WEB_PORT:-8000}/healthz', timeout=3)"]

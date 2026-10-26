@@ -12,12 +12,15 @@ services:
     ports:
       - "${WEB_PORT:-8000}:8000"
     volumes:
+      - ./models/translation:/opt/translation-models:ro
       - type: bind
         source: /tmp/argus_socket
         target: /tmp/argus_socket
         bind:
           create_host_path: false
     environment:
+      ENABLE_TRANSLATION: ${ENABLE_TRANSLATION:-1}
+      TRANSLATION_MODEL_DIR: /opt/translation-models/indictrans2-int8
       CAMERA_GSTREAMER: ${CAMERA_GSTREAMER:-1}
       CAMERA_SOURCE: >-
         ${CAMERA_SOURCE:-nvarguscamerasrc sensor-id=0 !
