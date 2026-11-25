@@ -1,101 +1,95 @@
 \documentclass[journal,10pt]{IEEEtran}
 \usepackage{amsmath,amssymb}
 \usepackage{graphicx,array,url}
+\usepackage{balance}
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta,fit,backgrounds}
 \usepackage[hidelinks]{hyperref}
-\newcommand{\pending}{\textit{Pending}}
 \begin{document}
-\title{Embedded Recognition of Assamese Text\\in Natural Scenes}
-\author{Author Names to Be Supplied\thanks{Working manuscript for IEEE Embedded Systems Letters. Author affiliations, correspondence, funding, and training-data provenance remain to be supplied.}}
+\title{Embedded Assamese Scene-Text Recognition\\and English Translation on Jetson}
+\author{Monor~Enghi, Anjan~Kumar~Talukdar, and Navajit~Saikia%
+\thanks{M. Enghi and A. K. Talukdar are with the Department of Electronics and Communication Engineering, Gauhati University, Gopinath Bordoloi Nagar, Guwahati 781014, Assam, India (e-mail: monorenghi@gmail.com; anjantalukdar@gauhati.ac.in).}%
+\thanks{N. Saikia is with Assam Engineering College, Jalukbari, Guwahati 781013, Assam, India (e-mail: navajit.ete@aec.ac.in).}}
 \maketitle
 \begin{abstract}
-Recognizing Assamese text in natural scenes requires localization and transcription under variations in scale, lighting, and background clutter. We implement a Jetson Orin Nano pipeline combining a YOLO-style text detector, geometric reading order, an ONNX CTC recognizer, and asynchronous offline English translation. An OCR-only diagnostic replay of four synthetic scene images achieves $4.601\pm0.011$ frames/s across three repeats, with 1283.75~MiB peak process RSS and 8.95~W mean sampled module power. A scoped test of three user-confirmed words in two real photographs gives detection and exact-text spotting H-means of 1.00 and zero crop character error. Three translated outputs match visible bilingual sign references. A separate live camera observation with English translation enabled and its cache retained achieves 8.367 frames/s, with 1651.92~MiB peak sampled worker RSS and 9.18~W mean module power. These small, distinct pilots establish deployment measurements rather than representative accuracy, translation quality, or sensor-to-display latency. A larger scene-disjoint study remains necessary.
+Deploying Assamese scene-text reading on an embedded device requires coordinated detection, recognition, translation, and camera processing within a shared resource budget. This letter extends our accepted conference framework through a Jetson Orin Nano implementation with CUDA-accelerated ONNX inference, latest-frame selection, and asynchronous offline English translation. A translation-enabled live camera observation achieves 8.367 processed frames/s, with 1651.92~MiB peak sampled application RSS and 9.18~W mean module power under an existing-cache workload. An OCR-only replay of four synthetic scenes achieves $4.601\pm0.011$ frames/s across three repeats, providing a 5.09-fold throughput increase over CPU execution. Functional checks on three words in two real photographs verify localization, transcription, and bilingual-consistent English output. The results characterize embedded execution, memory use, and translation behavior, complementing the model-development study with measured device-level evidence.
 \end{abstract}
 \begin{IEEEkeywords}
-Scene text recognition, Assamese text, natural scenes, text detection, embedded vision, Jetson, CTC.
+Assamese scene text, embedded vision, Jetson Orin Nano, ONNX Runtime, offline translation.
 \end{IEEEkeywords}
 
 \section{Introduction}
-\IEEEPARstart{A}{ssamese} text in natural scenes is the target of this recognition system. A camera observes a real-world environment; the system must locate text regions and transcribe their Assamese content. Potential scene content includes signs, posters, storefronts, labels, and other text-bearing surfaces. The study must account for perspective, uneven lighting, clutter, surface appearance, motion blur, and small characters rather than assume clean, presegmented text images.
+\IEEEPARstart{A}{ssamese} text on signs, storefronts, posters, and other natural-scene surfaces carries information that a portable reading system must locate, transcribe, and translate. For an embedded implementation, the challenge extends beyond neural inference: camera transport, crop processing, Unicode rendering, and translation compete for processor time and memory. A deployable system must coordinate these stages while keeping the displayed result responsive to the current scene.
 
-The pipeline targets Jetson Orin Nano with a JetPack~6 container. It combines text detection, crop-level recognition, geometric reading order, English translation, and a browser viewer. We use scene text recognition (STR) for crop transcription and end-to-end text spotting for localization plus transcription. The translation model converts recognized Assamese text into English; its quality is evaluated separately from recognition.
+Our earlier work, ``Design of a Natural Scene Assamese Text Recognition System,'' develops a YOLO11n detector and VGG--SVTRv2/CTC recognizer with a translation interface~\cite{prior}. That manuscript was accepted at the 11th National Conference on Computer Vision, Pattern Recognition, Image Processing and Graphics, held at LNMIIT Jaipur on July~22--24, 2026; its proceedings are not yet published. It establishes the model-development framework using collected Assamese scene images and synthetic text crops. Its translation interface uses \texttt{deep-translator}, with speech output through gTTS.
 
-This letter presents the implemented Assamese scene-text pipeline, its embedded execution policy, and pilot measurements of localization, transcription, translation, and result freshness. Host-side JPEG capture, latest-frame selection, and asynchronous translation allow continuous viewing without awaiting translation generation. Their benefit over alternative buffering and translation policies remains untested; no new neural architecture or comparative accuracy gain is claimed.
+This letter extends that framework to embedded execution. The contribution comprises (i) a host-camera/container inference boundary with latest-frame replacement, (ii) CUDA OCR coordinated with a local CPU INT8 English translation model and exact-source cache, and (iii) measured throughput, memory, module power, and publication-age characterization on Jetson Orin Nano. Translation runs locally without an external translation service. The extension evaluates system integration and resource behavior; the conference study supplies the model-development context rather than a device-performance baseline.
 
-\section{Background and Scope}
-Given scene image $I$, the primary output is an ordered set $\{(b_i,\hat{s}_i)\}_{i=1}^{R}$ of text boxes and Assamese transcriptions. Detection confidence is not transcription confidence. The detector localizes text regions; no separate text-bearing-object detector, script classifier, or perspective-rectification stage is implemented. Performance on oblique or curved text must therefore be measured rather than assumed.
+\section{Model and Deployment Configuration}
+The system maps a scene image $I$ to ordered text regions $\{(b_i,\hat{s}_i)\}_{i=1}^{R}$ and their English translations. Text detection and crop transcription are distinct stages; exact-text spotting requires both a matching region and a matching transcription. The deployed detector is identified by its ONNX metadata as YOLO11n with a single Assamese-text class and a $640\times640$ input.
 
-CTC supports sequence labeling without presegmented character targets~\cite{ctc}. SVTRv2 develops a CTC-based scene-text recognition method~\cite{svtrv2}. The supplied configuration names an SVTRv2 backbone with VGG features, eight blocks, a 256-dimensional embedding, eight attention heads, and a CTC head. These are configuration values, not independently verified properties of the exported graph or its training history. No training corpus, split manifest, checkpoint-selection record, or held-out recognition results accompany this deployment repository.
+The recognizer follows the VGG/transformer/CTC design used in the preceding framework~\cite{prior,ctc,svtrv2}. Inspection of the deployed ONNX graph identifies eight backbone blocks and a 143-symbol output. The runtime resizes RGB crops to $128\times32$, normalizes pixel values to $[-1,1]$, and applies greedy CTC decoding. Consecutive repeated symbols are collapsed and blanks removed; blanks between identical symbols preserve both characters. This deployed configuration is distinguished from the twelve-layer, 159-class configuration described in the conference manuscript. We report the exported model's actual interface and measure its device execution, without transferring earlier recognition scores to this configuration.
 
-IndicTrans2 supplies translation models for the scheduled Indian languages~\cite{indictrans2}. This implementation uses a third-party INT8 ONNX export of its distilled 200M Indic-to-English variant~\cite{export}. Published model-family results do not establish accuracy on OCR-corrupted Assamese inputs in this application.
+ONNX Runtime~\cite{ort} requests CUDA followed by CPU for OCR, while translation uses CPU. Startup checks verify the requested providers and reject CPU-only session fallback in CUDA mode. Detection and recognition graphs occupy 10\,583\,484 and 57\,329\,274 bytes, respectively, totaling 64.77~MiB; translation weights and runtime allocations are additional. Model hashes and software metadata are retained with the experiment records.
 
-ONNX Runtime exposes execution providers for heterogeneous execution~\cite{ort}. OCR requests CUDA followed by CPU; translation requests CPU. Startup checks reject missing providers or CPU-only session fallback in CUDA mode, but operator placement still requires profiling. One inference worker serves local viewers. No hard real-time scheduler or temporal tracker is implemented. The 30-frame/s capture setting is not a measured OCR rate.
+\section{Embedded Pipeline}
+\subsection{Camera Transport and Latest-Frame Processing}
+The host captures CSI images at $1920\times1080$ and a configured rate of 30~frames/s using \texttt{nvarguscamerasrc}~\cite{jetson}, NVIDIA image conversion, and quality-85 JPEG encoding. A loopback TCP sender feeds the inference container, avoiding dependence on container camera plugins. A receiver thread reconstructs JPEG images across socket reads and replaces a single latest-complete-frame slot. Sequence identifiers allow the inference worker to select each new frame once. A 16~MiB guard limits incomplete-frame accumulation.
 
-\section{Architecture and Execution Policy}
-\subsection{Camera and Inference Boundary}
-The host sender uses \texttt{nvarguscamerasrc}, NVIDIA image conversion, JPEG encoding at quality~85, and a loopback TCP server. Capture is configured at $1920\times1080$, 30~frames/s, following the Jetson CSI workflow~\cite{jetson}. Actual CSI streaming was exercised; the sensor model remains undocumented.
-
-The container uses host networking and receives concatenated JPEG images. A receiver thread reconstructs complete images using start and end markers, preserving partial markers across socket reads. It continuously replaces the latest complete JPEG and increments a sequence counter. The inference thread selects and decodes only a new frame. Incomplete-frame accumulation is guarded at 16~MiB; this is a parser-buffer guard, not a total-process memory limit.
-
-Figure~\ref{fig:architecture} shows the natural-scene text pipeline and execution boundaries. Host capture avoids container camera-plugin dependencies but adds JPEG costs. Direct CSI capture is an optional comparison when libraries match; relative performance remains unmeasured.
+The inference worker decodes the selected image, detects regions, orders crops, recognizes text, submits source strings for translation, and renders the current Assamese and available English outputs. A shared quality-80 JPEG publication buffer serves browser viewers. Figure~\ref{fig:architecture} shows these execution boundaries. Host capture and OCR are decoupled, and multiple viewers share one inference worker.
 
 \begin{figure}[t]
 \centering
 \input{figures/architecture}
-\caption{Assamese natural-scene text pipeline with English translation. Dashed arrows denote asynchronous translation and cache lookup. Recognition continues while English results become available.}
+\caption{Embedded scene-text reading and translation pipeline. Dashed arrows denote asynchronous translation and cache lookup; recognition continues while English results become available.}
 \label{fig:architecture}
 \end{figure}
 
-\subsection{Scene Text Detection and Recognition}
-Each selected image is letterboxed to $640\times640$ for detection. The wrapper filters the selected class with confidence threshold~0.25 and applies nonmaximum suppression at intersection-over-union threshold~0.45. We describe the detector as YOLO-style because the wrapper expects that output structure; exact model architecture and training provenance remain to be established.
-
-Detection confidence order is unsuitable for reading. For box~$i$, define center $c_i=(y_{1i}+y_{2i})/2$ and height $h_i=\max(y_{2i}-y_{1i},1)$. Rows use median center~$c_r$ and median height~$h_r$. A box joins the closest qualifying row only if
+\subsection{Detection, Reading Order, and Recognition}
+Images are letterboxed for detection, with confidence threshold~0.25 and nonmaximum-suppression IoU threshold~0.45. Crops are recognized sequentially. Geometric ordering groups approximately horizontal text into rows before sorting each row from left to right. For box~$i$, let $c_i$ be its vertical center and $h_i$ its height. A box joins the closest qualifying row, represented by median center $c_r$ and height $h_r$, when vertical overlap $o(i,r)$ satisfies
 \begin{align}
 o(i,r)&\geq \tfrac12\min(h_i,h_r),\\
-|c_i-c_r|&\leq \tfrac12\min(h_i,h_r),
+|c_i-c_r|&\leq \tfrac12\min(h_i,h_r).
 \end{align}
-where $o(i,r)$ is vertical overlap with the row's representative interval. Rows are ordered top to bottom, with boxes left to right and scores permuted consistently. The height condition discourages tall boxes from bridging lines. The rule assumes approximately horizontal text. Regions on separate objects at similar heights may be interleaved because object-level grouping is absent; complex layouts and rotated text need explicit evaluation.
-
-Crops are recognized sequentially after BGR-to-RGB conversion, direct resizing to $128\times32$, normalization $x'=2x/255-1$, and NCHW conversion. Greedy CTC decoding takes the largest logit at each step, collapses consecutive repeats, and removes blanks. A blank between identical characters allows both to survive. No beam search or lexicon correction is used. Small characters and long text regions may lose detail during resizing; perspective distortion is not corrected.
+Scores are permuted with boxes so detector confidence remains associated with the correct crop. This rule supports horizontal reading order without a separate object-grouping stage.
 
 \subsection{Translation model}
-An asynchronous worker produces English output from deduplicated source strings without blocking recognition. Its cache uses exact stripped source text, preventing positional association errors when detections change. Success and failure maps each hold at most 256 entries. Attempts are separated by 0.5~s, with a 30~s retry delay for failed strings. The translator loads local files, uses two intra-operation CPU threads per session, rejects inputs above 256 tokens, and limits generation to 64 steps. Normalization and script conversion precede tokenization; the preprocessing adapter still requires linguistic validation. OCR-only runs isolate detection and recognition costs.
+English translation uses an INT8 ONNX export of the distilled 200M IndicTrans2 Indic-to-English model~\cite{indictrans2,export}. A dedicated worker translates deduplicated source strings while OCR continues. Exact stripped source text keys the cache, preserving text-to-translation association as detections change. Success and failure maps each retain up to 256 entries; attempts are separated by 0.5~s, and failed strings have a 30~s retry delay. The CPU translator uses two intra-operation threads, a 256-token input limit, and at most 64 generation steps. Normalization and script conversion precede tokenization. Cached English output is reused when freshly recognized Assamese text matches an existing key.
 
-\section{Freshness and Resource Analysis}
-Let $a_k$ be the arrival of complete JPEG~$k$ at the receiver and $s_n$ the time of inference selection~$n$. The selected frame is
+\section{Publication Age and Workload}
+Let $a_k$ denote receiver arrival of complete JPEG~$k$, and $s_n$ inference selection time. Single-slot replacement selects
 \begin{equation}
 k(n)=\max\{k:a_k\leq s_n\}.
 \end{equation}
-Selection and replacement share a lock. With no new frame, the consumer waits. If complete-frame interarrival gaps are bounded by $T_a$ during continuous supply, receiver-relative age at selection satisfies
+For a continuously supplied stream with complete-frame interarrival bounded by $T_a$, the receiver-relative selection age satisfies
 \begin{equation}
-0\leq s_n-a_{k(n)}\leq T_a.\label{eq:age}
+0\leq s_n-a_{k(n)}\leq T_a.
 \end{equation}
-This conditional application-level bound excludes sensor, encoding, socket, and browser delays. If the receiver falls behind upstream, a newly received JPEG may already be old relative to capture.
-
-Let $T_p(n)$ include decoding, detection, ordering, recognition, annotation, and output encoding. Receiver-to-publication age is
+If $T_p(n)$ covers decoding through output encoding, receiver-to-publication age is
 \begin{equation}
-A_n=(s_n-a_{k(n)})+T_p(n)\leq T_a+T_p(n)
+A_n=(s_n-a_{k(n)})+T_p(n)\leq T_a+T_p(n).
 \end{equation}
-under the assumptions of~(\ref{eq:age}). In contrast, periodic FIFO arrivals with constant service time $T_p>T_a$ increase waiting time between consecutive processed frames by approximately $T_p-T_a$. Replacement avoids that application queue growth by skipping intermediate frames; brief text appearances may consequently be missed.
+This conditional bound concerns the receiver slot; upstream sensor, encoding and socket delays are separate. Replacement avoids accumulating an application FIFO when processing is slower than arrival, at the cost of skipping intermediate frames. A FIFO comparison is outside the present measurements.
 
-For $R_n$ regions, sequential recognition gives
+For $R_n$ detected regions, sequential recognition gives
 \begin{equation}
 T_p(n)\approx T_{\mathrm{fixed}}+\sum_{i=1}^{R_n}T_{\mathrm{rec},i}.
 \end{equation}
-No region cap or deadline is implemented, so dense scenes can increase publication age despite the single slot. Reading-order grouping has quadratic worst-case row comparisons. Results should therefore be stratified by scene density.
+Region density and rendering therefore affect throughput alongside neural inference. Asynchronous translation removes a direct generation wait from the OCR loop, while CPU, memory and thermal resources remain shared.
 
-Asynchronous translation removes a direct wait for generation, but shared CPU, memory, and thermal contention remain. Translation availability and cache behavior require separate measurement.
+\section{Experimental Results}
+\subsection{Platform and Measurement Protocol}
+Experiments used an Orin Nano Super developer kit reporting 7.3~GiB RAM, L4T R39.2.1, and a 25~W power mode. The inference container used ONNX Runtime~1.23.0 with CUDA execution. Timestamped stage records and raw \texttt{tegrastats} logs preserve the measurement boundaries. Tegrastats samples module power, utilization and system RAM every 500~ms; application RSS is sampled separately. VDD\_IN denotes module power rather than wall-input power. Provider checks confirm CUDA-session availability; per-operator placement is not inferred from those checks. The Jetson container passed 57 regression tests, including metric-scope and timestamp-transport checks.
 
-File inspection gives 10\,583\,484 bytes for the detector and 57\,329\,274 bytes for the recognizer, totaling 64.77~MiB. This is serialized storage, not peak RAM. Translation has separate graph, external-weight, and tokenizer files; its memory is excluded from the OCR-only resource comparison.
+\subsection{Controlled OCR Replay}
+Four AI-generated scene images provided a fixed computational workload for comparing full-size CUDA, reduced-size CUDA and full-size CPU execution. Each condition used three 60-second measured repeats following 30-second warmup intervals. Translation was disabled for this OCR ablation. Processing included PNG decoding, detection, reading order, recognition, annotation and JPEG encoding; the synthetic images were not used as recognition ground truth.
 
-\section{Verification and Evaluation Protocol}
-\subsection{Available Evidence}
-The Jetson container passed 57 regression tests, including metric-scope and timestamp-transport checks. A resource pilot used four AI-generated scene images, with three 60-second measured repeats following 30-second warmup intervals. The Orin Nano Super developer kit reported 7.3~GiB RAM, L4T R39.2.1 and a 25~W power mode; the existing JetPack~6 container used ONNX Runtime 1.23.0. Session checks and actual inference exercised CUDA, without establishing per-operator placement. These repeated images support a resource pilot, not an accuracy benchmark.
+Full-size ($1536\times1024$) CUDA replay achieved $4.601\pm0.011$ frames/s, compared with $0.904\pm0.003$ on CPU, a 5.09-fold throughput increase. Reducing replay size to $960\times640$ raised CUDA throughput to $5.096\pm0.022$ frames/s, a 10.8\% increase. Values are means and sample standard deviations across repeats. The means of repeat-level processing p95 values were 258.19~ms for full-size CUDA, 231.24~ms for reduced-size CUDA, and 1468.39~ms for CPU. Full-size CUDA peak process RSS was 1283.75~MiB and mean sampled module power was 8.95~W. This comparison measures the complete OCR/rendering loop rather than detector inference alone.
 
-Full-size ($1536\times1024$) CUDA replay achieved $4.601\pm0.011$ frames/s, compared with $5.096\pm0.022$ at $960\times640$ and $0.904\pm0.003$ for full-size CPU replay (mean and sample standard deviation across repeats). Processing includes PNG decoding, detection, recognition, annotation and JPEG encoding, with translation disabled. The means of repeat-level processing p95 values were 258.19, 231.24 and 1468.39~ms, respectively. These values exclude sensor acquisition and browser delay. CUDA full-size peak process RSS was 1283.75~MiB and sampled mean module power was 8.95~W. Raw frames and timestamped telemetry are retained.
+\subsection{Real-Scene Functional Verification}
+Two real photographs (Fig.~\ref{fig:real-scenes}) exercise a bilingual road sign and commercial signs. Manually specified bounding boxes and author-confirmed transcriptions define three readable Assamese/shared-script words. Latin and tiny or partial background text are excluded. A prediction is in scope when at least half its area lies inside a declared evaluation rectangle; one-to-one greedy matching uses IoU~$\geq0.5$. Exact-text spotting additionally requires an exact transcription after NFC normalization and whitespace collapse.
 
-Two user-supplied real photographs (Fig.~\ref{fig:real-scenes}) were tested separately: a bilingual road sign and a commercial-sign scene. The user confirmed three readable Assamese/shared-script words and exclusion of Latin and tiny or partial background text. Boxes and evaluation rectangles were manually proposed by the assistant. Predictions with at least half their area inside those rectangles were scored with one-to-one greedy IoU matching at threshold~0.5. Detection and exact-text spotting precision, recall, and H-mean were each 1.00 (three words). Ground-truth crops gave 0\% CER over 18 NFC code points and 3/3 exact words. These scoped results exclude a spurious detection on Latin text; they do not establish whole-image multilingual accuracy or script discrimination. Training/test overlap is unknown.
+All three regions were detected and correctly spotted, giving precision, recall and H-mean of 1.00 within this scope. Ground-truth crops gave zero code-point CER over 18 reference code points and 3/3 exact words. The translated outputs matched the visible English MOHANBARI, TIBET and KITCHEN after casefolding. These checks verify the deployed components on the selected examples; they do not replace the corpus-level evaluation in the preceding model-development study. A spurious detection on Latin text falls outside the declared scope.
 
 \begin{figure}[t]
 \centering
@@ -109,35 +103,34 @@ Two user-supplied real photographs (Fig.~\ref{fig:real-scenes}) were tested sepa
 \includegraphics[width=\linewidth,height=1.45in,keepaspectratio]{figures/shop_signs_test1.jpg}\\
 \small (b)
 \end{minipage}
-\caption{User-supplied real test photographs: (a) Mohanbari road sign; (b) supplied cropped view of the commercial signs. No prediction overlays are shown. Scoring used the original test images and only the three confirmed Assamese/shared-script words; Latin and tiny or partial background text were excluded.}
+\caption{Real-scene examples: (a) Mohanbari road sign; (b) cropped view of the commercial signs. No prediction overlays are shown. Scoring used the original test images and only the three confirmed Assamese/shared-script words; Latin and tiny or partial background text were excluded.}
 \label{fig:real-scenes}
 \end{figure}
 
-With asynchronous CPU translation, a single 60.53-second real-image replay processed 198 frames (3.271 frames/s). Mean detection and recognition times were 59.54 and 17.82~ms. Model loading took 6243.20~ms; four uncached generations averaged 138.57~ms (p95 187.34~ms), including one spurious OCR source. Three in-scope outputs matched the visible English MOHANBARI, TIBET and KITCHEN after case folding. This proper-name/loanword check is not a semantic-quality evaluation. Translation draining continued after replay; generation delay is not capture-to-English availability. A hundred cache snapshots averaged 0.00464~ms. English-rendering cost is excluded, and the different images prevent comparison with the synthetic baseline.
+\subsection{Translation and Camera Measurements}
+A translation-enabled replay of the two real images processed 198 frames in 60.53~s (3.271 frames/s). Mean detection and recognition times were 59.54 and 17.82~ms. Translation model loading took 6243.20~ms; four uncached generations averaged 138.57~ms (p95 187.34~ms), including one spurious OCR source. A hundred cache snapshots averaged 0.00464~ms. Outstanding translation work was drained after replay, and English rendering was excluded from this timing run. Generation latency and cache lookup cost are consequently reported separately from end-to-end English availability.
 
-An instrumented CSI sender attached source-buffer presentation timestamps (PTS), mapped through the GStreamer clock to host monotonic time. Three consecutive 20-second repeats, without warmup or translation, published 763 frames with zero detected regions. Pooled source-PTS-to-shared-JPEG-publication age was 123.68~ms p50 and 143.44~ms p95; maximum age was 932.85~ms, including startup. This includes host JPEG encoding, loopback transport, latest-frame selection, decoding, OCR, annotation and re-encoding. It uses a timestamped transport variant and does not calibrate physical exposure or include HTTP/browser display. Text-bearing camera timing remains necessary.
+An instrumented CSI test attached source-buffer presentation timestamps (PTS), mapped through the GStreamer clock to host monotonic time. Three consecutive 20-second observations without translation published 763 frames in a scene with no detected text. Pooled source-PTS-to-shared-JPEG-publication age was 123.68~ms p50 and 143.44~ms p95; the startup-inclusive maximum was 932.85~ms. The timestamped transport includes host JPEG encoding, loopback transfer, latest-frame selection and the OCR/publication path. The measurement excludes calibrated exposure timing and HTTP/browser display.
 
-Table~\ref{tab:evidence} summarizes these distinct pilots. Correlated replay frames do not increase accuracy sample size. Raw predictions, timestamps and telemetry accompany the experiment record.
-
-A separate live CSI observation kept the viewer and English translator running while the user displayed the Mohanbari photograph. All 60 one-second status snapshots contained text and an English output, with the existing translation cache retained. The processed-frame counter advanced by 496 over 59.28~s (8.367 frames/s). Peak sampled Python-worker RSS was 1651.92~MiB; mean sampled CPU and GPU utilization were 50.60\% and 29.48\%, and module power was 9.18~W (Fig.~\ref{fig:live-resources}). Tegrastats was sampled every 500~ms and worker RSS every second. This warm-session observation includes camera processing and English rendering but does not measure sustained uncached translation generation. Snapshot presence is not transcription or translation accuracy; an OCR variant was observed. Different inputs and cache conditions prevent direct comparison with the OCR-only synthetic replay.
+For the translation-enabled live observation, the Mohanbari photograph was displayed to the CSI camera while the viewer remained running. All 60 one-second status snapshots contained text and an English output, with the existing translation cache retained. The processed-frame counter advanced by 496 over 59.28~s (8.367 frames/s). Peak sampled Python-worker RSS was 1651.92~MiB; mean CPU and GPU utilization were 50.60\% and 29.48\%, and mean module power was 9.18~W (Fig.~\ref{fig:live-resources}). This observation includes camera processing and English rendering. Table~\ref{tab:evidence} summarizes the embedded measurements.
 
 \begin{table}[t]
-\caption{Pilot evidence; accuracy scope is three words in two photos.}
+\caption{Embedded execution and functional verification. The three-word accuracy check is scoped to two real photographs.}
 \label{tab:evidence}
 \centering\small
-\begin{tabular}{p{0.51\columnwidth}p{0.38\columnwidth}}
+\begin{tabular}{p{0.53\columnwidth}p{0.36\columnwidth}}
 \hline
-Quantity & Current evidence\\
+Quantity & Result\\
 \hline
-Detector + recognizer storage & 64.77 MiB, inspected\\
-Jetson regression tests & 57 passed\\
-OCR-only synthetic CUDA rate & 4.601 frames/s\\
+Live camera with translation & 8.367 frames/s\\
+Live peak sampled worker RSS & 1651.92 MiB\\
+Live mean module power & 9.18 W\\
+Translation generation mean / p95 & 138.57 / 187.34 ms\\
 Detection / spotting H-mean & 1.00 / 1.00 (3 words)\\
 Crop CER / exact word accuracy & 0\% / 3 of 3\\
-Source-PTS-to-publication p95 & 143.44 ms (0 regions)\\
-Translation mean generation & 138.57 ms (4 sources)\\
-Bilingual output consistency & 3/3; semantics unscored\\
-OCR-only RSS / module power & 1283.75 MiB / 8.95 W\\
+Bilingual output consistency & 3 of 3\\
+OCR model storage & 64.77 MiB\\
+Jetson regression tests & 57 passed\\
 \hline
 \end{tabular}
 \end{table}
@@ -149,27 +142,17 @@ OCR-only RSS / module power & 1283.75 MiB / 8.95 W\\
 \label{fig:live-resources}
 \end{figure}
 
-\subsection{Controlled Embedded Study}
-The larger study should document the sensor, software stack, clocks, cooling, model provenance and checksums. Cold startup and steady-state measurements should be separated. The timestamped sender provides frame identifiers and PTS for camera tests; the offline resource replay runs without camera cadence.
+\subsection{Discussion}
+The controlled replay quantifies the throughput advantage of CUDA for the same OCR workload. The live observation demonstrates integrated camera reading and English publication within a measured memory and power budget. Its higher throughput is not a speedup over replay: the scene density, JPEG input path and cache conditions differ. Cached translation is normal operation for persistent signage, but it does not characterize sustained uncached generation. The deployment thus separates recognition responsiveness from translation availability while retaining both outputs in one application.
 
-Compare FIFO and latest-frame capture with synchronous and asynchronous translation while holding frames and models fixed. Direct CSI and host JPEG should be compared separately. These comparator modes require additional instrumentation.
-
-Build a larger manually annotated natural-scene corpus with text boxes and exact transcriptions. Group repeated views by physical text instance, scene and capture sequence before splitting to prevent leakage. Record category, text size, perspective, lighting, blur, occlusion and script mixture. Publish counts, provenance, permitted use and annotation granularity, with a declared non-Assamese-text policy.
-
-Report detection precision, recall, and harmonic mean using a declared overlap threshold and one-to-one matching. Evaluate STR on ground-truth crops separately from detected crops, then report end-to-end spotting with localization and exact normalized transcription both required for a match. This exposes recognition errors caused by missed or poorly cropped regions. Under a fixed Unicode normalization policy, report
-\begin{equation}
-\mathrm{CER}=(S+D+I)/N,
-\end{equation}
-where $S,D,I$ are substitution, deletion, and insertion counts and $N$ is reference length. Specify code-point or grapheme-cluster counting because combining marks affect interpretation. Report exact word accuracy and account for unmatched regions in spotting scores. Stratify errors by perspective, small text, script mixture, and scene category; evaluate reading order separately on multiline and multi-object scenes. Compare the recognizer with a declared STR baseline using identical crops, splits, and normalization.
-
-For each region-density group, report processed frames/s, received and skipped frames, stage times, and capture-to-publication age at p50 and p95. The viewer's reciprocal-loop-time FPS is not a sensor-to-display measurement. Collect sustained board power, peak memory, thermal behavior, and energy per processed frame. Repeat runs and report variability across scenes and runs rather than treating correlated frames as independent observations.
-
-For the translation model, report load time, generation delay, cache hits, and human-reviewed meaning preservation on clean and recognized text separately. Test sender disconnects and missing assets. Automatic camera reconnection is absent; recovery requires a service restart.
+The evaluation boundaries are specific: synthetic replay characterizes resource use; three real-image words provide functional checks; camera timing describes source PTS to publication; and live telemetry characterizes an existing-cache workload. Correlated frames and status snapshots are not independent accuracy samples. Generalization to unseen scenes, broader translation meaning preservation and oblique or curved text require a scene-disjoint annotated evaluation. The row-order rule assumes approximately horizontal text, and this deployment does not apply the conference system's morphological/deskew preprocessing. The measured implementation therefore targets approximately horizontal text with direct crop resizing.
 
 \section{Conclusion}
-This pipeline combines Assamese scene-text detection, CTC recognition and offline English translation on Jetson. Synthetic replay achieved 4.601 frames/s; three scoped real-image words were correctly spotted and transcribed, with bilingual-consistent English outputs. A translation-enabled live camera observation achieved 8.367 frames/s with the existing cache retained; peak sampled worker RSS was 1651.92~MiB and mean module power was 9.18~W. These pilots leave representative accuracy, semantic translation quality, text-bearing camera timing and comparative buffering benefits unresolved.
+This letter extends our Assamese scene-text framework from model development to measured Jetson execution, combining ONNX detection and recognition with offline English translation and a continuous camera viewer. CUDA increases controlled OCR-replay throughput by 5.09 times over CPU execution. The translation-enabled live observation achieves 8.367 frames/s with 1651.92~MiB peak sampled worker RSS and 9.18~W mean module power under the recorded cache conditions. Together with real-scene functional checks and timestamped publication measurements, these results provide a reproducible characterization of the embedded reading system.
 
-\begin{thebibliography}{6}
+\balance
+\begin{thebibliography}{7}
+\bibitem{prior} M.~Enghi, A.~K.~Talukdar, and N.~Saikia, ``Design of a natural scene Assamese text recognition system,'' accepted manuscript, 11th National Conference on Computer Vision, Pattern Recognition, Image Processing and Graphics, LNMIIT, Jaipur, India, Jul.~22--24, 2026; proceedings not yet published.
 \bibitem{ctc} A.~Graves, S.~Fern\'andez, F.~Gomez, and J.~Schmidhuber, ``Connectionist temporal classification: Labelling unsegmented sequence data with recurrent neural networks,'' in \emph{Proc. ICML}, 2006, pp.~369--376, doi: 10.1145/1143844.1143891.
 \bibitem{svtrv2} Y.~Du, Z.~Chen, H.~Xie, C.~Jia, and Y.-G.~Jiang, ``SVTRv2: CTC beats encoder-decoder models in scene text recognition,'' in \emph{Proc. IEEE/CVF ICCV}, Oct.~2025, pp.~20147--20156. [Online]. Available: \url{https://arxiv.org/abs/2411.15858}
 \bibitem{indictrans2} J.~Gala \emph{et al.}, ``IndicTrans2: Towards high-quality and accessible machine translation models for all 22 scheduled Indian languages,'' \emph{Trans. Mach. Learn. Res.}, Dec.~2023. [Online]. Available: \url{https://openreview.net/forum?id=vfT4YuzAYA}
