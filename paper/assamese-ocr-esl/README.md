@@ -37,6 +37,15 @@ Compilation uses TikZ/PGF and the supplied graphics; BibTeX is not needed. Build
 
 ## Measured evidence
 
+The bibliography contains 13 references, including six additional primary sources verified on 25 November 2026. Citations are ordered by first appearance:
+
+- SynthTIGER: training-data context for the accepted conference work; [authors' citation](https://github.com/clovaai/synthtiger#citation). The four new replay scenes were AI-generated, not SynthTIGER outputs.
+- PARSeq: context-aware scene-text recognition; [ECCV paper](https://www.ecva.net/papers/eccv_2022/papers_ECCV/papers/136880177.pdf) and [author-supplied metadata](https://github.com/baudm/parseq#citation).
+- ICDAR 2015 Robust Reading Competition: separation of localization, crop recognition, and end-to-end spotting; [authors' paper](https://publication.imlab.jp/db/publication_data/1469/C02.pdf). The local three-word rectangle protocol is not presented as a full ICDAR evaluation.
+- Jacob et al., CVPR 2018: background on efficient low-precision inference; [primary paper](https://openaccess.thecvf.com/content_cvpr_2018/papers/Jacob_Quantization_and_Training_CVPR_2018_paper.pdf). This does not claim that the translation export uses the paper's quantization-aware training procedure.
+- Yates et al., IEEE JSAC 2021: information-freshness context for timestamped updates; [authors' paper](https://user.eng.umd.edu/~ulukus/papers/journal/aoi-survey.pdf). The receiver-slot bound and measured source-PTS boundary remain explicitly defined for this application.
+- NVIDIA Tegrastats: telemetry definitions; [official guide](https://docs.nvidia.com/jetson/archives/r36.4.3/DeveloperGuide/AT/JetsonLinuxDevelopmentTools/TegrastatsUtility.html). Actual board/software versions and raw output are retained in the experiment records.
+
 `experiments/evidence-20261125` preserves the controlled OCR replay, real-image functional check, translation events and source-PTS timing. `experiments/evidence-live-20261125` preserves the viewer-on live resource observations. Hash inventories accompany both records.
 
 The principal translation-enabled observation processed 496 frames over a 59.28 s first-to-last status interval (8.367 frames/s), with 1651.92 MiB peak sampled Python-worker RSS and 9.18 W mean module power. All 60 status snapshots contained text and an English output; the existing cache was retained. These are correlated observations of a displayed photograph, not 60 independent accuracy examples or a sustained uncached translation-generation benchmark.
