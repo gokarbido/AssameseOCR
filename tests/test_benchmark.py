@@ -103,6 +103,29 @@ class ReplayTests(unittest.TestCase):
         self.assertEqual(result['crop_cer_percent'], 0)
         self.assertEqual(result['crop_exact_region_accuracy'], 1)
 
+    def test_scope_ignores_outside_predictions_but_counts_inside_false_positive(self):
+        sample = dict(self.sample, annotation_status='reviewed', reviewer='Reviewer',
+                      evaluation_region=[0, 0, 100, 100],
+                      regions=[dict(box=[0, 0, 40, 40], text='পাঠ')])
+        _, samples = load_manifest(self.manifest([sample]))
+        pipeline = Mock()
+        pipeline.recognizer.recognize.return_value = 'পাঠ'
+        predictions = {'test': dict(boxes=[[0, 0, 40, 40], [150, 0, 190, 40], [60, 0, 90, 40]],
+                                    texts=['পাঠ', 'ignored', 'false positive'])}
+        result = evaluate_reviewed(pipeline, samples, predictions, 0)
+        self.assertEqual(result['detection']['precision'], .5)
+        self.assertEqual(result['detection']['recall'], 1)
+
+    def test_timestamp_transport_reassembles_partial_reads_and_rejects_eof(self):
+        from benchmark_age import HEADER, receive_exact
+        connection = Mock()
+        packet = HEADER.pack(42, 123456789, 100)
+        connection.recv.side_effect = [packet[:3], packet[3:10], packet[10:]]
+        self.assertEqual(HEADER.unpack(receive_exact(connection, HEADER.size)), (42, 123456789, 100))
+        connection.recv.side_effect = [b'ab', b'']
+        with self.assertRaises(EOFError):
+            receive_exact(connection, 4)
+
 
 if __name__ == '__main__':
     unittest.main()

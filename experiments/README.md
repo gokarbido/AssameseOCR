@@ -52,3 +52,29 @@ Only reviewed samples are scored. Ground-truth crops are recognized independentl
 The primary command exports a directory. After the run completes, it can be archived with `tar -czf experiment-results.tar.gz experiment_results/RUN_DIRECTORY`. Large raw results are ignored by Git; selectively publish summaries/evidence when appropriate.
 
 On an analysis workstation with matplotlib installed, run `python scripts/plot_experiment.py experiment_results/RUN_DIRECTORY` to export a 300-DPI PNG, a vector SVG, and an IEEE-style LaTeX results table in its `figures/` directory. The plotter reads the completed raw exports and preserves their values and metric definitions.
+
+## Completed 25 November pilots
+
+See `evidence-20261125/REPORT.md` and `completed_metrics.json` for the exported results, with raw JSON/CSV, telemetry and hash inventory. Accuracy uses the three words confirmed by the user in `real_scenes_v1/manifest.json`. Evaluation rectangles exclude Latin and tiny/partial background text; a prediction counts when at least 50% of its area lies inside a rectangle. This is scoped accuracy, not whole-image multilingual performance. Crop CER and exact-text spotting are separate measurements.
+
+Run reviewed accuracy independently from timed resource comparisons:
+
+```bash
+sudo docker run --rm --runtime nvidia --network none -e PYTHONDONTWRITEBYTECODE=1 \
+  -v "$PWD:/workspace:ro" -v "$PWD/experiment_results:/results" --entrypoint python \
+  assamese-ocr:jetpack6 /workspace/benchmark.py \
+  --manifest /workspace/experiments/real_scenes_v1/manifest.json \
+  --output /results/real-reviewed-NEW --device cuda --max-width 1536 \
+  --warmup-seconds 0 --seconds 1 --repeats 1
+```
+
+The short run is for accuracy only; its timing is not a resource benchmark. For the real-image translation pilot and instrumented CSI timing, use fresh output paths:
+
+```bash
+sudo bash scripts/record_all_stages.sh experiment_results/real-all-stages-NEW
+sudo bash scripts/record_camera_age.sh experiment_results/camera-age-NEW
+```
+
+The wrappers pause and restore the existing live service. Camera timing also temporarily replaces the host CSI sender. It records frame identifiers and source-buffer PTS mapped to the host monotonic clock; it saves no camera images. PTS is not calibrated exposure time, and shared-buffer publication excludes HTTP and browser display. The recorded pilot contained zero detected text regions. Test text-bearing scenes separately before claiming recognition-load camera freshness.
+
+Copy completed result directories to the workstation, then run `python scripts/finalize_pilot_report.py` to regenerate the November report and machine-readable export. Visible paired English sign words provide only a three-output translation consistency check; general semantic quality remains unmeasured.

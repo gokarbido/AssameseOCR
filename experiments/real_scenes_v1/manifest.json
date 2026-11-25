@@ -3,8 +3,8 @@
   "name": "User-supplied real natural scenes v1",
   "synthetic": false,
   "limitations": [
-    "Two user-supplied photographs; a qualitative pilot, not a representative benchmark.",
-    "Mixed-script text and partially visible background text require an explicit annotation policy before accuracy scoring."
+    "Two user-supplied photographs and three scoped words; not a representative benchmark.",
+    "Latin and tiny or partially visible background text are excluded under the user-confirmed scoring policy. Training/test overlap is unknown."
   ],
   "samples": [
     {
