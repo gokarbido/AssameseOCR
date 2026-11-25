@@ -1,0 +1,19 @@
+{
+  "status": "complete",
+  "samples": 60,
+  "observed_seconds": 59.28087965099985,
+  "processed_frame_delta": 496,
+  "throughput_fps": 8.366947368528704,
+  "sampled_peak_worker_rss_mib": 1651.921875,
+  "worker_lifetime_hwm_mib": 1653.0703125,
+  "text_present_snapshots": 60,
+  "translated_snapshots": 60,
+  "unique_texts": [
+    "মোহনবাৰী",
+    "মোাহনবাৰী"
+  ],
+  "cpu_percent_sample_mean": 50.60176991150443,
+  "gpu_percent_sample_mean": 29.47787610619469,
+  "module_power_w_sample_mean": 9.17512389380531,
+  "system_ram_mb_sample_mean": 4899.690265486725
+}

@@ -1,0 +1,12 @@
+{
+  "start_utc": "2026-11-25T17:26:26.349734+00:00",
+  "worker_pid": 28176,
+  "source_revision": "95968ead5ad607aed70f41d9849125f11536a6ec",
+  "container": "assameseocr-assamese-ocr-1",
+  "image": "sha256:2d50fc6acdb4fb76778871443ce4c9939765c3eee5bb88307f29b5bbd9a95800",
+  "power_mode": "NV Power Mode: 25W\n1",
+  "requested_seconds": 60.0,
+  "protocol": "Already-running viewer; translation required and enabled, existing translation cache retained. No service restart, cold-start measurement or forced cache misses. Displayed-photo camera test; scene changes are not controlled.",
+  "memory_scope": "RSS of Python web_app.py worker, excluding tini; sampled maximum is within this window. VmHWM is lifetime high-water mark, not window peak.",
+  "excludes": "No camera images/video saved. API snapshots are not per-frame accuracy samples; no source timestamp or translation generation latency measured."
+}

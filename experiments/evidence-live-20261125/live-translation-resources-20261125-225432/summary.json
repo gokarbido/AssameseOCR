@@ -1,0 +1,18 @@
+{
+  "status": "complete",
+  "samples": 60,
+  "observed_seconds": 59.256036622000465,
+  "processed_frame_delta": 752,
+  "throughput_fps": 12.690690145158964,
+  "sampled_peak_worker_rss_mib": 1652.96484375,
+  "worker_lifetime_hwm_mib": 1653.0703125,
+  "text_present_snapshots": 1,
+  "translated_snapshots": 0,
+  "unique_texts": [
+    "পা"
+  ],
+  "cpu_percent_sample_mean": 56.51327433628319,
+  "gpu_percent_sample_mean": 32.11504424778761,
+  "module_power_w_sample_mean": 9.321769911504424,
+  "system_ram_mb_sample_mean": 4858.938053097345
+}

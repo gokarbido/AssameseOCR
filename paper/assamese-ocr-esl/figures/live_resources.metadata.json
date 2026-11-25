@@ -1,0 +1,29 @@
+{
+  "source_directory": "experiment_results\\live-mohanbari-resources-20261125-225625",
+  "summary": {
+    "status": "complete",
+    "samples": 60,
+    "observed_seconds": 59.28087965099985,
+    "processed_frame_delta": 496,
+    "throughput_fps": 8.366947368528704,
+    "sampled_peak_worker_rss_mib": 1651.921875,
+    "worker_lifetime_hwm_mib": 1653.0703125,
+    "text_present_snapshots": 60,
+    "translated_snapshots": 60,
+    "unique_texts": [
+      "মোহনবাৰী",
+      "মোাহনবাৰী"
+    ],
+    "cpu_percent_sample_mean": 50.60176991150443,
+    "gpu_percent_sample_mean": 29.47787610619469,
+    "module_power_w_sample_mean": 9.17512389380531,
+    "system_ram_mb_sample_mean": 4899.690265486725
+  },
+  "plotted_window": "First through last live API observation; telemetry outside this window excluded.",
+  "sha256": {
+    "metadata.json": "8b3bd262371c56ffcac8a523a8153f803d1b808c83044d9cab62a11be19d9c24",
+    "samples.jsonl": "bf81671346362fcf7fdada930293fbe7df727f3ea17986396981f80c080b93ab",
+    "tegrastats.jsonl": "f14c92915829f8a18ae7bb17aee86738301b829dc6f3185a093ed18bc58b0dbf",
+    "summary.json": "d091f0ccd377244f4297c839d8ee7b47f809a1c51b6c487a1a1aee0cc8aed3b5"
+  }
+}

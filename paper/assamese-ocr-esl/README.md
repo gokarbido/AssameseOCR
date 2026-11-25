@@ -1,6 +1,6 @@
 # Assamese natural-scene text recognition manuscript for IEEE Embedded Systems Letters
 
-The primary task is locating and transcribing Assamese text in natural scenes. Signboards are one example; the scope also allows posters, storefronts, labels, and other text-bearing surfaces. These are intended evaluation categories, not claims about existing training-data coverage or demonstrated accuracy. Crop-level scene text recognition and end-to-end text spotting are evaluated separately. Offline English translation is optional. Object-level grouping, script classification, and perspective rectification are not implemented; robustness to complex scenes remains to be evaluated.
+The primary task is locating and transcribing Assamese text in natural scenes. Signboards are one example; the scope also allows posters, storefronts, labels, and other text-bearing surfaces. These are intended evaluation categories, not claims about existing training-data coverage or demonstrated accuracy. Crop-level scene text recognition and end-to-end text spotting are evaluated separately. Offline English translation is a required project output. OCR-only measurements are diagnostic ablations. Object-level grouping, script classification, and perspective rectification are not implemented; robustness to complex scenes remains to be evaluated.
 
 `main.tex` is the editable manuscript. `IEEEtran.cls` is copied unchanged from the IEEE template already supplied in the parent paper folder. References are embedded in the source. The architecture diagram is native TikZ in `figures/architecture.tex`. Figure 2 uses the two original user-supplied test photographs from `../../experiments/real_scenes_v1/images/`; keep that repository-relative location when building. The caption states the three-word scoring scope. Compilation requires TikZ/PGF and those JPEG files; BibTeX is not required.
 
@@ -21,6 +21,8 @@ The second pass resolves references. The delivery PDF is `manuscript.pdf`; after
 The delivery PDF is built with local pdfLaTeX. Rebuild twice to resolve references, then visually inspect every rendered page. If the app preview encounters MiKTeX settings/cache access errors, open `manuscript.pdf` directly or use a terminal with access to the normal MiKTeX settings/cache.
 
 The November 25 delivery compiled to four pages with resolved references and no overfull-box warnings. Every rendered page was visually checked. The Jetson container passed 57 tests; the retained log is in the published evidence directory. The TikZ architecture diagram remains editable in the LaTeX source.
+
+English translation is required throughout the project and manuscript. The new `figures/live_resources.pdf` chart uses a separate live-camera resource observation with the viewer and translation enabled; `scripts/plot_live_resources.py` regenerates it from raw records. Existing translation-disabled pilots are diagnostic ablations. Preserve the graph asset when building the manuscript; PDF/SVG/PNG exports are provided.
 
 The journal's [author instructions](https://ieee-ceda.org/publication/esl/esl-author-instructions), checked October 29, 2026, specify at most four pages including figures, tables, and references. Recheck after adding author information and results. Keep standard IEEE type size and margins.
 

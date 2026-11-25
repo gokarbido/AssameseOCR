@@ -71,10 +71,30 @@ sudo docker run --rm --runtime nvidia --network none -e PYTHONDONTWRITEBYTECODE=
 The short run is for accuracy only; its timing is not a resource benchmark. For the real-image translation pilot and instrumented CSI timing, use fresh output paths:
 
 ```bash
-sudo bash scripts/record_all_stages.sh experiment_results/real-all-stages-NEW
+sudo bash scripts/record_all_stages.sh experiments/real_scenes_v1/manifest.json experiment_results/real-all-stages-NEW
 sudo bash scripts/record_camera_age.sh experiment_results/camera-age-NEW
 ```
 
 The wrappers pause and restore the existing live service. Camera timing also temporarily replaces the host CSI sender. It records frame identifiers and source-buffer PTS mapped to the host monotonic clock; it saves no camera images. PTS is not calibrated exposure time, and shared-buffer publication excludes HTTP and browser display. The recorded pilot contained zero detected text regions. Test text-bearing scenes separately before claiming recognition-load camera freshness.
 
 Copy completed result directories to the workstation, then run `python scripts/finalize_pilot_report.py` to regenerate the November report and machine-readable export. Visible paired English sign words provide only a three-output translation consistency check; general semantic quality remains unmeasured.
+
+## Live resources with required English translation
+
+English translation is a required project stage. Earlier translation-disabled measurements are OCR-only diagnostic ablations. To record resources while keeping the viewer available and the translator enabled, run on the Jetson host:
+
+```bash
+sudo python3 scripts/record_live_resources.py \
+  --output experiment_results/live-translation-NEW --seconds 60
+```
+
+This recorder leaves the service and camera running. It verifies that the viewer stays live and translation stays enabled, records raw tegrastats every 500 ms, and polls status plus Python-worker RSS every second. The worker is selected from Docker's process inventory so the `tini` init process is excluded. The existing model/cache state is retained; this is not a cold-start or forced-generation benchmark. API text/translation presence counts describe correlated snapshots, not accuracy samples. Throughput uses the processed-frame counter difference over the first-to-last status observation. Peak sampled RSS applies to this observation window; VmHWM applies to the worker's lifetime. System RAM and module power are board-wide. No camera images/video are saved.
+
+After exporting a completed directory, generate the publication chart with:
+
+```bash
+python scripts/plot_live_resources.py experiment_results/live-translation-NEW \
+  --output paper/assamese-ocr-esl/figures/live_resources
+```
+
+The plotter exports vector PDF/SVG and a 300-DPI PNG. Report the observed text/translation presence and cache conditions with each chart; merely enabling translation does not establish sustained generation load.
