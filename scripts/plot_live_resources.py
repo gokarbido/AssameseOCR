@@ -29,7 +29,8 @@ def main():
         records = [r for r in telemetry if key in r]
         axes[0].plot([r['monotonic']-start for r in records],[r[key] for r in records],label=label,color=color,lw=.8)
     axes[0].set(ylabel='Utilization (%)',ylim=(0,100))
-    axes[0].legend(loc='upper right',ncol=2,frameon=False,fontsize=6)
+    axes[0].legend(loc='lower right',bbox_to_anchor=(1,1.04),
+                   ncol=2,frameon=False,fontsize=6,borderaxespad=0)
     axes[1].plot([r['monotonic']-start for r in rows],[r['VmRSS_mib'] for r in rows],color='#4a8c70',lw=1)
     axes[1].set(ylabel='Worker RSS\n(MiB)',ylim=(0,summary['sampled_peak_worker_rss_mib']*1.15))
     records = [r for r in telemetry if 'module_power_w' in r]
