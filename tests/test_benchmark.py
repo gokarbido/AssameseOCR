@@ -44,9 +44,11 @@ class MetricTests(unittest.TestCase):
 
     def test_real_tegrastats_units_and_missing_sensors(self):
         raw = 'RAM 3320/7620MB CPU [1%@900] GR3D_FREQ 37%@[612] CPU@48.5C GPU@49C VDD_IN 6282mW/6028mW'
-        self.assertEqual(host.parse_tegrastats(raw), dict(gpu_percent=37, system_ram_mb=3320, module_power_w=6.282, max_cpu_gpu_c=49))
+        self.assertEqual(host.parse_tegrastats(raw), dict(cpu_percent=1, cpu_cores_reported=1,
+                         gpu_percent=37, system_ram_mb=3320, module_power_w=6.282, max_cpu_gpu_c=49))
         self.assertEqual(host.parse_tegrastats('RAM 1024/7620MB'), {'system_ram_mb': 1024})
         self.assertEqual(host.parse_tegrastats('failed to read sensor'), {})
+        self.assertEqual(host.parse_tegrastats('CPU [20%@1200,off]')['cpu_percent'], 10)
 
 
 class ReplayTests(unittest.TestCase):

@@ -11,6 +11,15 @@ larger type. Bounding-box coordinates and sizes are unchanged.
 Label blocks avoid each other. When a crowded frame has no room for another
 large label, that region's full Assamese and English results remain in the sidebar.
 
+## Record experiments
+
+See [experiments/README.md](experiments/README.md) for the Docker benchmark runner,
+timestamped Jetson telemetry, CSV/JSON exports, and paper figures. The included
+four-image Assamese natural-scene pilot is AI-generated and explicitly marked
+as synthetic. Requested generation text is not used as ground truth; accuracy
+scoring requires independently reviewed annotations. The runner can pause and
+restore the live OCR service while comparing GPU/CPU processing.
+
 ## Run on the Jetson
 
 The default Docker configuration receives CSI frames from a host-side sender.

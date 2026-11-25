@@ -40,6 +40,14 @@ def parse_tegrastats(line):
     ram = re.search(r'RAM\s+(\d+)/(\d+)MB', line)
     power = re.search(r'\bVDD_IN\s+(\d+)(?:mW)?/', line)
     temperatures = re.findall(r'(?:CPU|GPU|cpu|gpu)@(\d+(?:\.\d+)?)C', line)
+    cpu = re.search(r'\bCPU\s+\[([^\]]+)\]', line)
+    if cpu:
+        cores = cpu[1].split(',')
+        loads = [0.0 if core.strip() == 'off' else float(match[1])
+                 for core in cores if core.strip() == 'off' or (match := re.search(r'(\d+)%', core))]
+        if len(loads) == len(cores):
+            result['cpu_percent'] = statistics.fmean(loads)
+            result['cpu_cores_reported'] = len(cores)
     if gpu:
         result['gpu_percent'] = int(gpu[1])
     if ram:
@@ -61,6 +69,8 @@ def record_telemetry(process, path):
 def aggregate(output, configurations):
     telemetry_path = output / 'tegrastats.jsonl'
     telemetry = [json.loads(line) for line in telemetry_path.read_text().splitlines()] if telemetry_path.exists() else []
+    # Reparse raw records so postprocessing can add metrics without changing raw evidence.
+    telemetry = [dict(row, **parse_tegrastats(row.get('raw', ''))) for row in telemetry]
     rows = []
     for name in configurations:
         folder = output / name
@@ -69,7 +79,8 @@ def aggregate(output, configurations):
         summary = json.loads((folder / 'summary.json').read_text())
         if summary['status'] != 'complete':
             continue
-        frames = list(csv.DictReader((folder / 'frames.csv').open(encoding='utf-8')))
+        with (folder / 'frames.csv').open(encoding='utf-8') as stream:
+            frames = list(csv.DictReader(stream))
         windows = [(r['start_utc'], r['end_utc']) for r in summary['repeats']]
         measured = [t for t in telemetry if any(start <= t['timestamp'] <= end for start, end in windows)]
         row = dict(condition=name, repeats=len(summary['repeats']), frames=len(frames),
@@ -81,7 +92,7 @@ def aggregate(output, configurations):
         # Repeat-level percentiles remain in summary.json; this is their arithmetic mean.
         for key in ('p50', 'p95'):
             row[f'mean_repeat_processing_{key}_ms'] = statistics.fmean(r['stages_ms']['processing_ms'][key] for r in summary['repeats'])
-        for metric in ('gpu_percent', 'system_ram_mb', 'module_power_w', 'max_cpu_gpu_c'):
+        for metric in ('cpu_percent', 'gpu_percent', 'system_ram_mb', 'module_power_w', 'max_cpu_gpu_c'):
             values = [t[metric] for t in measured if metric in t]
             row[metric + '_sample_mean'] = statistics.fmean(values) if values else None
             row[metric + '_sample_max'] = max(values) if values else None
@@ -93,24 +104,28 @@ def aggregate(output, configurations):
             writer.writerows(rows)
     lines = ['# Jetson synthetic scene-text experiment', '',
              'These are measured resource/processing results on four AI-generated scenes. They do not establish accuracy on real photographs.', '',
-             '| Condition | Frames | FPS mean ± SD | Processing p50 / p95 (ms)* | Peak process RSS (MiB) | Mean GPU (%) | Mean module power (W) |',
-             '| --- | ---: | ---: | ---: | ---: | ---: | ---: |']
+             '| Condition | Frames | FPS mean ± SD | Processing p50 / p95 (ms)* | Peak process RSS (MiB) | Mean CPU (%) | Mean GPU (%) | Mean module power (W) |',
+             '| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |']
     def number(value):
         return f'{value:.2f}' if value is not None else 'Unavailable'
     for r in rows:
         lines.append(f"| {r['condition']} | {r['frames']} | {number(r['throughput_mean_fps'])} ± {number(r['throughput_stdev_fps'])} | "
                      f"{number(r['mean_repeat_processing_p50_ms'])} / {number(r['mean_repeat_processing_p95_ms'])} | "
-                     f"{number(r['process_peak_rss_mib'])} | {number(r['gpu_percent_sample_mean'])} | {number(r['module_power_w_sample_mean'])} |")
+                     f"{number(r['process_peak_rss_mib'])} | {number(r['cpu_percent_sample_mean'])} | {number(r['gpu_percent_sample_mean'])} | {number(r['module_power_w_sample_mean'])} |")
     lines += ['', '*Arithmetic mean of repeat-level percentiles; individual distributions and raw frames are exported.', '',
               '- Workload: unpaced offline image replay with OCR, annotation, and JPEG encoding; translation disabled.',
               '- Processing timings exclude capture, transport and browser delay. Throughput includes benchmark output overhead.',
               '- RSS includes benchmark buffers and model runtime; tegrastats RAM is system-wide.',
+              '- CPU utilization is the arithmetic mean across all cores reported by tegrastats, including offline cores as zero.',
               '- VDD_IN is module power, not total carrier-board/input power. Missing sensors remain unavailable.',
               '- Repeated frames from four fixed images are correlated. Report repeat variability, not dataset confidence intervals.',
               '- Prompted text is not ground truth. Accuracy remains unscored until annotations are reviewed.',
               '- Available/session execution providers do not prove every operator ran on the GPU.', '']
     (output / 'REPORT.md').write_text('\n'.join(lines), encoding='utf-8')
     (output / 'comparison.json').write_text(json.dumps(rows, indent=2, allow_nan=False) + '\n')
+    analysis = dict(created_at=utc(), method='Recomputed from unchanged frames.csv, summary.json, and timestamped raw tegrastats records.',
+                    analysis_source_revision=command(['git', '-c', f'safe.directory={ROOT}', 'rev-parse', 'HEAD']))
+    (output / 'analysis_metadata.json').write_text(json.dumps(analysis, indent=2) + '\n')
 
 
 def main(argv=None):

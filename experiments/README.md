@@ -7,6 +7,7 @@ This suite measures the deployed detector/recognizer and Jetson resources on fou
 Use the existing CUDA-enabled application image. A rebuild is unnecessary because the runner mounts the current source and images read-only. From the repository root:
 
 ```bash
+mkdir -p experiment_results
 sudo python3 scripts/record_jetson_experiment.py \
   --output experiment_results/orin-pilot-$(date +%Y%m%d-%H%M%S) \
   --pause-service
@@ -49,3 +50,5 @@ For each independently reviewed sample, set `annotation_status` to `reviewed`, i
 Only reviewed samples are scored. Ground-truth crops are recognized independently, and exact-region accuracy and code-point CER use NFC plus collapsed whitespace. Whole-image detection uses greedy descending-IoU one-to-one matching at IoU >= 0.5. Spotting requires a matched box and exact normalized transcription. Each unique image is scored once using its first measured prediction, avoiding duplicated accuracy counts from replay. Scores on a reviewed synthetic subset must still be reported separately from real-scene accuracy.
 
 The primary command exports a directory. After the run completes, it can be archived with `tar -czf experiment-results.tar.gz experiment_results/RUN_DIRECTORY`. Large raw results are ignored by Git; selectively publish summaries/evidence when appropriate.
+
+On an analysis workstation with matplotlib installed, run `python scripts/plot_experiment.py experiment_results/RUN_DIRECTORY` to export a 300-DPI PNG, a vector SVG, and an IEEE-style LaTeX results table in its `figures/` directory. The plotter reads the completed raw exports and preserves their values and metric definitions.
