@@ -22,7 +22,8 @@
 \node[block, fill=black!6] (slot) at (2.55,-1.65)
   {Latest complete\\JPEG slot};
 \node[block] (decode) at (0,-1.65) {JPEG decode};
-\draw[flow] (sender) -- node[note, right] {Loopback TCP} (receiver);
+\draw[flow] (sender.south) --
+  node[note, midway, anchor=east, xshift=-4pt] {Loopback TCP} (receiver.north);
 \draw[flow] (receiver) -- (slot);
 \draw[flow] (slot) -- (decode);
 
