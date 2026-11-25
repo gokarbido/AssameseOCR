@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "name": "Assamese synthetic natural-scene pilot v1",
+  "synthetic": true,
+  "generation": {
+    "tool": "OpenAI built-in image_gen",
+    "date": "2026-11-25",
+    "model": "Tool default; model identifier not returned",
+    "requested_size": "1536x1024",
+    "transparent_background": false
+  },
+  "limitations": [
+    "Four AI-generated images, not independently photographed natural scenes.",
+    "Requested text can differ from visible glyphs; it is not ground truth.",
+    "Annotations are unreviewed and excluded from accuracy scoring.",
+    "Repeated image replay measures processing/resource load, not camera-to-display latency.",
+    "Input-size conditions reuse the same scenes and are not independent test samples."
+  ],
+  "samples": [
+    {
+      "id": "daylight_storefront",
+      "image": "images/daylight_storefront.png",
+      "condition": "Frontal large text, daylight, weathered storefront",
+      "requested_text": ["পুথিভঁৰাল", "কিতাপ আৰু আলোচনী"],
+      "annotation_status": "unreviewed",
+      "reviewer": null,
+      "regions": null,
+      "generation_prompt": "Use case: photorealistic-natural. Asset type: synthetic Assamese scene-text test photograph, landscape 1536x1024. Generate ONE realistic ordinary street-level photograph in Assam, daylight, a small weathered bookshop storefront with plants and metal shutter, no people. One large cream painted rectangular shop sign with dark green Assamese lettering EXACTLY \"পুথিভঁৰাল\" and a second smaller line EXACTLY \"কিতাপ আৰু আলোচনী\". Nearly frontal camera, signs clear and fully in frame with useful margins, authentic painted text on real material. Realistic lighting and photographic texture; no decorative pseudo-lettering, no English, no logos, no watermarks. Text must be actual Assamese and should be legible, without invented extra text. This is synthetic experimental input, not a real business photograph."
+    },
+    {
+      "id": "oblique_public_notice",
+      "image": "images/oblique_public_notice.png",
+      "condition": "Oblique wall text, textured surface, mottled shadows",
+      "requested_text": ["বিশুদ্ধ খোৱা পানী", "পানী অপচয় নকৰিব"],
+      "annotation_status": "unreviewed",
+      "reviewer": null,
+      "regions": null,
+      "generation_prompt": "Use case: photorealistic-natural. Asset type: synthetic Assamese scene text test photograph, landscape 1536x1024. Generate ONE realistic photograph of a small public drinking-water point and a notice painted on an aged plaster wall in Assam, photographed at a moderate 20-degree oblique viewing angle. Exactly two clear Assamese lines painted dark blue on a white rectangle: \"বিশুদ্ধ খোৱা পানী\" and \"পানী অপচয় নকৰিব\". Include a tap, tiled basin, shadows from trees, worn natural textures. The entire text rectangle must remain readable and visible, occupying roughly half the image width. No other writing, no people, no English, no logos, no watermarks. Realistic camera photograph, not a poster graphic."
+    },
+    {
+      "id": "dense_grocery_labels",
+      "image": "images/dense_grocery_labels.png",
+      "condition": "Six separate labels, cluttered grocery scene, varied alignment",
+      "requested_text": ["চাউল", "দাইল", "চেনি", "নিমখ", "চাহ", "তেল"],
+      "annotation_status": "unreviewed",
+      "reviewer": null,
+      "regions": null,
+      "generation_prompt": "Use case: photorealistic-natural. Asset type: synthetic Assamese scene text stress-test photograph, landscape 1536x1024. Generate ONE realistic indoor grocery stall photograph in Assam. Six separate small cream paper price labels on wooden shelves or grain bins, each fully visible and printed in large dark Assamese lettering. Exact labels, one per card: \"চাউল\", \"দাইল\", \"চেনি\", \"নিমখ\", \"চাহ\", \"তেল\". Arrange the six cards in three columns and two rows with ample separation; keep a few grains, tins, jars and sacks visible without any other readable branding. Natural indoor light with moderate clutter, slightly varied card angles. All six labels should be readable but smaller than a large shop sign. No people, English, invented text, logos, or watermark. A photorealistic synthetic scene, not a contact sheet."
+    },
+    {
+      "id": "low_light_poster",
+      "image": "images/low_light_poster.png",
+      "condition": "Multiline poster, warm low light, wrinkles and shadows",
+      "requested_text": ["অসমীয়া সাংস্কৃতিক সন্ধিয়া", "সকলোকে স্বাগতম", "প্ৰৱেশ বিনামূলীয়া"],
+      "annotation_status": "unreviewed",
+      "reviewer": null,
+      "regions": null,
+      "generation_prompt": "Use case: photorealistic-natural. Asset type: synthetic Assamese natural-scene text test photograph, landscape 1536x1024. Generate ONE evening photograph of a rectangular community event poster pasted on a textured wall in Assam, lit by one warm street light, some realistic shadow and slight paper wrinkles but legible text. Exact Assamese text in three separate lines: \"অসমীয়া সাংস্কৃতিক সন্ধিয়া\", \"সকলোকে স্বাগতম\", \"প্ৰৱেশ বিনামূলীয়া\". Poster occupies 60 percent of frame width and is fully within frame. No additional letters or words anywhere. Moderate low-light photographic noise, no extreme blur. No people, no English, no logos or watermarks. Make it look like a real photograph of a printed poster in an environment, not a clean digital poster."
+    }
+  ]
+}

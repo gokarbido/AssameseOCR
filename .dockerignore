@@ -6,3 +6,4 @@ __pycache__
 captured_frame_*.jpg
 debug_frame_*.jpg
 models/translation/
+experiment_results/
