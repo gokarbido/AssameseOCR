@@ -95,7 +95,23 @@ The Jetson container passed 57 regression tests, including metric-scope and time
 
 Full-size ($1536\times1024$) CUDA replay achieved $4.601\pm0.011$ frames/s, compared with $5.096\pm0.022$ at $960\times640$ and $0.904\pm0.003$ for full-size CPU replay (mean and sample standard deviation across repeats). Processing includes PNG decoding, detection, recognition, annotation and JPEG encoding, with translation disabled. The means of repeat-level processing p95 values were 258.19, 231.24 and 1468.39~ms, respectively. These values exclude sensor acquisition and browser delay. CUDA full-size peak process RSS was 1283.75~MiB and sampled mean module power was 8.95~W. Raw frames and timestamped telemetry are retained.
 
-Two user-supplied real photographs were tested separately: a bilingual road sign and a commercial-sign scene. The user confirmed three readable Assamese/shared-script words and exclusion of Latin and tiny or partial background text. Boxes and evaluation rectangles were manually proposed by the assistant. Predictions with at least half their area inside those rectangles were scored with one-to-one greedy IoU matching at threshold~0.5. Detection and exact-text spotting precision, recall, and H-mean were each 1.00 (three words). Ground-truth crops gave 0\% CER over 18 NFC code points and 3/3 exact words. These scoped results exclude a spurious detection on Latin text; they do not establish whole-image multilingual accuracy or script discrimination. Training/test overlap is unknown.
+Two user-supplied real photographs (Fig.~\ref{fig:real-scenes}) were tested separately: a bilingual road sign and a commercial-sign scene. The user confirmed three readable Assamese/shared-script words and exclusion of Latin and tiny or partial background text. Boxes and evaluation rectangles were manually proposed by the assistant. Predictions with at least half their area inside those rectangles were scored with one-to-one greedy IoU matching at threshold~0.5. Detection and exact-text spotting precision, recall, and H-mean were each 1.00 (three words). Ground-truth crops gave 0\% CER over 18 NFC code points and 3/3 exact words. These scoped results exclude a spurious detection on Latin text; they do not establish whole-image multilingual accuracy or script discrimination. Training/test overlap is unknown.
+
+\begin{figure}[t]
+\centering
+\begin{minipage}[b]{0.69\columnwidth}
+\centering
+\includegraphics[height=1.65in]{../../experiments/real_scenes_v1/images/mohanbari.jpg}\\
+\small (a)
+\end{minipage}\hfill
+\begin{minipage}[b]{0.29\columnwidth}
+\centering
+\includegraphics[angle=-90,origin=c,width=\linewidth,height=1.65in,keepaspectratio]{../../experiments/real_scenes_v1/images/shop_signs.jpg}\\
+\small (b)
+\end{minipage}
+\caption{User-supplied real test photographs: (a) Mohanbari road sign; (b) commercial signs. Original images are shown without prediction overlays. Only the three confirmed Assamese/shared-script words were scored; Latin and tiny or partial background text were excluded.}
+\label{fig:real-scenes}
+\end{figure}
 
 With asynchronous CPU translation, a single 60.53-second real-image replay processed 198 frames (3.271 frames/s). Mean detection and recognition times were 59.54 and 17.82~ms. Model loading took 6243.20~ms; four uncached generations averaged 138.57~ms (p95 187.34~ms), including one spurious OCR source. Three in-scope outputs matched the visible English MOHANBARI, TIBET and KITCHEN after case folding. This proper-name/loanword check is not a semantic-quality evaluation. Translation draining continued after replay; generation delay is not capture-to-English availability. A hundred cache snapshots averaged 0.00464~ms. English-rendering cost is excluded, and the different images prevent comparison with the synthetic baseline.
 
