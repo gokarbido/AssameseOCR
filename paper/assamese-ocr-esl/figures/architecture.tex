@@ -38,7 +38,7 @@
 \node[block, fill=black!6] (cache) at (2.55,-4.65)
   {Exact-source cache\\256 entries};
 \node[block] (translator) at (5.10,-4.65)
-  {CPU INT8\\translation worker};
+  {CPU INT8\\translation model};
 \draw[flow] (ocr) -- node[note, left] {OCR text} (browser);
 \draw[async] (desired) -- node[note, left] {Uncached text} (translator);
 \draw[async] (translator) -- (cache);

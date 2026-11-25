@@ -10,7 +10,7 @@
 \author{Author Names to Be Supplied\thanks{Working manuscript for IEEE Embedded Systems Letters. Author affiliations, correspondence, funding, and training-data provenance remain to be supplied.}}
 \maketitle
 \begin{abstract}
-Recognizing Assamese text in natural scenes requires localization and transcription under variations in scale, lighting, and background clutter. We implement a Jetson Orin Nano pipeline combining a YOLO-style text detector, geometric reading order, an ONNX CTC recognizer, and required asynchronous offline English translation. An OCR-only diagnostic replay of four synthetic scene images achieves $4.601\pm0.011$ frames/s across three repeats, with 1283.75~MiB peak process RSS and 8.95~W mean sampled module power. A scoped test of three user-confirmed words in two real photographs gives detection and exact-text spotting H-means of 1.00 and zero crop character error. Three translated outputs match visible bilingual sign references. A separate live camera observation with English translation enabled and its cache retained achieves 8.367 frames/s, with 1651.92~MiB peak sampled worker RSS and 9.18~W mean module power. These small, distinct pilots establish deployment measurements rather than representative accuracy, translation quality, or sensor-to-display latency. A larger scene-disjoint study remains necessary.
+Recognizing Assamese text in natural scenes requires localization and transcription under variations in scale, lighting, and background clutter. We implement a Jetson Orin Nano pipeline combining a YOLO-style text detector, geometric reading order, an ONNX CTC recognizer, and asynchronous offline English translation. An OCR-only diagnostic replay of four synthetic scene images achieves $4.601\pm0.011$ frames/s across three repeats, with 1283.75~MiB peak process RSS and 8.95~W mean sampled module power. A scoped test of three user-confirmed words in two real photographs gives detection and exact-text spotting H-means of 1.00 and zero crop character error. Three translated outputs match visible bilingual sign references. A separate live camera observation with English translation enabled and its cache retained achieves 8.367 frames/s, with 1651.92~MiB peak sampled worker RSS and 9.18~W mean module power. These small, distinct pilots establish deployment measurements rather than representative accuracy, translation quality, or sensor-to-display latency. A larger scene-disjoint study remains necessary.
 \end{abstract}
 \begin{IEEEkeywords}
 Scene text recognition, Assamese text, natural scenes, text detection, embedded vision, Jetson, CTC.
@@ -19,7 +19,7 @@ Scene text recognition, Assamese text, natural scenes, text detection, embedded 
 \section{Introduction}
 \IEEEPARstart{A}{ssamese} text in natural scenes is the target of this recognition system. A camera observes a real-world environment; the system must locate text regions and transcribe their Assamese content. Potential scene content includes signs, posters, storefronts, labels, and other text-bearing surfaces. The study must account for perspective, uneven lighting, clutter, surface appearance, motion blur, and small characters rather than assume clean, presegmented text images.
 
-The pipeline targets Jetson Orin Nano with a JetPack~6 container. It combines text detection, crop-level recognition, geometric reading order, English translation, and a browser viewer. We use scene text recognition (STR) for crop transcription and end-to-end text spotting for localization plus transcription. English translation is a required project output; its quality is evaluated separately from recognition.
+The pipeline targets Jetson Orin Nano with a JetPack~6 container. It combines text detection, crop-level recognition, geometric reading order, English translation, and a browser viewer. We use scene text recognition (STR) for crop transcription and end-to-end text spotting for localization plus transcription. The translation model converts recognized Assamese text into English; its quality is evaluated separately from recognition.
 
 This letter presents the implemented Assamese scene-text pipeline, its embedded execution policy, and pilot measurements of localization, transcription, translation, and result freshness. Host-side JPEG capture, latest-frame selection, and asynchronous translation allow continuous viewing without awaiting translation generation. Their benefit over alternative buffering and translation policies remains untested; no new neural architecture or comparative accuracy gain is claimed.
 
@@ -43,7 +43,7 @@ Figure~\ref{fig:architecture} shows the natural-scene text pipeline and executio
 \begin{figure}[t]
 \centering
 \input{figures/architecture}
-\caption{Assamese natural-scene text pipeline with required English translation. Dashed arrows denote asynchronous translation and cache lookup. Recognition continues while English results become available.}
+\caption{Assamese natural-scene text pipeline with English translation. Dashed arrows denote asynchronous translation and cache lookup. Recognition continues while English results become available.}
 \label{fig:architecture}
 \end{figure}
 
@@ -59,8 +59,8 @@ where $o(i,r)$ is vertical overlap with the row's representative interval. Rows 
 
 Crops are recognized sequentially after BGR-to-RGB conversion, direct resizing to $128\times32$, normalization $x'=2x/255-1$, and NCHW conversion. Greedy CTC decoding takes the largest logit at each step, collapses consecutive repeats, and removes blanks. A blank between identical characters allows both to survive. No beam search or lexicon correction is used. Small characters and long text regions may lose detail during resizing; perspective distortion is not corrected.
 
-\subsection{Required Offline English Translation}
-An asynchronous worker produces the required English output from deduplicated source strings without blocking recognition. Its cache uses exact stripped source text, preventing positional association errors when detections change. Success and failure maps each hold at most 256 entries. Attempts are separated by 0.5~s, with a 30~s retry delay for failed strings. The translator loads local files, uses two intra-operation CPU threads per session, rejects inputs above 256 tokens, and limits generation to 64 steps. Normalization and script conversion precede tokenization; the preprocessing adapter still requires linguistic validation. OCR-only runs are diagnostic ablations and do not satisfy the complete project requirement.
+\subsection{Translation model}
+An asynchronous worker produces English output from deduplicated source strings without blocking recognition. Its cache uses exact stripped source text, preventing positional association errors when detections change. Success and failure maps each hold at most 256 entries. Attempts are separated by 0.5~s, with a 30~s retry delay for failed strings. The translator loads local files, uses two intra-operation CPU threads per session, rejects inputs above 256 tokens, and limits generation to 64 steps. Normalization and script conversion precede tokenization; the preprocessing adapter still requires linguistic validation. OCR-only runs isolate detection and recognition costs.
 
 \section{Freshness and Resource Analysis}
 Let $a_k$ be the arrival of complete JPEG~$k$ at the receiver and $s_n$ the time of inference selection~$n$. The selected frame is
@@ -119,7 +119,7 @@ An instrumented CSI sender attached source-buffer presentation timestamps (PTS),
 
 Table~\ref{tab:evidence} summarizes these distinct pilots. Correlated replay frames do not increase accuracy sample size. Raw predictions, timestamps and telemetry accompany the experiment record.
 
-A separate live CSI observation kept the viewer and required English translator running while the user displayed the Mohanbari photograph. All 60 one-second status snapshots contained text and an English output, with the existing translation cache retained. The processed-frame counter advanced by 496 over 59.28~s (8.367 frames/s). Peak sampled Python-worker RSS was 1651.92~MiB; mean sampled CPU and GPU utilization were 50.60\% and 29.48\%, and module power was 9.18~W (Fig.~\ref{fig:live-resources}). Tegrastats was sampled every 500~ms and worker RSS every second. This warm-session observation includes camera processing and English rendering but does not measure sustained uncached translation generation. Snapshot presence is not transcription or translation accuracy; an OCR variant was observed. Different inputs and cache conditions prevent direct comparison with the OCR-only synthetic replay.
+A separate live CSI observation kept the viewer and English translator running while the user displayed the Mohanbari photograph. All 60 one-second status snapshots contained text and an English output, with the existing translation cache retained. The processed-frame counter advanced by 496 over 59.28~s (8.367 frames/s). Peak sampled Python-worker RSS was 1651.92~MiB; mean sampled CPU and GPU utilization were 50.60\% and 29.48\%, and module power was 9.18~W (Fig.~\ref{fig:live-resources}). Tegrastats was sampled every 500~ms and worker RSS every second. This warm-session observation includes camera processing and English rendering but does not measure sustained uncached translation generation. Snapshot presence is not transcription or translation accuracy; an OCR variant was observed. Different inputs and cache conditions prevent direct comparison with the OCR-only synthetic replay.
 
 \begin{table}[t]
 \caption{Pilot evidence; accuracy scope is three words in two photos.}
@@ -145,7 +145,7 @@ OCR-only RSS / module power & 1283.75 MiB / 8.95 W\\
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{figures/live_resources.pdf}
-\caption{Live CSI resource observation with required English translation enabled and the existing cache retained. CPU utilization is averaged across reported cores; RSS is the Python application worker; VDD\_IN is module power. This is a single warm-session observation, not a cold-start or sustained uncached-generation benchmark.}
+\caption{Live CSI resource observation with English translation enabled and the existing cache retained. CPU utilization is averaged across reported cores; RSS is the Python application worker; VDD\_IN is module power. This is a single warm-session observation, not a cold-start or sustained uncached-generation benchmark.}
 \label{fig:live-resources}
 \end{figure}
 
@@ -164,10 +164,10 @@ where $S,D,I$ are substitution, deletion, and insertion counts and $N$ is refere
 
 For each region-density group, report processed frames/s, received and skipped frames, stage times, and capture-to-publication age at p50 and p95. The viewer's reciprocal-loop-time FPS is not a sensor-to-display measurement. Collect sustained board power, peak memory, thermal behavior, and energy per processed frame. Repeat runs and report variability across scenes and runs rather than treating correlated frames as independent observations.
 
-For the required translation stage, report load time, generation delay, cache hits, and human-reviewed meaning preservation on clean and recognized text separately. Test sender disconnects and missing assets. Automatic camera reconnection is absent; recovery requires a service restart.
+For the translation model, report load time, generation delay, cache hits, and human-reviewed meaning preservation on clean and recognized text separately. Test sender disconnects and missing assets. Automatic camera reconnection is absent; recovery requires a service restart.
 
 \section{Conclusion}
-This pipeline combines Assamese scene-text detection, CTC recognition and required offline English translation on Jetson. Synthetic replay achieved 4.601 frames/s; three scoped real-image words were correctly spotted and transcribed, with bilingual-consistent English outputs. A translation-enabled live camera observation achieved 8.367 frames/s with the existing cache retained; peak sampled worker RSS was 1651.92~MiB and mean module power was 9.18~W. These pilots leave representative accuracy, semantic translation quality, text-bearing camera timing and comparative buffering benefits unresolved.
+This pipeline combines Assamese scene-text detection, CTC recognition and offline English translation on Jetson. Synthetic replay achieved 4.601 frames/s; three scoped real-image words were correctly spotted and transcribed, with bilingual-consistent English outputs. A translation-enabled live camera observation achieved 8.367 frames/s with the existing cache retained; peak sampled worker RSS was 1651.92~MiB and mean module power was 9.18~W. These pilots leave representative accuracy, semantic translation quality, text-bearing camera timing and comparative buffering benefits unresolved.
 
 \begin{thebibliography}{6}
 \bibitem{ctc} A.~Graves, S.~Fern\'andez, F.~Gomez, and J.~Schmidhuber, ``Connectionist temporal classification: Labelling unsegmented sequence data with recurrent neural networks,'' in \emph{Proc. ICML}, 2006, pp.~369--376, doi: 10.1145/1143844.1143891.
