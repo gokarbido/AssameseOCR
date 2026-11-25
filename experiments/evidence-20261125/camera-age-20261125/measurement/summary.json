@@ -1,0 +1,63 @@
+{
+  "repeats": [
+    {
+      "repeat": 1,
+      "age_ms": {
+        "n": 234,
+        "mean": 127.03844983760685,
+        "p50": 124.879773,
+        "p95": 142.6956052,
+        "minimum": 99.724097,
+        "maximum": 932.851939
+      },
+      "region_count": {
+        "n": 234,
+        "mean": 0.0,
+        "p50": 0.0,
+        "p95": 0.0,
+        "minimum": 0,
+        "maximum": 0
+      }
+    },
+    {
+      "repeat": 2,
+      "age_ms": {
+        "n": 262,
+        "mean": 124.58676754961833,
+        "p50": 124.1340605,
+        "p95": 145.64066344999998,
+        "minimum": 100.949652,
+        "maximum": 149.045702
+      },
+      "region_count": {
+        "n": 262,
+        "mean": 0.0,
+        "p50": 0.0,
+        "p95": 0.0,
+        "minimum": 0,
+        "maximum": 0
+      }
+    },
+    {
+      "repeat": 3,
+      "age_ms": {
+        "n": 267,
+        "mean": 122.31650444569289,
+        "p50": 122.415983,
+        "p95": 141.5879194,
+        "minimum": 99.490011,
+        "maximum": 147.827206
+      },
+      "region_count": {
+        "n": 267,
+        "mean": 0.0,
+        "p50": 0.0,
+        "p95": 0.0,
+        "minimum": 0,
+        "maximum": 0
+      }
+    }
+  ],
+  "scope": "GStreamer source-buffer PTS mapped to host monotonic clock, through host JPEG encode, timestamped loopback transport, latest-frame selection, decode, CUDA OCR, annotation, JPEG encode and shared-buffer publication.",
+  "excludes": "Physical exposure timestamp is not independently calibrated; HTTP transfer and browser rendering excluded. Translation disabled. This instrumented sender differs from the production unframed JPEG sender."
+}

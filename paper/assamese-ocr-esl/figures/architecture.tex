@@ -1,0 +1,56 @@
+% Native vector diagram. Coordinates are in centimetres; no raster assets.
+\begin{tikzpicture}[
+  font=\footnotesize,
+  block/.style={draw, rounded corners=1.5pt, line width=0.5pt,
+    fill=white, align=center, text width=1.90cm,
+    minimum height=0.66cm, inner sep=3pt},
+  flow/.style={-{Stealth[length=1.6mm]}, line width=0.65pt},
+  async/.style={flow, dashed},
+  note/.style={font=\scriptsize, fill=white, inner sep=1.5pt},
+  boundary/.style={draw, rounded corners=2pt, line width=0.5pt,
+    inner xsep=4pt, inner ysep=5pt}
+]
+% Host camera stages.
+\node[block] (camera) at (0,0) {Natural scene\\CSI camera};
+\node[block] (convert) at (2.55,0) {Image conversion};
+\node[block] (sender) at (5.10,0) {JPEG sender};
+\draw[flow] (camera) -- (convert);
+\draw[flow] (convert) -- (sender);
+
+% Receiver progresses independently of the OCR consumer.
+\node[block] (receiver) at (5.10,-1.65) {TCP receiver};
+\node[block, fill=black!6] (slot) at (2.55,-1.65)
+  {Latest complete\\JPEG slot};
+\node[block] (decode) at (0,-1.65) {JPEG decode};
+\draw[flow] (sender) -- node[note, right] {Loopback TCP} (receiver);
+\draw[flow] (receiver) -- (slot);
+\draw[flow] (slot) -- (decode);
+
+% OCR is published without waiting for the translation worker.
+\node[block, minimum height=1.02cm] (ocr) at (0,-3.05)
+  {Detection\\Reading order\\Recognition};
+\node[block] (desired) at (5.10,-3.05) {Current source\\strings};
+\draw[flow] (decode) -- (ocr);
+\draw[flow] (ocr) -- node[note, above] {Submit current text} (desired);
+
+\node[block] (browser) at (0,-4.65) {Browser output};
+\node[block, fill=black!6] (cache) at (2.55,-4.65)
+  {Exact-source cache\\256 entries};
+\node[block] (translator) at (5.10,-4.65)
+  {CPU INT8\\translation worker};
+\draw[flow] (ocr) -- node[note, left] {OCR text} (browser);
+\draw[async] (desired) -- node[note, left] {Uncached text} (translator);
+\draw[async] (translator) -- (cache);
+\draw[async] (cache) -- (browser);
+
+% Execution boundaries are behind nodes and arrows.
+\begin{scope}[on background layer]
+  \node[boundary, fit=(camera)(sender), fill=black!3] (host) {};
+  \node[boundary, fit=(decode)(receiver)(ocr)(desired)(browser)(translator)]
+    (container) {};
+\end{scope}
+\node[font=\footnotesize\bfseries, anchor=south west]
+  at (host.north west) {Jetson host};
+\node[font=\footnotesize\bfseries, anchor=south west]
+  at (container.north west) {Inference container};
+\end{tikzpicture}

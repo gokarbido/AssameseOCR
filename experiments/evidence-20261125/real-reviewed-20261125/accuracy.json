@@ -1,0 +1,22 @@
+{
+  "status": "scored_reviewed_subset_only",
+  "reviewed_images": 2,
+  "unreviewed_images": 0,
+  "matching": "Greedy descending IoU, one-to-one, IoU >= 0.5",
+  "normalization": "NFC and collapsed whitespace; Unicode code points",
+  "detection": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "hmean": 1.0
+  },
+  "spotting": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "hmean": 1.0
+  },
+  "crop_exact_region_accuracy": 1.0,
+  "crop_cer_percent": 0.0,
+  "reference_regions": 3,
+  "reference_code_points": 18,
+  "note": "Each reviewed source image scored once using its first measured prediction; repeated timing frames are not independent accuracy samples."
+}

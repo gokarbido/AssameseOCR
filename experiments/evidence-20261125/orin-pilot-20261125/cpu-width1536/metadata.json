@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-11-25T16:27:51.629626+00:00",
+  "device": "cpu",
+  "max_width": 1536,
+  "python": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+  "platform": "Linux-6.8.12-1021-tegra-aarch64-with-glibc2.35",
+  "opencv": "4.5.4",
+  "onnxruntime": "1.23.0",
+  "available_providers": [
+    "TensorrtExecutionProvider",
+    "CUDAExecutionProvider",
+    "CPUExecutionProvider"
+  ],
+  "manifest_sha256": {
+    "bytes": 5867,
+    "sha256": "2261333f03b45ccae9f2aaaaa163fcf0b9922444c0b1e7e4bf8b5b2f2be9a268"
+  },
+  "samples": [
+    {
+      "id": "daylight_storefront",
+      "sha256": "72e4950833256b2445b80b2c872f2f29239da0f2bbc230b152329bb65b63bd82",
+      "annotation_status": "unreviewed"
+    },
+    {
+      "id": "oblique_public_notice",
+      "sha256": "c355007a753302b9f6fa97500ee8486f1fb249cfc78fd2c3bfee5117a4c07918",
+      "annotation_status": "unreviewed"
+    },
+    {
+      "id": "dense_grocery_labels",
+      "sha256": "e83e84dcdbc86a8cebdf70486d5bb5ba0a95b9441774abe2e662ae5e15abf59c",
+      "annotation_status": "unreviewed"
+    },
+    {
+      "id": "low_light_poster",
+      "sha256": "348c693fc0bf84fd032a64b2a896206dca8ff9ca5f72ce4159b575d24fc3f7a2",
+      "annotation_status": "unreviewed"
+    }
+  ],
+  "artifacts": {
+    "det_asm.onnx": {
+      "bytes": 10583484,
+      "sha256": "fdb0fb9a1e145b92d557fa1deeb7d2e7158fecac424c784b8ba08b6bd96c64ef"
+    },
+    "model.onnx": {
+      "bytes": 57329274,
+      "sha256": "0e8212f22233b45a1a31b7b3ebd8cbf9e24fe0001562aa97dd65c0ed43770718"
+    },
+    "config.yaml": {
+      "bytes": 3337,
+      "sha256": "615e8cb9dd11bc98c76fbbb7885a4d3f1810784e796b40b5b35118142fb1b78a"
+    },
+    "benchmark.py": {
+      "bytes": 18250,
+      "sha256": "50a40ab609b0a3f468af2dacb18be4e4fa751cfd07bc17ca354a46cc8d163263"
+    }
+  },
+  "requested_protocol": {
+    "repeats": 3,
+    "seconds": 60.0,
+    "warmup_seconds": 30.0
+  },
+  "workload": "Offline unpaced image replay, detection + ordering + sequential recognition + annotation + JPEG; translation disabled",
+  "timing_scope": "Host wall-clock synchronous ONNX calls; includes decode/resize, excludes sensor acquisition and browser/network latency.",
+  "generated_dataset": true,
+  "limitations": [
+    "Four AI-generated images, not independently photographed natural scenes.",
+    "Requested text can differ from visible glyphs; it is not ground truth.",
+    "Annotations are unreviewed and excluded from accuracy scoring.",
+    "Repeated image replay measures processing/resource load, not camera-to-display latency.",
+    "Input-size conditions reuse the same scenes and are not independent test samples."
+  ],
+  "model_initialization_ms": 305.12114600014684,
+  "session_providers": {
+    "detector": [
+      "CPUExecutionProvider"
+    ],
+    "recognizer": [
+      "CPUExecutionProvider"
+    ]
+  },
+  "provider_note": "Session registration is not proof of per-operator GPU placement."
+}

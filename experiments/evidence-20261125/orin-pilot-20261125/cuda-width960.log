@@ -1,0 +1,10 @@
+Initializing Live Text Detection App...
+[0;93m2026-11-25 21:53:16.397310874 [W:onnxruntime:, transformer_memcpy.cc:85 ApplyImpl] 4 Memcpy nodes are added to the graph main_graph for CUDAExecutionProvider. It might have negative impact on performance (including unable to run CUDA graph). Set session_options.log_severity_level=1 to see the detail logs before this message.[m
+ONNX model: /workspace/det_asm.onnx; active providers: ['CUDAExecutionProvider', 'CPUExecutionProvider']
+ONNX model: /workspace/model.onnx; active providers: ['CUDAExecutionProvider', 'CPUExecutionProvider']
+Text Recognizer initialized - Input: [3, 32, 128], Vocab: 143
+Successfully loaded fallback font: Lohit-Assamese.ttf
+App initialized successfully!
+MEASURED repeat=1 frames=308 elapsed_s=60.714 fps=5.073
+MEASURED repeat=2 frames=308 elapsed_s=60.210 fps=5.115
+MEASURED repeat=3 frames=308 elapsed_s=60.385 fps=5.101

@@ -1,0 +1,80 @@
+{
+  "started_at": "2026-11-25T16:18:16.102450+00:00",
+  "system": "Linux-6.8.12-1021-tegra-aarch64-with-glibc2.39",
+  "device": "NVIDIA Jetson Orin Nano Engineering Reference Developer Kit Super",
+  "l4t": "# R39 (release), REVISION: 2.1, GCID: 46758480, BOARD: generic, EABI: aarch64, DATE: Fri Aug  7 05:54:22 AM UTC 2026\n# KERNEL_VARIANT: oot\nTARGET_USERSPACE_LIB_DIR=nvidia\nTARGET_USERSPACE_LIB_DIR_PATH=usr/lib/aarch64-linux-gnu/nvidia",
+  "cuda_version": "{\n   \"cuda\" : {\n      \"name\" : \"CUDA SDK\",\n      \"version\" : \"13.2.2\"\n   },\n   \"cuda_cccl\" : {\n      \"name\" : \"CUDA C++ Core Compute Libraries\",\n      \"version\" : \"13.2.86\"\n   },\n   \"cuda_crt\" : {\n      \"name\" : \"CUDA crt Compiler for CUDA applications\",\n      \"version\" : \"13.2.86\"\n   },\n   \"cuda_ctadvisor\" : {\n      \"name\" : \"CUDA Compile Time Advisor\",\n      \"version\" : \"13.2.86\"\n   },\n   \"cuda_cudart\" : {\n      \"name\" : \"CUDA Runtime (cudart)\",\n      \"version\" : \"13.2.86\"\n   },\n   \"cuda_culibos\" : {\n      \"name\" : \"CUDA DEV culibos is a Math Libraries\",\n      \"version\" : \"13.2.86\"\n   },\n   \"cuda_cuobjdump\" : {\n      \"name\" : \"cuobjdump\",\n      \"version\" : \"13.2.86\"\n   },\n   \"cuda_cupti\" : {\n      \"name\" : \"CUPTI\",\n      \"version\" : \"13.2.86\"\n   },\n   \"cuda_cuxxfilt\" : {\n      \"name\" : \"CUDA cu++ filt\",\n      \"version\" : \"13.2.86\"\n   },\n   \"cuda_gdb\" : {\n      \"name\" : \"CUDA GDB\",\n      \"version\" : \"13.2.86\"\n   },\n   \"cuda_nvcc\" : {\n      \"name\" : \"CUDA NVCC\",\n      \"version\" : \"13.2.86\"\n   },\n   \"cuda_nvdisasm\" : {\n      \"name\" : \"CUDA nvdisasm\",\n      \"version\" : \"13.2.86\"\n   },\n   \"cuda_nvml_dev\" : {\n      \"name\" : \"CUDA NVML Headers\",\n      \"version\" : \"13.2.86\"\n   },\n   \"cuda_nvprune\" : {\n      \"name\" : \"CUDA nvprune\",\n      \"version\" : \"13.2.86\"\n   },\n   \"cuda_nvrtc\" : {\n      \"name\" : \"CUDA NVRTC\",\n      \"version\" : \"13.2.86\"\n   },\n   \"cuda_nvtx\" : {\n      \"name\" : \"CUDA NVTX\",\n      \"version\" : \"13.2.86\"\n   },\n   \"cuda_profiler_api\" : {\n      \"name\" : \"CUDA Profiler API\",\n      \"version\" : \"13.2.86\"\n   },\n   \"cuda_sandbox_dev\" : {\n      \"name\" : \"NVIDIA Sandbox Utils\",\n      \"version\" : \"13.2.86\"\n   },\n   \"cuda_sanitizer_api\" : {\n      \"name\" : \"CUDA Compute Sanitizer API\",\n      \"version\" : \"13.2.87\"\n   },\n   \"libcublas\" : {\n      \"name\" : \"CUDA cuBLAS\",\n      \"version\" : \"13.4.1.3\"\n   },\n   \"libcudla\" : {\n      \"name\" : \"CUDA cuDLA\",\n      \"version\" : \"13.2.86\"\n   },\n   \"libcufft\" : {\n      \"name\" : \"CUDA cuFFT\",\n      \"version\" : \"12.2.0.57\"\n   },\n   \"libcufile\" : {\n      \"name\" : \"GPUDirect Storage (cufile)\",\n      \"version\" : \"1.17.1.22\"\n   },\n   \"libcurand\" : {\n      \"name\" : \"CUDA cuRAND\",\n      \"version\" : \"10.4.2.66\"\n   },\n   \"libcusolver\" : {\n      \"name\" : \"CUDA cuSOLVER\",\n      \"version\" : \"12.2.0.11\"\n   },\n   \"libcusparse\" : {\n      \"name\" : \"CUDA cuSPARSE\",\n      \"version\" : \"12.7.10.12\"\n   },\n   \"libnpp\" : {\n      \"name\" : \"CUDA NPP\",\n      \"version\" : \"13.1.0.59\"\n   },\n   \"libnvfatbin\" : {\n      \"name\" : \"Fatbin interaction library\",\n      \"version\" : \"13.2.86\"\n   },\n   \"libnvjitlink\" : {\n      \"name\" : \"JIT Linker Library\",\n      \"version\" : \"13.2.86\"\n   },\n   \"libnvjpeg\" : {\n      \"name\" : \"CUDA nvJPEG\",\n      \"version\" : \"13.1.0.59\"\n   },\n   \"libnvptxcompiler\" : {\n      \"name\" : \"CUDA PTX compiler\",\n      \"version\" : \"13.2.86\"\n   },\n   \"libnvvm\" : {\n      \"name\" : \"NVVM\",\n      \"version\" : \"13.2.86\"\n   },\n   \"nsight_compute\" : {\n      \"name\" : \"Nsight Compute\",\n      \"version\" : \"2026.1.1.2\"\n   },\n   \"nsight_systems\" : {\n      \"name\" : \"Nsight Systems\",\n      \"version\" : \"2025.6.3.541\"\n   },\n   \"nvidia_driver\" : {\n      \"name\" : \"NVIDIA Linux Driver\",\n      \"version\" : \"595.71.05\"\n   },\n   \"nvidia_fs\" : {\n      \"name\" : \"NVIDIA file-system\",\n      \"version\" : \"2.28.4\"\n   }\n}",
+  "image": {
+    "command": [
+      "docker",
+      "image",
+      "inspect",
+      "--format",
+      "{{.Id}}",
+      "assamese-ocr:jetpack6"
+    ],
+    "returncode": 0,
+    "stdout": "sha256:2d50fc6acdb4fb76778871443ce4c9939765c3eee5bb88307f29b5bbd9a95800",
+    "stderr": ""
+  },
+  "source_revision": {
+    "command": [
+      "git",
+      "-c",
+      "safe.directory=/home/monor/Projects/AssameseOCR",
+      "rev-parse",
+      "HEAD"
+    ],
+    "returncode": 0,
+    "stdout": "0a1874b58c6296cf5c523fc442f9b36d49ad0bc0",
+    "stderr": ""
+  },
+  "source_status": {
+    "command": [
+      "git",
+      "-c",
+      "safe.directory=/home/monor/Projects/AssameseOCR",
+      "status",
+      "--short"
+    ],
+    "returncode": 0,
+    "stdout": "M scripts/build_onnxruntime_jetson.sh",
+    "stderr": ""
+  },
+  "power_mode": {
+    "command": [
+      "nvpmodel",
+      "-q"
+    ],
+    "returncode": 0,
+    "stdout": "NV Power Mode: 25W\n1",
+    "stderr": ""
+  },
+  "clocks": {
+    "command": [
+      "jetson_clocks",
+      "--show"
+    ],
+    "returncode": 0,
+    "stdout": "SOC family:tegra234  Machine:NVIDIA Jetson Orin Nano Engineering Reference Developer Kit Super\nOnline CPUs: 0-5, Offline CPUs: \ncpu0:  Governor=schedutil MinFreq=729600 MaxFreq=1344000 CurrentFreq=1344000 IdleStates: WFI=1 c7=1 \ncpu1:  Governor=schedutil MinFreq=729600 MaxFreq=1344000 CurrentFreq=1344000 IdleStates: WFI=1 c7=1 \ncpu2:  Governor=schedutil MinFreq=729600 MaxFreq=1344000 CurrentFreq=1344000 IdleStates: WFI=1 c7=1 \ncpu3:  Governor=schedutil MinFreq=729600 MaxFreq=1344000 CurrentFreq=1344000 IdleStates: WFI=1 c7=1 \ncpu4:  Governor=schedutil MinFreq=729600 MaxFreq=1344000 CurrentFreq=1344000 IdleStates: WFI=1 c7=1 \ncpu5:  Governor=schedutil MinFreq=729600 MaxFreq=1344000 CurrentFreq=1344000 IdleStates: WFI=1 c7=1 \nGPU MinFreq=306000000 MaxFreq=918000000 CurrentFreq=918000000\nActive GPU TPCs: 4\nEMC MinFreq=204000000 MaxFreq=3199000000 CurrentFreq=3199000000\nFAN Dynamic Speed Control=nvfancontrol hwmon0_pwm1=90\nFAN Dynamic Speed Control=nvfancontrol hwmon0_pwm1_enable=1\nNV Power Mode: 25W",
+    "stderr": ""
+  },
+  "host_memory": "MemTotal:        7665104 kB\nMemFree:          432416 kB\nMemAvailable:    2808116 kB\nBuffers:          124284 kB\nCached:          2356828 kB\nSwapCached:            0 kB\nActive:          1356700 kB\nInactive:        3759284 kB\nActive(anon):       2888 kB\nInactive(anon):  2651216 kB\nActive(file):    1353812 kB\nInactive(file):  1108068 kB\nUnevictable:       28052 kB\nMlocked:              32 kB\nSwapTotal:             0 kB\nSwapFree:              0 kB\nDirty:               172 kB\nWriteback:             0 kB\nAnonPages:       2646248 kB\nMapped:           799424 kB\nShmem:             52044 kB\nKReclaimable:     116652 kB\nSlab:             246100 kB\nSReclaimable:     116652 kB\nSUnreclaim:       129448 kB\nKernelStack:       17132 kB\nPageTables:        43288 kB\nSecPageTables:         0 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:     3832552 kB\nCommitted_AS:   10950256 kB\nVmallocTotal:   133141626880 kB\nVmallocUsed:       60836 kB\nVmallocChunk:          0 kB\nPercpu:             4008 kB\nHardwareCorrupted:     0 kB\nAnonHugePages:   1046528 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:         0 kB\nFilePmdMapped:         0 kB\nCmaTotal:         262144 kB\nCmaFree:               0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB",
+  "conditions": "cuda:1536,cuda:960,cpu:1536",
+  "pause_service": true,
+  "idle_start_utc": "2026-11-25T16:18:22.668265+00:00",
+  "idle_end_utc": "2026-11-25T16:18:37.668395+00:00",
+  "status": "complete",
+  "finished_at": "2026-11-25T16:32:32.110145+00:00",
+  "service_restoration": {
+    "command": [
+      "docker",
+      "compose",
+      "start",
+      "assamese-ocr"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": "Container assameseocr-assamese-ocr-1 Starting \n Container assameseocr-assamese-ocr-1 Started"
+  }
+}

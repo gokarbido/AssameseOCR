@@ -1,0 +1,9 @@
+Initializing Live Text Detection App...
+ONNX model: /workspace/det_asm.onnx; active providers: ['CPUExecutionProvider']
+ONNX model: /workspace/model.onnx; active providers: ['CPUExecutionProvider']
+Text Recognizer initialized - Input: [3, 32, 128], Vocab: 143
+Successfully loaded fallback font: Lohit-Assamese.ttf
+App initialized successfully!
+MEASURED repeat=1 frames=56 elapsed_s=61.725 fps=0.907
+MEASURED repeat=2 frames=56 elapsed_s=61.987 fps=0.903
+MEASURED repeat=3 frames=56 elapsed_s=62.165 fps=0.901

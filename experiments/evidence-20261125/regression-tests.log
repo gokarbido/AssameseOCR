@@ -1,0 +1,7 @@
+.............ONNX model: model.onnx; active providers: ['CUDAExecutionProvider', 'CPUExecutionProvider']
+..ONNX model: model.onnx; active providers: ['CPUExecutionProvider']
+..........................................
+----------------------------------------------------------------------
+Ran 57 tests in 0.312s
+
+OK

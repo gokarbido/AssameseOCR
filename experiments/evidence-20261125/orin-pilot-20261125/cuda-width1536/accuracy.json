@@ -1,0 +1,7 @@
+{
+  "status": "not_scored",
+  "reason": "No independently reviewed annotations. Prompted text is not ground truth.",
+  "reviewed_images": 0,
+  "unreviewed_images": 4,
+  "normalization": "NFC and collapsed whitespace; Unicode code points"
+}

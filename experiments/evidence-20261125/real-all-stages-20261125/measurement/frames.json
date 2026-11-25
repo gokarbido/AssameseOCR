@@ -1,0 +1,3170 @@
+[
+  {
+    "timestamp": "2026-11-25T16:45:57.694621+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 125.18576200000098,
+      "detect_ms": 868.6789719999979,
+      "order_ms": 0.0056650001170055475,
+      "recognize_ms": 82.50005899981261,
+      "annotate_ms": 22.220535000087693,
+      "encode_ms": 22.62461500004065,
+      "processing_ms": 1121.2156080000568,
+      "translation_submit_snapshot_ms": 0.11427200024627382
+    },
+    "translation_ready": 0,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:45:58.181659+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 266.118051000376,
+      "detect_ms": 51.83806299964999,
+      "order_ms": 1.004242000362865,
+      "recognize_ms": 30.79867499991451,
+      "annotate_ms": 79.0748879999228,
+      "encode_ms": 53.467451999949844,
+      "processing_ms": 482.301371000176,
+      "translation_submit_snapshot_ms": 0.07624500040037674
+    },
+    "translation_ready": 0,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:45:58.369971+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 90.95534499965652,
+      "detect_ms": 47.48165900036838,
+      "order_ms": 0.004448999789019581,
+      "recognize_ms": 10.933768000086275,
+      "annotate_ms": 12.339366000105656,
+      "encode_ms": 25.35392599975239,
+      "processing_ms": 187.06851299975824,
+      "translation_submit_snapshot_ms": 0.06168100026116008
+    },
+    "translation_ready": 0,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:45:58.797476+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 201.07751900013682,
+      "detect_ms": 47.86035500001162,
+      "order_ms": 0.878192000072886,
+      "recognize_ms": 29.37745500003075,
+      "annotate_ms": 91.93884499973137,
+      "encode_ms": 54.13829200006148,
+      "processing_ms": 425.27065800004493,
+      "translation_submit_snapshot_ms": 0.08795999974609003
+    },
+    "translation_ready": 0,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:45:59.305423+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 103.81002100029946,
+      "detect_ms": 202.1414509999886,
+      "order_ms": 0.007041999651846709,
+      "recognize_ms": 83.93680900007894,
+      "annotate_ms": 65.7339160002266,
+      "encode_ms": 52.059093000025314,
+      "processing_ms": 507.68833200027075,
+      "translation_submit_snapshot_ms": 0.10902199983320315
+    },
+    "translation_ready": 0,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:04.131807+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 2037.1819380002307,
+      "detect_ms": 2640.446496000095,
+      "order_ms": 0.9082979995582718,
+      "recognize_ms": 26.087296000241622,
+      "annotate_ms": 67.0346819997576,
+      "encode_ms": 51.8292790002306,
+      "processing_ms": 4823.487989000114,
+      "translation_submit_snapshot_ms": 0.125375999687094
+    },
+    "translation_ready": 0,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:04.308624+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 94.88000500005,
+      "detect_ms": 38.64381299990782,
+      "order_ms": 0.005088999841973418,
+      "recognize_ms": 8.618448000106582,
+      "annotate_ms": 11.674842000047647,
+      "encode_ms": 22.59083399985684,
+      "processing_ms": 176.41303099981087,
+      "translation_submit_snapshot_ms": 0.12883299996246933
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:04.700313+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 207.07238200020583,
+      "detect_ms": 40.733303999786585,
+      "order_ms": 0.8707179999873915,
+      "recognize_ms": 26.734512000075483,
+      "annotate_ms": 64.19210300009581,
+      "encode_ms": 50.01268900014111,
+      "processing_ms": 389.6157080002922,
+      "translation_submit_snapshot_ms": 0.11823800014099106
+    },
+    "translation_ready": 0,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:04.885430+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 94.96149799997511,
+      "detect_ms": 45.627509000041755,
+      "order_ms": 0.004865999926551012,
+      "recognize_ms": 8.98532500013971,
+      "annotate_ms": 12.527378999948269,
+      "encode_ms": 22.71729799986133,
+      "processing_ms": 184.82387499989272,
+      "translation_submit_snapshot_ms": 0.13644999989992357
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:05.272798+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 201.6882779998923,
+      "detect_ms": 37.96724299991183,
+      "order_ms": 0.9425729999748,
+      "recognize_ms": 26.31938500007891,
+      "annotate_ms": 66.69782700009819,
+      "encode_ms": 51.72033200005899,
+      "processing_ms": 385.335638000015,
+      "translation_submit_snapshot_ms": 0.13773099999525584
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:05.457185+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 93.32141599998067,
+      "detect_ms": 46.74484199995277,
+      "order_ms": 0.005344999863154953,
+      "recognize_ms": 8.621752000181004,
+      "annotate_ms": 11.857732999942527,
+      "encode_ms": 23.555875000056403,
+      "processing_ms": 184.10696299997653,
+      "translation_submit_snapshot_ms": 0.13014500018471153
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:05.854074+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 213.4889750000184,
+      "detect_ms": 43.706028999622504,
+      "order_ms": 0.8270560001619742,
+      "recognize_ms": 25.628108000091743,
+      "annotate_ms": 61.35113799973624,
+      "encode_ms": 50.00345300004483,
+      "processing_ms": 395.0047589996757,
+      "translation_submit_snapshot_ms": 0.1422750001438544
+    },
+    "translation_ready": 2,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:06.022789+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 86.97025199990094,
+      "detect_ms": 39.33520200007479,
+      "order_ms": 0.0052489999688987155,
+      "recognize_ms": 8.38745300006849,
+      "annotate_ms": 11.09242099983021,
+      "encode_ms": 22.666131000278256,
+      "processing_ms": 168.45670800012158,
+      "translation_submit_snapshot_ms": 0.1091149997591856
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:06.400727+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 199.39990000011676,
+      "detect_ms": 38.53463399991597,
+      "order_ms": 0.8755779999773949,
+      "recognize_ms": 26.353302000188705,
+      "annotate_ms": 61.042116999942664,
+      "encode_ms": 49.89233800006332,
+      "processing_ms": 376.0978690002048,
+      "translation_submit_snapshot_ms": 0.1445480002075783
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:06.570335+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 87.35582500003147,
+      "detect_ms": 40.10977799998727,
+      "order_ms": 0.00499399993714178,
+      "recognize_ms": 8.08399300012752,
+      "annotate_ms": 11.075841000092623,
+      "encode_ms": 22.67446799987738,
+      "processing_ms": 169.3048990000534,
+      "translation_submit_snapshot_ms": 0.14144399983706535
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:06.953012+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 200.59699700004785,
+      "detect_ms": 42.48271999995268,
+      "order_ms": 0.9000320001177897,
+      "recognize_ms": 25.599802999749954,
+      "annotate_ms": 61.16915600023276,
+      "encode_ms": 49.93641300006857,
+      "processing_ms": 380.6851210001696,
+      "translation_submit_snapshot_ms": 0.12880000031145755
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:07.129243+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 88.67320400031531,
+      "detect_ms": 43.00439200005712,
+      "order_ms": 0.005088999841973418,
+      "recognize_ms": 8.2438499998716,
+      "annotate_ms": 12.737402000311704,
+      "encode_ms": 23.283544999685546,
+      "processing_ms": 175.94748200008326,
+      "translation_submit_snapshot_ms": 0.13673699959326768
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:07.518815+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 201.98205099995903,
+      "detect_ms": 45.47562400011884,
+      "order_ms": 1.017082000089431,
+      "recognize_ms": 24.707415000193578,
+      "annotate_ms": 62.52659699975993,
+      "encode_ms": 51.94630200003303,
+      "processing_ms": 387.65507100015384,
+      "translation_submit_snapshot_ms": 0.14739600010216236
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:07.695318+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 86.95016699994085,
+      "detect_ms": 45.36948499981008,
+      "order_ms": 0.0056020003285084385,
+      "recognize_ms": 8.202207000067574,
+      "annotate_ms": 12.516803999915282,
+      "encode_ms": 23.180191999927047,
+      "processing_ms": 176.22445699998934,
+      "translation_submit_snapshot_ms": 0.13004799984628335
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:08.089417+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 212.5166719997651,
+      "detect_ms": 42.38932900034342,
+      "order_ms": 1.4045369998711976,
+      "recognize_ms": 25.786432000131754,
+      "annotate_ms": 60.50226699971972,
+      "encode_ms": 49.836556000173005,
+      "processing_ms": 392.4357930000042,
+      "translation_submit_snapshot_ms": 0.14419499984796857
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:08.256009+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 85.79899000005753,
+      "detect_ms": 38.63793099981194,
+      "order_ms": 0.0054420002015831415,
+      "recognize_ms": 8.089516999916668,
+      "annotate_ms": 11.113644000033673,
+      "encode_ms": 22.666627000035078,
+      "processing_ms": 166.31215100005647,
+      "translation_submit_snapshot_ms": 0.1336000000264903
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:08.645171+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 198.83704499989108,
+      "detect_ms": 48.16539900002681,
+      "order_ms": 0.8959609999692475,
+      "recognize_ms": 24.883390000013605,
+      "annotate_ms": 64.50002300016422,
+      "encode_ms": 49.85454400002709,
+      "processing_ms": 387.13636200009205,
+      "translation_submit_snapshot_ms": 0.14281799985838006
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:08.811456+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 87.47181200033083,
+      "detect_ms": 36.69873999979245,
+      "order_ms": 0.005313000201567775,
+      "recognize_ms": 8.091021999916848,
+      "annotate_ms": 11.131216999729077,
+      "encode_ms": 22.613078000176756,
+      "processing_ms": 166.01118200014753,
+      "translation_submit_snapshot_ms": 0.12879900032203295
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:09.189550+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 196.66063800013944,
+      "detect_ms": 44.007595000039146,
+      "order_ms": 0.8922789997996006,
+      "recognize_ms": 25.28175299994473,
+      "annotate_ms": 59.83318900007362,
+      "encode_ms": 49.84496599990962,
+      "processing_ms": 376.52041999990615,
+      "translation_submit_snapshot_ms": 0.1368650000586058
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:09.358476+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 84.55064700001458,
+      "detect_ms": 42.300625999814656,
+      "order_ms": 0.005185000190977007,
+      "recognize_ms": 8.049389000007068,
+      "annotate_ms": 11.138003999803914,
+      "encode_ms": 22.60834300022907,
+      "processing_ms": 168.65219400006026,
+      "translation_submit_snapshot_ms": 0.12681400039582513
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:09.731777+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 195.48507099989365,
+      "detect_ms": 40.12269400027435,
+      "order_ms": 0.8814279999569408,
+      "recognize_ms": 25.697788999877957,
+      "annotate_ms": 59.35172999988936,
+      "encode_ms": 49.80569200006357,
+      "processing_ms": 371.34440399995583,
+      "translation_submit_snapshot_ms": 0.14851600008114474
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:09.903221+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 85.49352899990481,
+      "detect_ms": 43.58304600009433,
+      "order_ms": 0.0044809999053541105,
+      "recognize_ms": 8.0325530002483,
+      "annotate_ms": 11.391216999982134,
+      "encode_ms": 22.663203999854886,
+      "processing_ms": 171.1680299999898,
+      "translation_submit_snapshot_ms": 0.1291829998990579
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:10.282603+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 195.61906000035378,
+      "detect_ms": 45.25660599983894,
+      "order_ms": 0.8975890000328945,
+      "recognize_ms": 25.31750199977978,
+      "annotate_ms": 60.39460100009819,
+      "encode_ms": 50.04065399998581,
+      "processing_ms": 377.5260120000894,
+      "translation_submit_snapshot_ms": 0.1461140000174055
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:10.458763+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 89.07414900022559,
+      "detect_ms": 44.72383899974375,
+      "order_ms": 0.005281000085233245,
+      "recognize_ms": 8.099811999727535,
+      "annotate_ms": 11.392114000045694,
+      "encode_ms": 22.611195000081352,
+      "processing_ms": 175.90638999990915,
+      "translation_submit_snapshot_ms": 0.11417199993957183
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:10.855549+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 205.30499000005875,
+      "detect_ms": 47.35563199983517,
+      "order_ms": 1.0432879998916178,
+      "recognize_ms": 25.39326300029643,
+      "annotate_ms": 63.652846999957546,
+      "encode_ms": 51.86374300001262,
+      "processing_ms": 394.61376300005213,
+      "translation_submit_snapshot_ms": 0.14861099998597638
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:11.032022+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 90.84637799969641,
+      "detect_ms": 42.832350000026054,
+      "order_ms": 0.005313000201567775,
+      "recognize_ms": 8.29688299972986,
+      "annotate_ms": 11.438100000304985,
+      "encode_ms": 22.757792999982485,
+      "processing_ms": 176.17681699994137,
+      "translation_submit_snapshot_ms": 0.13417599984677508
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:11.421540+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 197.97017800010508,
+      "detect_ms": 47.34494400008771,
+      "order_ms": 1.0412679998808017,
+      "recognize_ms": 24.790399000266916,
+      "annotate_ms": 64.72998699973687,
+      "encode_ms": 51.62092499995197,
+      "processing_ms": 387.49770100002934,
+      "translation_submit_snapshot_ms": 0.13968099983685534
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:11.596593+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 89.29850899994562,
+      "detect_ms": 42.17614599974695,
+      "order_ms": 0.004578000243782299,
+      "recognize_ms": 8.151418000124977,
+      "annotate_ms": 12.16948199999024,
+      "encode_ms": 22.978868999871338,
+      "processing_ms": 174.7790019999229,
+      "translation_submit_snapshot_ms": 0.12422100007825065
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:11.985468+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 209.50834299992493,
+      "detect_ms": 38.61700600009499,
+      "order_ms": 0.8697090001987817,
+      "recognize_ms": 26.041539999823726,
+      "annotate_ms": 62.109980000059295,
+      "encode_ms": 49.86419199985903,
+      "processing_ms": 387.01076999996076,
+      "translation_submit_snapshot_ms": 0.14589100010198308
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:12.149882+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 85.43195899983402,
+      "detect_ms": 35.41673800009448,
+      "order_ms": 0.004929000169795472,
+      "recognize_ms": 8.35272399990572,
+      "annotate_ms": 12.247388000105275,
+      "encode_ms": 22.656494999864663,
+      "processing_ms": 164.11023299997396,
+      "translation_submit_snapshot_ms": 0.1456339996366296
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:12.522105+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 195.59950999973807,
+      "detect_ms": 38.942069000313495,
+      "order_ms": 0.8608399998593086,
+      "recognize_ms": 26.147352999942086,
+      "annotate_ms": 59.04430600003252,
+      "encode_ms": 49.77082300001712,
+      "processing_ms": 370.3649009999026,
+      "translation_submit_snapshot_ms": 0.13782399992123828
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:12.685275+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 84.04921699957413,
+      "detect_ms": 36.67635900001187,
+      "order_ms": 0.005281000085233245,
+      "recognize_ms": 8.507223999913549,
+      "annotate_ms": 11.054023000269808,
+      "encode_ms": 22.599008999804937,
+      "processing_ms": 162.89111299965953,
+      "translation_submit_snapshot_ms": 0.12975900017409003
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:13.064763+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 194.62104299964267,
+      "detect_ms": 46.52879100012797,
+      "order_ms": 0.8547259999431844,
+      "recognize_ms": 26.316705000226648,
+      "annotate_ms": 59.58572400004414,
+      "encode_ms": 49.731934999726946,
+      "processing_ms": 377.63892399971155,
+      "translation_submit_snapshot_ms": 0.1434559999324847
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:13.228643+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 85.39599800042197,
+      "detect_ms": 36.21561499994641,
+      "order_ms": 0.005184999736229656,
+      "recognize_ms": 8.331514000019524,
+      "annotate_ms": 11.099764999926265,
+      "encode_ms": 22.555869000370876,
+      "processing_ms": 163.60394600042127,
+      "translation_submit_snapshot_ms": 0.12598100011018687
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:13.599076+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 194.12132399975235,
+      "detect_ms": 38.2701020002969,
+      "order_ms": 0.8941259998209716,
+      "recognize_ms": 25.753434999842284,
+      "annotate_ms": 59.79338200040729,
+      "encode_ms": 49.71548299999995,
+      "processing_ms": 368.54785200011975,
+      "translation_submit_snapshot_ms": 0.14489699969999492
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:13.765169+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 85.39177400007247,
+      "detect_ms": 38.84473000016442,
+      "order_ms": 0.004960999831382651,
+      "recognize_ms": 8.040087000154017,
+      "annotate_ms": 10.948947000088083,
+      "encode_ms": 22.57395299966447,
+      "processing_ms": 165.80445199997484,
+      "translation_submit_snapshot_ms": 0.13407799997366965
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:14.146393+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 198.23257200005173,
+      "detect_ms": 47.40274699997826,
+      "order_ms": 0.8541779998267884,
+      "recognize_ms": 24.230529000305978,
+      "annotate_ms": 58.89350600000398,
+      "encode_ms": 49.71977399964089,
+      "processing_ms": 379.33330599980764,
+      "translation_submit_snapshot_ms": 0.13769499992122292
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:14.312239+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 86.23677299965493,
+      "detect_ms": 36.87717699995119,
+      "order_ms": 0.00502500006405171,
+      "recognize_ms": 8.618918000138365,
+      "annotate_ms": 11.249370999848907,
+      "encode_ms": 22.58109800004604,
+      "processing_ms": 165.56836199970348,
+      "translation_submit_snapshot_ms": 0.12975800018466543
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:14.686623+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 196.0583919999408,
+      "detect_ms": 38.90368500015029,
+      "order_ms": 0.9008130000438541,
+      "recognize_ms": 26.457114000095316,
+      "annotate_ms": 60.223151999707625,
+      "encode_ms": 49.799985000390734,
+      "processing_ms": 372.3431410003286,
+      "translation_submit_snapshot_ms": 0.13977599974168697
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:14.853731+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 84.65855900021779,
+      "detect_ms": 39.94452899996759,
+      "order_ms": 0.00505700018038624,
+      "recognize_ms": 8.48272699977315,
+      "annotate_ms": 11.02564099983283,
+      "encode_ms": 22.705926000071486,
+      "processing_ms": 166.82243900004323,
+      "translation_submit_snapshot_ms": 0.13411000009000418
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:15.243229+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 213.21633500019743,
+      "detect_ms": 37.88223899982768,
+      "order_ms": 0.8990179999273096,
+      "recognize_ms": 25.81648800014591,
+      "annotate_ms": 59.704966000026616,
+      "encode_ms": 49.776302999816835,
+      "processing_ms": 387.2953489999418,
+      "translation_submit_snapshot_ms": 0.146399999721325
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:15.419287+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 88.07719600008568,
+      "detect_ms": 44.55849099986153,
+      "order_ms": 0.00550499999008025,
+      "recognize_ms": 8.537342999716202,
+      "annotate_ms": 11.63602200040259,
+      "encode_ms": 22.968071999912354,
+      "processing_ms": 175.78262899996844,
+      "translation_submit_snapshot_ms": 0.12498799969762331
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:15.809538+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 204.2371180000373,
+      "detect_ms": 40.219084000000294,
+      "order_ms": 0.8177509998859023,
+      "recognize_ms": 26.40356400024757,
+      "annotate_ms": 64.40739899971959,
+      "encode_ms": 51.736615000208985,
+      "processing_ms": 387.82153100009964,
+      "translation_submit_snapshot_ms": 0.14723300000696327
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:15.991349+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 88.56556199998522,
+      "detect_ms": 50.852256000325724,
+      "order_ms": 0.004642000021704007,
+      "recognize_ms": 8.19499299996096,
+      "annotate_ms": 11.262082000030205,
+      "encode_ms": 22.648063999895385,
+      "processing_ms": 181.5275990002192,
+      "translation_submit_snapshot_ms": 0.12719699998342548
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:16.370704+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 197.2564659999989,
+      "detect_ms": 44.072161999793025,
+      "order_ms": 0.9196280002470303,
+      "recognize_ms": 24.68683000006422,
+      "annotate_ms": 60.42504299966822,
+      "encode_ms": 49.794810000094,
+      "processing_ms": 377.1549389998654,
+      "translation_submit_snapshot_ms": 0.15155400024013943
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:16.543631+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 89.0468279999368,
+      "detect_ms": 41.57269400002406,
+      "order_ms": 0.005281000085233245,
+      "recognize_ms": 8.164213999862113,
+      "annotate_ms": 11.196823999853223,
+      "encode_ms": 22.65725899997051,
+      "processing_ms": 172.64309999973193,
+      "translation_submit_snapshot_ms": 0.13100500018481398
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:16.928027+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 198.25298299974747,
+      "detect_ms": 44.698381000216614,
+      "order_ms": 0.894886999958544,
+      "recognize_ms": 24.553199999900244,
+      "annotate_ms": 63.70017100016412,
+      "encode_ms": 49.90526499977932,
+      "processing_ms": 382.0048869997663,
+      "translation_submit_snapshot_ms": 0.15260999998645275
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:17.100253+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 89.69935000004625,
+      "detect_ms": 40.336289999686414,
+      "order_ms": 0.005345000317902304,
+      "recognize_ms": 8.185510999737744,
+      "annotate_ms": 11.081187999934627,
+      "encode_ms": 22.63499100035915,
+      "processing_ms": 171.9426750000821,
+      "translation_submit_snapshot_ms": 0.1285080002162431
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:17.486652+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 202.89704500009975,
+      "detect_ms": 42.3801949996232,
+      "order_ms": 0.9155620000456111,
+      "recognize_ms": 25.863379999918834,
+      "annotate_ms": 62.39544300024136,
+      "encode_ms": 49.94537799984755,
+      "processing_ms": 384.3970029997763,
+      "translation_submit_snapshot_ms": 0.1515220001238049
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:17.653055+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 85.15503700027693,
+      "detect_ms": 38.91645800013066,
+      "order_ms": 0.004608999915944878,
+      "recognize_ms": 8.117656999729661,
+      "annotate_ms": 11.228388000290579,
+      "encode_ms": 22.694331999900896,
+      "processing_ms": 166.11648100024468,
+      "translation_submit_snapshot_ms": 0.13302199977260898
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:18.034818+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 199.19693600013488,
+      "detect_ms": 44.31534000013926,
+      "order_ms": 0.8662069999445521,
+      "recognize_ms": 25.41336100011904,
+      "annotate_ms": 59.96358099991994,
+      "encode_ms": 49.799831999735034,
+      "processing_ms": 379.5552569999927,
+      "translation_submit_snapshot_ms": 0.1405739999427169
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:18.204334+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 88.50759500001004,
+      "detect_ms": 38.28701300017201,
+      "order_ms": 0.005088999841973418,
+      "recognize_ms": 8.309487000133231,
+      "annotate_ms": 11.40347099999417,
+      "encode_ms": 22.715979000167863,
+      "processing_ms": 169.2286340003193,
+      "translation_submit_snapshot_ms": 0.1310370003011485
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:18.585151+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 198.80232900004557,
+      "detect_ms": 42.5825059996896,
+      "order_ms": 0.8963870000116003,
+      "recognize_ms": 25.585883000076137,
+      "annotate_ms": 61.19231299999228,
+      "encode_ms": 49.799372000052244,
+      "processing_ms": 378.85878999986744,
+      "translation_submit_snapshot_ms": 0.14047800004846067
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:18.752682+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 84.47523099994214,
+      "detect_ms": 40.883225000015955,
+      "order_ms": 0.0051530000746424776,
+      "recognize_ms": 8.117285000025731,
+      "annotate_ms": 11.101965999841923,
+      "encode_ms": 22.669665000194072,
+      "processing_ms": 167.25252500009447,
+      "translation_submit_snapshot_ms": 0.1259159998880932
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:19.134673+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 202.98061299990877,
+      "detect_ms": 39.3691360000048,
+      "order_ms": 0.8986910002022341,
+      "recognize_ms": 26.025739000033354,
+      "annotate_ms": 60.643507999884605,
+      "encode_ms": 49.85632300031284,
+      "processing_ms": 379.7740100003466,
+      "translation_submit_snapshot_ms": 0.14082999996389844
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:19.305116+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 86.58639900022536,
+      "detect_ms": 40.91798499985089,
+      "order_ms": 0.0049929999477171805,
+      "recognize_ms": 8.711282000149367,
+      "annotate_ms": 11.361228000168921,
+      "encode_ms": 22.575190999759798,
+      "processing_ms": 170.15707800010205,
+      "translation_submit_snapshot_ms": 0.13186799969844287
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:19.683314+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 200.29978499997014,
+      "detect_ms": 39.208433000112564,
+      "order_ms": 0.9128370002144948,
+      "recognize_ms": 25.552472000072157,
+      "annotate_ms": 60.13738199999352,
+      "encode_ms": 49.830653999833885,
+      "processing_ms": 375.94156300019677,
+      "translation_submit_snapshot_ms": 0.1538569999866013
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:19.849789+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 85.24057400018137,
+      "detect_ms": 38.75377499980459,
+      "order_ms": 0.00556900022274931,
+      "recognize_ms": 8.088619999853108,
+      "annotate_ms": 11.492776000068261,
+      "encode_ms": 22.589691000121093,
+      "processing_ms": 166.17100500025117,
+      "translation_submit_snapshot_ms": 0.13234800007921876
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:20.236280+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 198.62191000038365,
+      "detect_ms": 44.25043899982484,
+      "order_ms": 0.9175720001621812,
+      "recognize_ms": 24.52777899998182,
+      "annotate_ms": 63.573975000053906,
+      "encode_ms": 52.40084599972761,
+      "processing_ms": 384.292521000134,
+      "translation_submit_snapshot_ms": 0.16009799992389162
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:20.408622+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 87.59303799979534,
+      "detect_ms": 42.14723999984926,
+      "order_ms": 0.006338000275718514,
+      "recognize_ms": 8.65281699998377,
+      "annotate_ms": 11.076820999733172,
+      "encode_ms": 22.582757000236597,
+      "processing_ms": 172.05901099987386,
+      "translation_submit_snapshot_ms": 0.12482699958127341
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:20.781279+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 197.6598510000258,
+      "detect_ms": 36.17003199997271,
+      "order_ms": 0.8461960001113766,
+      "recognize_ms": 26.156125999932556,
+      "annotate_ms": 59.98393100026078,
+      "encode_ms": 49.69098999981725,
+      "processing_ms": 370.5071260001205,
+      "translation_submit_snapshot_ms": 0.1398059998791723
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:20.949468+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 85.6110169997919,
+      "detect_ms": 40.02951000029498,
+      "order_ms": 0.004769000042870175,
+      "recognize_ms": 8.657714000037231,
+      "annotate_ms": 11.03501999978107,
+      "encode_ms": 22.571042999970814,
+      "processing_ms": 167.90907299991886,
+      "translation_submit_snapshot_ms": 0.13087599973005126
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:21.325851+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 196.89417600011438,
+      "detect_ms": 40.04987100006474,
+      "order_ms": 0.8676060001562291,
+      "recognize_ms": 25.562437999724352,
+      "annotate_ms": 60.97997300003044,
+      "encode_ms": 49.739239000246016,
+      "processing_ms": 374.09330300033616,
+      "translation_submit_snapshot_ms": 0.1814460001696716
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:21.489764+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 85.59485100022357,
+      "detect_ms": 36.16658999999345,
+      "order_ms": 0.004704999810201116,
+      "recognize_ms": 8.064993000061804,
+      "annotate_ms": 11.209111999960442,
+      "encode_ms": 22.590452000258665,
+      "processing_ms": 163.63070300030813,
+      "translation_submit_snapshot_ms": 0.12949999972988735
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:21.866467+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 195.32441499995912,
+      "detect_ms": 43.23825500023304,
+      "order_ms": 0.8793849997346115,
+      "recognize_ms": 25.297228999988874,
+      "annotate_ms": 60.01557900026455,
+      "encode_ms": 49.74884099965493,
+      "processing_ms": 374.5037039998351,
+      "translation_submit_snapshot_ms": 0.14380600032382063
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:22.037749+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 85.40162600002077,
+      "detect_ms": 43.73339899984785,
+      "order_ms": 0.005728999894927256,
+      "recognize_ms": 8.113192000109848,
+      "annotate_ms": 11.121387999992294,
+      "encode_ms": 22.62788100006219,
+      "processing_ms": 171.00321499992788,
+      "translation_submit_snapshot_ms": 0.12709800012089545
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:22.415360+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 195.9595039998021,
+      "detect_ms": 43.39454199998727,
+      "order_ms": 0.9952790001079848,
+      "recognize_ms": 26.048306000120647,
+      "annotate_ms": 59.458751999954984,
+      "encode_ms": 49.66445699983524,
+      "processing_ms": 375.52083999980823,
+      "translation_submit_snapshot_ms": 0.14505399985864642
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:22.587653+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 87.14688800000658,
+      "detect_ms": 39.51658200003294,
+      "order_ms": 0.004864999937126413,
+      "recognize_ms": 8.703509000042686,
+      "annotate_ms": 12.34042700025384,
+      "encode_ms": 24.31943300007333,
+      "processing_ms": 172.0317040003465,
+      "translation_submit_snapshot_ms": 0.1173360001303081
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:22.970181+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 201.86310100007177,
+      "detect_ms": 40.965715999846,
+      "order_ms": 0.8731100001568848,
+      "recognize_ms": 25.99738300023091,
+      "annotate_ms": 61.006851000001916,
+      "encode_ms": 49.80016399986198,
+      "processing_ms": 380.50632500016945,
+      "translation_submit_snapshot_ms": 0.16070599986051093
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:23.145227+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 85.2911279998807,
+      "detect_ms": 47.63576899995314,
+      "order_ms": 0.004929000169795472,
+      "recognize_ms": 8.12663499982591,
+      "annotate_ms": 11.12293200003478,
+      "encode_ms": 22.578700999929424,
+      "processing_ms": 174.76009399979375,
+      "translation_submit_snapshot_ms": 0.12943499996254104
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:23.526440+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 196.99679099994682,
+      "detect_ms": 38.73668699998234,
+      "order_ms": 0.9896760002447991,
+      "recognize_ms": 26.48395400001391,
+      "annotate_ms": 64.3145670001104,
+      "encode_ms": 51.55785699980697,
+      "processing_ms": 379.07953200010525,
+      "translation_submit_snapshot_ms": 0.1446379997105396
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:23.705062+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 92.84451099983926,
+      "detect_ms": 41.16608399999677,
+      "order_ms": 0.005281000085233245,
+      "recognize_ms": 8.28487499984476,
+      "annotate_ms": 12.005770000087068,
+      "encode_ms": 23.98977599978025,
+      "processing_ms": 178.29629699963334,
+      "translation_submit_snapshot_ms": 0.15471999995497754
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:24.101087+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 204.41435200018532,
+      "detect_ms": 44.04655000007551,
+      "order_ms": 0.8813329995973618,
+      "recognize_ms": 28.780876000382705,
+      "annotate_ms": 64.48314999988725,
+      "encode_ms": 51.288698999996996,
+      "processing_ms": 393.89496000012514,
+      "translation_submit_snapshot_ms": 0.1620810003259976
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:24.273664+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 90.44244400001844,
+      "detect_ms": 39.749705999838625,
+      "order_ms": 0.004864999937126413,
+      "recognize_ms": 8.082800000011048,
+      "annotate_ms": 11.422681000112789,
+      "encode_ms": 22.59648000017478,
+      "processing_ms": 172.2989760000928,
+      "translation_submit_snapshot_ms": 0.1320589999522781
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:24.654074+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 199.39810300002137,
+      "detect_ms": 39.641972000026726,
+      "order_ms": 0.8832199996504642,
+      "recognize_ms": 26.35065399999803,
+      "annotate_ms": 61.98710500029847,
+      "encode_ms": 49.86123999970005,
+      "processing_ms": 378.1222939996951,
+      "translation_submit_snapshot_ms": 0.14348500008054543
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:24.827645+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 88.40247599982831,
+      "detect_ms": 42.53315300002214,
+      "order_ms": 0.0051530000746424776,
+      "recognize_ms": 8.216459999857761,
+      "annotate_ms": 11.507338000228629,
+      "encode_ms": 22.620998000093095,
+      "processing_ms": 173.28557800010458,
+      "translation_submit_snapshot_ms": 0.12946600008945097
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:25.198831+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 194.80416999977024,
+      "detect_ms": 36.28181800013408,
+      "order_ms": 0.8590849997744954,
+      "recognize_ms": 26.35386300016762,
+      "annotate_ms": 61.06128200008243,
+      "encode_ms": 49.872271999902296,
+      "processing_ms": 369.23248999983116,
+      "translation_submit_snapshot_ms": 0.14585400003852556
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:25.371632+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 85.53236500029016,
+      "detect_ms": 43.48045400001865,
+      "order_ms": 0.0049929999477171805,
+      "recognize_ms": 8.327119999648858,
+      "annotate_ms": 11.781930000324792,
+      "encode_ms": 23.390895999909844,
+      "processing_ms": 172.51775800014002,
+      "translation_submit_snapshot_ms": 0.12754599993058946
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:25.768338+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 205.24676199966052,
+      "detect_ms": 46.393874999921536,
+      "order_ms": 0.95497600023009,
+      "recognize_ms": 26.083568000103696,
+      "annotate_ms": 64.60654100010288,
+      "encode_ms": 51.27879599967855,
+      "processing_ms": 394.5645179996973,
+      "translation_submit_snapshot_ms": 0.16576100006204797
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:25.950204+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 92.74543599985918,
+      "detect_ms": 46.44591699980083,
+      "order_ms": 0.005376999979489483,
+      "recognize_ms": 8.586181000282522,
+      "annotate_ms": 10.970852999889757,
+      "encode_ms": 22.72948300014832,
+      "processing_ms": 181.4832469999601,
+      "translation_submit_snapshot_ms": 0.13916399984736927
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:26.340797+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 206.0200110004189,
+      "detect_ms": 38.93878399958339,
+      "order_ms": 0.8444890004284389,
+      "recognize_ms": 26.64029599964124,
+      "annotate_ms": 63.48419799996918,
+      "encode_ms": 52.49144300023545,
+      "processing_ms": 388.4192210002766,
+      "translation_submit_snapshot_ms": 0.14162900015435298
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:26.519009+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 92.67463600008341,
+      "detect_ms": 41.53226200014615,
+      "order_ms": 0.004928999715048121,
+      "recognize_ms": 8.653088000301068,
+      "annotate_ms": 11.333110999657947,
+      "encode_ms": 23.7291550001828,
+      "processing_ms": 177.92718100008642,
+      "translation_submit_snapshot_ms": 0.13218599997344427
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:26.915583+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 209.78455100021165,
+      "detect_ms": 47.16564299997117,
+      "order_ms": 0.8471450000797631,
+      "recognize_ms": 25.51200699963374,
+      "annotate_ms": 61.29774500004714,
+      "encode_ms": 49.937749000037,
+      "processing_ms": 394.54483999998047,
+      "translation_submit_snapshot_ms": 0.15353500020864885
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:27.087927+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 88.03006000016467,
+      "detect_ms": 42.24316899990299,
+      "order_ms": 0.0051530000746424776,
+      "recognize_ms": 8.12807000011162,
+      "annotate_ms": 11.02989199989679,
+      "encode_ms": 22.618518999934167,
+      "processing_ms": 172.05486300008488,
+      "translation_submit_snapshot_ms": 0.13109800011079642
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:27.474920+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 195.8983019999323,
+      "detect_ms": 49.173461999998835,
+      "order_ms": 0.8883679997779836,
+      "recognize_ms": 24.603775000286987,
+      "annotate_ms": 62.52294899968547,
+      "encode_ms": 51.77727299997059,
+      "processing_ms": 384.86412899965217,
+      "translation_submit_snapshot_ms": 0.1658559999668796
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:27.653117+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 90.35270500044135,
+      "detect_ms": 45.67267499987793,
+      "order_ms": 0.00550499999008025,
+      "recognize_ms": 8.087550999789528,
+      "annotate_ms": 11.158429000261094,
+      "encode_ms": 22.619414000018878,
+      "processing_ms": 177.89627900037885,
+      "translation_submit_snapshot_ms": 0.1270969996767235
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:28.047968+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 207.68395899995085,
+      "detect_ms": 46.49402099994404,
+      "order_ms": 0.8804620001683361,
+      "recognize_ms": 25.917953999851306,
+      "annotate_ms": 62.25704100006624,
+      "encode_ms": 49.75339900011022,
+      "processing_ms": 392.986836000091,
+      "translation_submit_snapshot_ms": 0.13964400022814516
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:28.217050+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 84.60602200011635,
+      "detect_ms": 42.30936399972052,
+      "order_ms": 0.005216999852564186,
+      "recognize_ms": 8.168446000127005,
+      "annotate_ms": 11.037263000162056,
+      "encode_ms": 22.665488999791705,
+      "processing_ms": 168.7918009997702,
+      "translation_submit_snapshot_ms": 0.13173800016375026
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:28.599173+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 199.21592899981988,
+      "detect_ms": 37.95107199994163,
+      "order_ms": 0.863368999944214,
+      "recognize_ms": 26.59774700032358,
+      "annotate_ms": 64.32999099979497,
+      "encode_ms": 51.20316800002911,
+      "processing_ms": 380.1612759998534,
+      "translation_submit_snapshot_ms": 0.14281200037657982
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:28.770475+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 89.46486000013465,
+      "detect_ms": 38.90969199983374,
+      "order_ms": 0.004929000169795472,
+      "recognize_ms": 8.510048000061943,
+      "annotate_ms": 11.120158999801788,
+      "encode_ms": 22.622410000167292,
+      "processing_ms": 170.6320980001692,
+      "translation_submit_snapshot_ms": 0.13660300010087667
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:29.147004+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 198.01518200029022,
+      "detect_ms": 40.127138999650924,
+      "order_ms": 0.8993430001282832,
+      "recognize_ms": 26.214067000182695,
+      "annotate_ms": 59.65529399963998,
+      "encode_ms": 49.69567000034658,
+      "processing_ms": 374.6066950002387,
+      "translation_submit_snapshot_ms": 0.13769099996352452
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:29.315862+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 84.69604700030686,
+      "detect_ms": 42.093620999821724,
+      "order_ms": 0.005728999894927256,
+      "recognize_ms": 8.136360000207787,
+      "annotate_ms": 11.015027999746962,
+      "encode_ms": 22.615227000187588,
+      "processing_ms": 168.56201200016585,
+      "translation_submit_snapshot_ms": 0.13861900015399442
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:29.688146+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 196.3037349996739,
+      "detect_ms": 37.64607300036005,
+      "order_ms": 0.8729689998290269,
+      "recognize_ms": 25.616063000143185,
+      "annotate_ms": 59.87251999977161,
+      "encode_ms": 49.77456500000699,
+      "processing_ms": 370.08592499978477,
+      "translation_submit_snapshot_ms": 0.1446040000701032
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:29.853152+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 83.8802719999876,
+      "detect_ms": 39.15263599992613,
+      "order_ms": 0.005281000085233245,
+      "recognize_ms": 8.069946999967215,
+      "annotate_ms": 11.021494000033272,
+      "encode_ms": 22.59435799987841,
+      "processing_ms": 164.72398799987786,
+      "translation_submit_snapshot_ms": 0.13045800005784258
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:30.226344+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 196.89077000020916,
+      "detect_ms": 38.174419999904785,
+      "order_ms": 0.8796239999355748,
+      "recognize_ms": 25.592009000320104,
+      "annotate_ms": 59.79193899975144,
+      "encode_ms": 49.83934300025794,
+      "processing_ms": 371.168105000379,
+      "translation_submit_snapshot_ms": 0.1418510000803508
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:30.391886+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 85.2120740000828,
+      "detect_ms": 37.85592699978224,
+      "order_ms": 0.004641000032279408,
+      "recognize_ms": 8.188225000139937,
+      "annotate_ms": 11.38099699983286,
+      "encode_ms": 22.616591000314656,
+      "processing_ms": 165.25845500018477,
+      "translation_submit_snapshot_ms": 0.13225000020611333
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:30.766598+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 194.0805540002657,
+      "detect_ms": 42.712569999821426,
+      "order_ms": 0.8960760001173185,
+      "recognize_ms": 25.24387699986619,
+      "annotate_ms": 59.828010000273935,
+      "encode_ms": 49.831213999823376,
+      "processing_ms": 372.59230100016794,
+      "translation_submit_snapshot_ms": 0.150141000176518
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:30.936159+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 85.4440230000364,
+      "detect_ms": 41.50827500006926,
+      "order_ms": 0.005024999609304359,
+      "recognize_ms": 8.6607000002914,
+      "annotate_ms": 11.042371999792522,
+      "encode_ms": 22.61588600003961,
+      "processing_ms": 169.2762809998385,
+      "translation_submit_snapshot_ms": 0.13093699999444652
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:31.311039+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 197.69427900018854,
+      "detect_ms": 38.68733999979668,
+      "order_ms": 0.9043630002452119,
+      "recognize_ms": 25.590231000023778,
+      "annotate_ms": 59.8755189998883,
+      "encode_ms": 49.824747999991814,
+      "processing_ms": 372.5764800001343,
+      "translation_submit_snapshot_ms": 0.1366980000057083
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:31.479801+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 85.22320800011585,
+      "detect_ms": 41.4703310002551,
+      "order_ms": 0.00550499999008025,
+      "recognize_ms": 8.092735999980505,
+      "annotate_ms": 11.051120000047376,
+      "encode_ms": 22.638214999915363,
+      "processing_ms": 168.48111500030427,
+      "translation_submit_snapshot_ms": 0.13228100033302326
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:31.856131+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 195.26273900009983,
+      "detect_ms": 42.49228500020763,
+      "order_ms": 0.8994029999485065,
+      "recognize_ms": 25.355881999985286,
+      "annotate_ms": 60.26896999992459,
+      "encode_ms": 50.04306099999667,
+      "processing_ms": 374.3223400001625,
+      "translation_submit_snapshot_ms": 0.1459479999539326
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:32.033406+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 87.70409399994605,
+      "detect_ms": 46.771336999881896,
+      "order_ms": 0.00556900022274931,
+      "recognize_ms": 8.11136299989812,
+      "annotate_ms": 11.75620499998331,
+      "encode_ms": 22.63545100004194,
+      "processing_ms": 176.98401899997407,
+      "translation_submit_snapshot_ms": 0.13695300003746524
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:32.419093+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 204.51863399966896,
+      "detect_ms": 43.34506800023519,
+      "order_ms": 0.945456999943417,
+      "recognize_ms": 25.65873899993676,
+      "annotate_ms": 59.392594000200916,
+      "encode_ms": 49.73503699966386,
+      "processing_ms": 383.5955289996491,
+      "translation_submit_snapshot_ms": 0.14197900009094155
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:32.584763+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 85.27639900012218,
+      "detect_ms": 38.560361999770976,
+      "order_ms": 0.005089000296720769,
+      "recognize_ms": 8.03411699962453,
+      "annotate_ms": 10.898943000029249,
+      "encode_ms": 22.615671000039583,
+      "processing_ms": 165.39058099988324,
+      "translation_submit_snapshot_ms": 0.1314490000368096
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:32.959720+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 195.57970599998953,
+      "detect_ms": 38.785555999766075,
+      "order_ms": 0.9012250002342626,
+      "recognize_ms": 25.20790299968212,
+      "annotate_ms": 62.4084880000737,
+      "encode_ms": 49.892953999915335,
+      "processing_ms": 372.775831999661,
+      "translation_submit_snapshot_ms": 0.14668399990114267
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:33.133833+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 94.29176200001166,
+      "detect_ms": 37.69603199998528,
+      "order_ms": 0.0051530000746424776,
+      "recognize_ms": 8.047608000197215,
+      "annotate_ms": 11.144119999698887,
+      "encode_ms": 22.63249600036943,
+      "processing_ms": 173.8171710003371,
+      "translation_submit_snapshot_ms": 0.15234800002872362
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:33.513712+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 204.17428199971255,
+      "detect_ms": 38.32126900033472,
+      "order_ms": 0.8927730000323209,
+      "recognize_ms": 25.614170999688213,
+      "annotate_ms": 59.30484999998953,
+      "encode_ms": 49.79133799997726,
+      "processing_ms": 378.0986829997346,
+      "translation_submit_snapshot_ms": 0.12018200004604296
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:33.679036+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 86.71797899978628,
+      "detect_ms": 36.4950090001912,
+      "order_ms": 0.005633000000671018,
+      "recognize_ms": 8.05752999985998,
+      "annotate_ms": 11.125685000024532,
+      "encode_ms": 22.63563199994678,
+      "processing_ms": 165.03746799980945,
+      "translation_submit_snapshot_ms": 0.13224900021668873
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:34.054401+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 195.20909500033667,
+      "detect_ms": 42.79784499976813,
+      "order_ms": 0.9603389999028877,
+      "recognize_ms": 25.360203000218462,
+      "annotate_ms": 59.54562899978555,
+      "encode_ms": 49.83192500003497,
+      "processing_ms": 373.7050360000467,
+      "translation_submit_snapshot_ms": 0.13900199974159477
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:34.224026+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 84.88737000016044,
+      "detect_ms": 42.512592999628396,
+      "order_ms": 0.00550499999008025,
+      "recognize_ms": 8.102100000087376,
+      "annotate_ms": 11.221745000057126,
+      "encode_ms": 22.6115230002506,
+      "processing_ms": 169.34083600017402,
+      "translation_submit_snapshot_ms": 0.12965599989911425
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:34.594945+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 195.0886790000368,
+      "detect_ms": 37.871131999963836,
+      "order_ms": 0.9601120000297669,
+      "recognize_ms": 25.877724000110902,
+      "annotate_ms": 59.46800299989263,
+      "encode_ms": 49.81211299991628,
+      "processing_ms": 369.0777629999502,
+      "translation_submit_snapshot_ms": 0.14287400017565233
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:34.759564+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 84.39146999990044,
+      "detect_ms": 37.94304899975032,
+      "order_ms": 0.005441000212158542,
+      "recognize_ms": 8.132312999805436,
+      "annotate_ms": 11.26021700019919,
+      "encode_ms": 22.604384999795002,
+      "processing_ms": 164.33687499966254,
+      "translation_submit_snapshot_ms": 0.13125599980412517
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:35.131898+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 194.99525499986703,
+      "detect_ms": 39.89976100001513,
+      "order_ms": 0.8890590002010867,
+      "recognize_ms": 25.282955999955448,
+      "annotate_ms": 59.66255399971487,
+      "encode_ms": 49.81634400019175,
+      "processing_ms": 370.5459289999453,
+      "translation_submit_snapshot_ms": 0.1485710004089924
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:35.302075+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 85.38698700021996,
+      "detect_ms": 42.75131199983662,
+      "order_ms": 0.00505700018038624,
+      "recognize_ms": 8.049498999753268,
+      "annotate_ms": 11.086244000125589,
+      "encode_ms": 22.61500199983857,
+      "processing_ms": 169.8941009999544,
+      "translation_submit_snapshot_ms": 0.1287909999518888
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:35.681554+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 197.1814420003284,
+      "detect_ms": 44.43619499988927,
+      "order_ms": 0.8436739999524434,
+      "recognize_ms": 25.73528199991415,
+      "annotate_ms": 59.169729000132065,
+      "encode_ms": 49.89046899981986,
+      "processing_ms": 377.2567910000362,
+      "translation_submit_snapshot_ms": 0.16050900012487546
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:35.846542+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 84.59119300005113,
+      "detect_ms": 37.89554699960718,
+      "order_ms": 0.005185000190977007,
+      "recognize_ms": 8.540181000171287,
+      "annotate_ms": 11.076129999764817,
+      "encode_ms": 22.584533000099327,
+      "processing_ms": 164.69276899988472,
+      "translation_submit_snapshot_ms": 0.13903300032325205
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:36.225263+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 194.84436899983848,
+      "detect_ms": 43.625602000247454,
+      "order_ms": 0.8854709999468469,
+      "recognize_ms": 28.360191000047053,
+      "annotate_ms": 58.945036999830336,
+      "encode_ms": 49.90667099991697,
+      "processing_ms": 376.56734099982714,
+      "translation_submit_snapshot_ms": 0.14200999976310413
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:36.389075+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 86.21539900013886,
+      "detect_ms": 34.928927999771986,
+      "order_ms": 0.005313000201567775,
+      "recognize_ms": 8.342657999946823,
+      "annotate_ms": 11.380741999801103,
+      "encode_ms": 22.64674300022307,
+      "processing_ms": 163.5197830000834,
+      "translation_submit_snapshot_ms": 0.14040900032341597
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:36.761685+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 197.2130310000466,
+      "detect_ms": 36.73645399976522,
+      "order_ms": 0.8653079999021429,
+      "recognize_ms": 26.283560000138095,
+      "annotate_ms": 59.7597770001812,
+      "encode_ms": 49.81295700008559,
+      "processing_ms": 370.67108700011886,
+      "translation_submit_snapshot_ms": 0.14473000010184478
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:36.927153+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 85.1007659998686,
+      "detect_ms": 37.84967899991898,
+      "order_ms": 0.005281000085233245,
+      "recognize_ms": 8.424527999977727,
+      "annotate_ms": 11.16406300025119,
+      "encode_ms": 22.63461299980918,
+      "processing_ms": 165.1789299999109,
+      "translation_submit_snapshot_ms": 0.13279199993121438
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:37.304947+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 195.76436400029706,
+      "detect_ms": 44.9256609999793,
+      "order_ms": 0.8526639999217878,
+      "recognize_ms": 25.556150999818783,
+      "annotate_ms": 59.108514999934414,
+      "encode_ms": 49.73957700030951,
+      "processing_ms": 375.94693200026086,
+      "translation_submit_snapshot_ms": 0.1438340000277094
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:37.473194+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 85.04729500009489,
+      "detect_ms": 40.42696900023657,
+      "order_ms": 0.005472999873745721,
+      "recognize_ms": 8.427937999840651,
+      "annotate_ms": 11.49923899993155,
+      "encode_ms": 22.554142999979376,
+      "processing_ms": 167.96105699995678,
+      "translation_submit_snapshot_ms": 0.13301599983606138
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:37.848551+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 196.27968500026327,
+      "detect_ms": 40.82415899983971,
+      "order_ms": 0.8538490001228638,
+      "recognize_ms": 25.43878599999516,
+      "annotate_ms": 59.83113999991474,
+      "encode_ms": 49.868720000176836,
+      "processing_ms": 373.0963390003126,
+      "translation_submit_snapshot_ms": 0.151675000324758
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:38.014036+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 84.71802000030948,
+      "detect_ms": 38.35549399991578,
+      "order_ms": 0.005568999768001959,
+      "recognize_ms": 8.424610000020039,
+      "annotate_ms": 11.090750000221306,
+      "encode_ms": 22.606386999996175,
+      "processing_ms": 165.20083000023078,
+      "translation_submit_snapshot_ms": 0.1286299998355389
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:38.397248+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 204.95191899999554,
+      "detect_ms": 39.490253000167286,
+      "order_ms": 0.8444380000582896,
+      "recognize_ms": 25.40465599986419,
+      "annotate_ms": 60.481487000288325,
+      "encode_ms": 49.89833499985252,
+      "processing_ms": 381.07108800022615,
+      "translation_submit_snapshot_ms": 0.15049100011310657
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:38.566906+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 85.31064999988303,
+      "detect_ms": 42.05093000018678,
+      "order_ms": 0.005441000212158542,
+      "recognize_ms": 8.415376999892032,
+      "annotate_ms": 10.976533999837557,
+      "encode_ms": 22.613185999944108,
+      "processing_ms": 169.37211799995566,
+      "translation_submit_snapshot_ms": 0.13285500017445884
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:38.945790+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 195.54362999997466,
+      "detect_ms": 45.96448700021938,
+      "order_ms": 0.8815959999992629,
+      "recognize_ms": 24.954623999747128,
+      "annotate_ms": 59.75111800034938,
+      "encode_ms": 49.83982899966577,
+      "processing_ms": 376.9352839999556,
+      "translation_submit_snapshot_ms": 0.14389799980563112
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:39.110481+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 86.39011700006449,
+      "detect_ms": 36.38746600017839,
+      "order_ms": 0.005056999725638889,
+      "recognize_ms": 7.9981369999586605,
+      "annotate_ms": 11.03012600015063,
+      "encode_ms": 22.599127999910706,
+      "processing_ms": 164.41003099998852,
+      "translation_submit_snapshot_ms": 0.13253499992060824
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:39.482728+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 196.14813899988803,
+      "detect_ms": 38.09720500021285,
+      "order_ms": 0.898653000149352,
+      "recognize_ms": 25.651279999692633,
+      "annotate_ms": 59.59850999988703,
+      "encode_ms": 49.741614000140544,
+      "processing_ms": 370.13540099997044,
+      "translation_submit_snapshot_ms": 0.14591399985874887
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:39.646658+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 84.71065499998076,
+      "detect_ms": 37.11159199974645,
+      "order_ms": 0.005121000413055299,
+      "recognize_ms": 8.023677999972278,
+      "annotate_ms": 11.16810199982865,
+      "encode_ms": 22.624605000146403,
+      "processing_ms": 163.6437530000876,
+      "translation_submit_snapshot_ms": 0.1324400000157766
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:40.024208+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 197.0478479997837,
+      "detect_ms": 42.218856000090454,
+      "order_ms": 0.8916120000321826,
+      "recognize_ms": 25.277806999838504,
+      "annotate_ms": 60.198678000233485,
+      "encode_ms": 49.83465299983436,
+      "processing_ms": 375.4694539998127,
+      "translation_submit_snapshot_ms": 0.14255299993237713
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:40.187749+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 84.26467500021317,
+      "detect_ms": 37.11901899987424,
+      "order_ms": 0.004864999937126413,
+      "recognize_ms": 8.088187999874208,
+      "annotate_ms": 11.128396000003704,
+      "encode_ms": 22.65122800008612,
+      "processing_ms": 163.25637099998858,
+      "translation_submit_snapshot_ms": 0.12968699957127683
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:40.559538+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 196.04359799996018,
+      "detect_ms": 37.3530120000396,
+      "order_ms": 0.9349470001325244,
+      "recognize_ms": 25.510796000162372,
+      "annotate_ms": 59.87477700000454,
+      "encode_ms": 49.745595999866055,
+      "processing_ms": 369.4627260001653,
+      "translation_submit_snapshot_ms": 0.14917799990143976
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:40.731591+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 88.16743299985319,
+      "detect_ms": 41.441977999966184,
+      "order_ms": 0.0051530000746424776,
+      "recognize_ms": 8.115359999919747,
+      "annotate_ms": 11.355667999850994,
+      "encode_ms": 22.683137000058196,
+      "processing_ms": 171.76872899972295,
+      "translation_submit_snapshot_ms": 0.12975000026926864
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:41.111831+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 203.65237499981959,
+      "detect_ms": 38.23322900007042,
+      "order_ms": 0.9570299998813425,
+      "recognize_ms": 25.542258000314177,
+      "annotate_ms": 59.71910299967931,
+      "encode_ms": 49.741415999960736,
+      "processing_ms": 377.8454109997256,
+      "translation_submit_snapshot_ms": 0.14719399996465654
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:41.284288+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 84.94750099998782,
+      "detect_ms": 45.02015699972617,
+      "order_ms": 0.005472999873745721,
+      "recognize_ms": 8.476305000385764,
+      "annotate_ms": 11.100372999862884,
+      "encode_ms": 22.63003400003072,
+      "processing_ms": 172.1798429998671,
+      "translation_submit_snapshot_ms": 0.1306789999944158
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:41.661470+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 194.03121699997428,
+      "detect_ms": 45.08621500008303,
+      "order_ms": 0.8777510001891642,
+      "recognize_ms": 24.93884799969237,
+      "annotate_ms": 60.26869800007262,
+      "encode_ms": 49.88480100018933,
+      "processing_ms": 375.0875300002008,
+      "translation_submit_snapshot_ms": 0.14027999986865325
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:41.831810+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 85.51588699992863,
+      "detect_ms": 42.09338100008608,
+      "order_ms": 0.005344999863154953,
+      "recognize_ms": 8.690741999998863,
+      "annotate_ms": 11.132793999877322,
+      "encode_ms": 22.622898000008718,
+      "processing_ms": 170.06104699976277,
+      "translation_submit_snapshot_ms": 0.12962199980393052
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:42.203642+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 195.74237999995603,
+      "detect_ms": 37.694227999963914,
+      "order_ms": 0.8979449999060307,
+      "recognize_ms": 25.89253699989058,
+      "annotate_ms": 59.53292300000612,
+      "encode_ms": 49.77449300031367,
+      "processing_ms": 369.53450600003634,
+      "translation_submit_snapshot_ms": 0.1473209999858227
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:42.374484+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 85.41115400021226,
+      "detect_ms": 43.085993999739,
+      "order_ms": 0.0054719998843211215,
+      "recognize_ms": 8.530221000000893,
+      "annotate_ms": 10.998289000326622,
+      "encode_ms": 22.52796499988108,
+      "processing_ms": 170.55909500004418,
+      "translation_submit_snapshot_ms": 0.1333660002273973
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:42.752366+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 197.81960899990736,
+      "detect_ms": 43.864110999948025,
+      "order_ms": 0.8726920000299287,
+      "recognize_ms": 24.138542999935453,
+      "annotate_ms": 58.80473500019434,
+      "encode_ms": 49.895473000105994,
+      "processing_ms": 375.3951630001211,
+      "translation_submit_snapshot_ms": 0.1436719999219349
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:42.920014+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 84.72502099994017,
+      "detect_ms": 41.0121039999467,
+      "order_ms": 0.005600999884336488,
+      "recognize_ms": 8.023734999824228,
+      "annotate_ms": 11.006610000094952,
+      "encode_ms": 22.59741700027007,
+      "processing_ms": 167.37048799996046,
+      "translation_submit_snapshot_ms": 0.12853399994128267
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:43.291418+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 194.6914709997145,
+      "detect_ms": 38.37649000024612,
+      "order_ms": 0.8884379999472003,
+      "recognize_ms": 25.53086699981577,
+      "annotate_ms": 59.84472000000096,
+      "encode_ms": 49.877310000283614,
+      "processing_ms": 369.2092960000082,
+      "translation_submit_snapshot_ms": 0.15221800003928365
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:43.466932+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 88.454217999697,
+      "detect_ms": 44.57507200004329,
+      "order_ms": 0.005441000212158542,
+      "recognize_ms": 8.187237000129244,
+      "annotate_ms": 11.266828999850986,
+      "encode_ms": 22.744252999927994,
+      "processing_ms": 175.23304999986067,
+      "translation_submit_snapshot_ms": 0.1290139998673112
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:43.852083+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 200.35309500008225,
+      "detect_ms": 47.544372999709594,
+      "order_ms": 0.8938470000430243,
+      "recognize_ms": 24.373040000227775,
+      "annotate_ms": 60.14707399981489,
+      "encode_ms": 49.84472900014225,
+      "processing_ms": 383.1561580000198,
+      "translation_submit_snapshot_ms": 0.1391280002280837
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:44.018253+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 85.70575400017333,
+      "detect_ms": 38.13481799988949,
+      "order_ms": 0.00505700018038624,
+      "recognize_ms": 8.43857499967271,
+      "annotate_ms": 11.01917100004357,
+      "encode_ms": 22.589616000004753,
+      "processing_ms": 165.89299099996424,
+      "translation_submit_snapshot_ms": 0.12968600003659958
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:44.397683+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 195.3021429999353,
+      "detect_ms": 40.634151000176644,
+      "order_ms": 0.8746419998715282,
+      "recognize_ms": 29.552619000241975,
+      "annotate_ms": 61.02952799983541,
+      "encode_ms": 49.91486900007658,
+      "processing_ms": 377.30795200013745,
+      "translation_submit_snapshot_ms": 0.15045700001792284
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:44.563821+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 85.353208000015,
+      "detect_ms": 37.88050699995438,
+      "order_ms": 0.005440999757411191,
+      "recognize_ms": 8.58815500032506,
+      "annotate_ms": 11.403441999846109,
+      "encode_ms": 22.61251500021899,
+      "processing_ms": 165.84326800011695,
+      "translation_submit_snapshot_ms": 0.1357030000690429
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:44.938395+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 197.3949729999731,
+      "detect_ms": 38.426197999797296,
+      "order_ms": 0.8891730003597331,
+      "recognize_ms": 25.449884999943606,
+      "annotate_ms": 60.43662799993399,
+      "encode_ms": 49.82435900001292,
+      "processing_ms": 372.42121600002065,
+      "translation_submit_snapshot_ms": 0.14485600013358635
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:45.105523+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 86.10466500022085,
+      "detect_ms": 38.500613999985944,
+      "order_ms": 0.005088999841973418,
+      "recognize_ms": 8.45647200003441,
+      "annotate_ms": 11.189917000137939,
+      "encode_ms": 22.58303500002512,
+      "processing_ms": 166.83979200024623,
+      "translation_submit_snapshot_ms": 0.13198999977248604
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:45.486660+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 199.3971099996088,
+      "detect_ms": 46.04941600018719,
+      "order_ms": 0.8319140001731284,
+      "recognize_ms": 24.034314999880735,
+      "annotate_ms": 58.88082100000247,
+      "encode_ms": 49.779122000018106,
+      "processing_ms": 378.97269799987043,
+      "translation_submit_snapshot_ms": 0.1481209997109545
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:45.657081+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 84.60235900020052,
+      "detect_ms": 43.11331400003837,
+      "order_ms": 0.005088999841973418,
+      "recognize_ms": 8.158054999967135,
+      "annotate_ms": 11.54549600005339,
+      "encode_ms": 22.709519999807526,
+      "processing_ms": 170.13383299990892,
+      "translation_submit_snapshot_ms": 0.13355800001590978
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:46.041347+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 203.58369099994889,
+      "detect_ms": 41.98483900017891,
+      "order_ms": 0.9163119998447655,
+      "recognize_ms": 25.3841389999252,
+      "annotate_ms": 60.720005000348465,
+      "encode_ms": 49.87950299982913,
+      "processing_ms": 382.46848900007535,
+      "translation_submit_snapshot_ms": 0.1349979997939954
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:46.209470+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 86.78438000015376,
+      "detect_ms": 39.10219099998358,
+      "order_ms": 0.004671999704441987,
+      "recognize_ms": 8.054218000324909,
+      "annotate_ms": 11.22814499967717,
+      "encode_ms": 22.664070000246284,
+      "processing_ms": 167.83767600009014,
+      "translation_submit_snapshot_ms": 0.13416600040727644
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:46.592406+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 204.6227179998823,
+      "detect_ms": 38.68772200030435,
+      "order_ms": 0.8892339997146337,
+      "recognize_ms": 25.77203600003486,
+      "annotate_ms": 60.99675799987381,
+      "encode_ms": 49.96445200004018,
+      "processing_ms": 380.9329199998501,
+      "translation_submit_snapshot_ms": 0.1493680001658504
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:46.767621+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 90.92089900013889,
+      "detect_ms": 41.72742099990501,
+      "order_ms": 0.004479999915929511,
+      "recognize_ms": 8.103954000034719,
+      "annotate_ms": 11.450261999925715,
+      "encode_ms": 22.69757900012337,
+      "processing_ms": 174.90459500004363,
+      "translation_submit_snapshot_ms": 0.14552800030287472
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:47.149225+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 200.29874500005462,
+      "detect_ms": 41.84704999988753,
+      "order_ms": 0.8564600002500811,
+      "recognize_ms": 25.544631999764533,
+      "annotate_ms": 61.060836000251584,
+      "encode_ms": 49.90760000009686,
+      "processing_ms": 379.5153230003052,
+      "translation_submit_snapshot_ms": 0.1517370001238305
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:47.319452+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 88.35906500007695,
+      "detect_ms": 39.48894599989217,
+      "order_ms": 0.0052489999688987155,
+      "recognize_ms": 8.114374999877327,
+      "annotate_ms": 11.267015000157699,
+      "encode_ms": 22.705674999997427,
+      "processing_ms": 169.94032499997047,
+      "translation_submit_snapshot_ms": 0.13080500002615736
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:47.704417+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 206.29797800029337,
+      "detect_ms": 39.342618999853585,
+      "order_ms": 0.9027070000229287,
+      "recognize_ms": 25.83232599999974,
+      "annotate_ms": 60.72618999996848,
+      "encode_ms": 49.979419999999664,
+      "processing_ms": 383.08124000013777,
+      "translation_submit_snapshot_ms": 0.14754399990124512
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:47.875088+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 85.16366599997127,
+      "detect_ms": 43.4979819997352,
+      "order_ms": 0.004929000169795472,
+      "recognize_ms": 8.122824000110995,
+      "annotate_ms": 10.960532999888528,
+      "encode_ms": 22.64339299972562,
+      "processing_ms": 170.3933269996014,
+      "translation_submit_snapshot_ms": 0.12798900024790782
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:48.244879+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 195.36957799982702,
+      "detect_ms": 36.148317999959545,
+      "order_ms": 0.878285999988293,
+      "recognize_ms": 26.25107499989099,
+      "annotate_ms": 59.57465100027548,
+      "encode_ms": 49.79717200012601,
+      "processing_ms": 368.01908000006733,
+      "translation_submit_snapshot_ms": 0.14008600010129157
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:48.416927+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 85.35067399998297,
+      "detect_ms": 44.266969000091194,
+      "order_ms": 0.005472999873745721,
+      "recognize_ms": 8.666963999985455,
+      "annotate_ms": 10.879127999942284,
+      "encode_ms": 22.598456000196165,
+      "processing_ms": 171.76766400007182,
+      "translation_submit_snapshot_ms": 0.12952500037499703
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:48.809210+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 211.8122570000196,
+      "detect_ms": 39.71292400001403,
+      "order_ms": 0.8441039999524946,
+      "recognize_ms": 25.83193600003142,
+      "annotate_ms": 62.21261199971195,
+      "encode_ms": 49.89325099995767,
+      "processing_ms": 390.30708399968717,
+      "translation_submit_snapshot_ms": 0.15365700028269202
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:48.975240+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 85.85277100019084,
+      "detect_ms": 37.50863200002641,
+      "order_ms": 0.005568999768001959,
+      "recognize_ms": 8.32249299992327,
+      "annotate_ms": 11.438354000347317,
+      "encode_ms": 22.617273999912868,
+      "processing_ms": 165.7450930001687,
+      "translation_submit_snapshot_ms": 0.12882100008937414
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:49.358323+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 204.7837349996371,
+      "detect_ms": 39.021203000174864,
+      "order_ms": 0.8303409999825817,
+      "recognize_ms": 25.998261000040657,
+      "annotate_ms": 60.65291200002321,
+      "encode_ms": 49.836177000088355,
+      "processing_ms": 381.12262899994676,
+      "translation_submit_snapshot_ms": 0.13992699996379088
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:49.526198+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 84.11415999989913,
+      "detect_ms": 39.80094400003509,
+      "order_ms": 0.00553700010641478,
+      "recognize_ms": 8.18821900020339,
+      "annotate_ms": 12.283719999686582,
+      "encode_ms": 23.195286000373017,
+      "processing_ms": 167.58786600030362,
+      "translation_submit_snapshot_ms": 0.12782900012098253
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:49.922663+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 206.16688700010855,
+      "detect_ms": 46.58064999966882,
+      "order_ms": 0.8597539999755099,
+      "recognize_ms": 25.686019000204396,
+      "annotate_ms": 63.59133300020403,
+      "encode_ms": 51.31641399975706,
+      "processing_ms": 394.20105699991836,
+      "translation_submit_snapshot_ms": 0.14514300028167781
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:50.101928+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 93.19706699989183,
+      "detect_ms": 42.02155799976026,
+      "order_ms": 0.005089000296720769,
+      "recognize_ms": 8.109314999728667,
+      "annotate_ms": 11.971493000146438,
+      "encode_ms": 23.557550000077754,
+      "processing_ms": 178.86207199990167,
+      "translation_submit_snapshot_ms": 0.24701599977561273
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:50.504046+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 219.6354729999257,
+      "detect_ms": 43.152968999947916,
+      "order_ms": 0.838724999994156,
+      "recognize_ms": 25.404466000054526,
+      "annotate_ms": 61.19038199994975,
+      "encode_ms": 49.970974999723694,
+      "processing_ms": 400.19298999959574,
+      "translation_submit_snapshot_ms": 0.145846999657806
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:50.681722+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 90.21538799970585,
+      "detect_ms": 45.06306300027063,
+      "order_ms": 0.005376999979489483,
+      "recognize_ms": 8.339174999946408,
+      "annotate_ms": 11.143233999973745,
+      "encode_ms": 22.6323480001156,
+      "processing_ms": 177.39858499999173,
+      "translation_submit_snapshot_ms": 0.12635600023713778
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:51.067139+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 198.13744900011443,
+      "detect_ms": 44.571977999567025,
+      "order_ms": 0.8338600000570295,
+      "recognize_ms": 24.536712000099214,
+      "annotate_ms": 63.529652999932296,
+      "encode_ms": 51.68976699997074,
+      "processing_ms": 383.29941899974074,
+      "translation_submit_snapshot_ms": 0.14210200015440932
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:51.239652+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 88.75019900006009,
+      "detect_ms": 41.59563999974125,
+      "order_ms": 0.005376999979489483,
+      "recognize_ms": 8.124121000037121,
+      "annotate_ms": 11.131985000247369,
+      "encode_ms": 22.61970499966992,
+      "processing_ms": 172.22702699973524,
+      "translation_submit_snapshot_ms": 0.13278899996294058
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:51.632391+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 206.16498700019292,
+      "detect_ms": 48.22186299998066,
+      "order_ms": 0.8793369997874834,
+      "recognize_ms": 24.21403600010308,
+      "annotate_ms": 61.119980000057694,
+      "encode_ms": 49.89310100017974,
+      "processing_ms": 390.4933040003016,
+      "translation_submit_snapshot_ms": 0.1585209997756465
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:51.806024+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 87.17788900003143,
+      "detect_ms": 44.543046000399045,
+      "order_ms": 0.005120999958307948,
+      "recognize_ms": 8.070288999988406,
+      "annotate_ms": 10.935985999822151,
+      "encode_ms": 22.61928899997656,
+      "processing_ms": 173.3516200001759,
+      "translation_submit_snapshot_ms": 0.1279560001421487
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:52.184114+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 196.69675100021777,
+      "detect_ms": 45.70147200001884,
+      "order_ms": 0.8649669998703757,
+      "recognize_ms": 23.9559769997868,
+      "annotate_ms": 59.03557200008436,
+      "encode_ms": 49.75918600030127,
+      "processing_ms": 376.0139250002794,
+      "translation_submit_snapshot_ms": 0.1467749998482759
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:52.354326+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 84.53809299999193,
+      "detect_ms": 43.58328300031644,
+      "order_ms": 0.005120999958307948,
+      "recognize_ms": 8.235198999955173,
+      "annotate_ms": 10.986122999838699,
+      "encode_ms": 22.584757000004174,
+      "processing_ms": 169.93257600006473,
+      "translation_submit_snapshot_ms": 0.12994000007893192
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:52.724656+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 194.74769500038747,
+      "detect_ms": 37.097506999998586,
+      "order_ms": 0.8642309999231657,
+      "recognize_ms": 26.05623999988893,
+      "annotate_ms": 59.711676000006264,
+      "encode_ms": 49.85020899994197,
+      "processing_ms": 368.3275580001464,
+      "translation_submit_snapshot_ms": 0.14322199967864435
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:52.893754+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 85.18212899980426,
+      "detect_ms": 41.273547999935545,
+      "order_ms": 0.005472999873745721,
+      "recognize_ms": 8.701480000127049,
+      "annotate_ms": 11.048052000205644,
+      "encode_ms": 22.60876099990128,
+      "processing_ms": 168.81944299984752,
+      "translation_submit_snapshot_ms": 0.12897999977212748
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:53.273835+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 196.96981100014455,
+      "detect_ms": 43.24317099963082,
+      "order_ms": 0.8945380000113801,
+      "recognize_ms": 25.91890300027444,
+      "annotate_ms": 61.27279499969518,
+      "encode_ms": 49.86287800011269,
+      "processing_ms": 378.16209599986905,
+      "translation_submit_snapshot_ms": 0.1589679995959159
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:53.440796+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 86.06422900038524,
+      "detect_ms": 38.83516399992004,
+      "order_ms": 0.00502500006405171,
+      "recognize_ms": 8.09881499981202,
+      "annotate_ms": 11.087115000009362,
+      "encode_ms": 22.589302000142197,
+      "processing_ms": 166.6796500003329,
+      "translation_submit_snapshot_ms": 0.1313489997301076
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:53.820448+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 199.3374789999507,
+      "detect_ms": 37.750069000139774,
+      "order_ms": 0.90599499981181,
+      "recognize_ms": 26.54722400029641,
+      "annotate_ms": 62.91323999994347,
+      "encode_ms": 49.87647999996625,
+      "processing_ms": 377.3304870001084,
+      "translation_submit_snapshot_ms": 0.15179899992290302
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:53.994341+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 87.0094940000854,
+      "detect_ms": 44.48877100003301,
+      "order_ms": 0.005824999789183494,
+      "recognize_ms": 8.128547000069375,
+      "annotate_ms": 11.37205500026539,
+      "encode_ms": 22.60540099996433,
+      "processing_ms": 173.6100930002067,
+      "translation_submit_snapshot_ms": 0.13179600000512437
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:54.382587+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 206.10075300010067,
+      "detect_ms": 44.9625430001106,
+      "order_ms": 0.9838309997576289,
+      "recognize_ms": 24.478296000324917,
+      "annotate_ms": 59.57382899987351,
+      "encode_ms": 49.8099070000535,
+      "processing_ms": 385.9091590002208,
+      "translation_submit_snapshot_ms": 0.1442459997633705
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:54.546970+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 83.85033400008979,
+      "detect_ms": 37.9785649997757,
+      "order_ms": 0.0052489999688987155,
+      "recognize_ms": 8.491632000186655,
+      "annotate_ms": 11.137315999803832,
+      "encode_ms": 22.63263900022139,
+      "processing_ms": 164.09573500004626,
+      "translation_submit_snapshot_ms": 0.13387700028033578
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:54.927717+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 194.60960800006433,
+      "detect_ms": 46.08969099990645,
+      "order_ms": 0.9159480000562326,
+      "recognize_ms": 26.352822999797354,
+      "annotate_ms": 60.942485999930796,
+      "encode_ms": 49.841847000152484,
+      "processing_ms": 378.75240299990764,
+      "translation_submit_snapshot_ms": 0.1509989997430239
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:55.094472+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 85.37225300005957,
+      "detect_ms": 38.62114000003203,
+      "order_ms": 0.0054090000958240125,
+      "recognize_ms": 8.251167999787867,
+      "annotate_ms": 11.502829000164638,
+      "encode_ms": 22.70141799999692,
+      "processing_ms": 166.45421700013685,
+      "translation_submit_snapshot_ms": 0.13934899970990955
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:55.470669+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 195.2465019999181,
+      "detect_ms": 40.95032400027776,
+      "order_ms": 0.8708199998181954,
+      "recognize_ms": 26.08830000008311,
+      "annotate_ms": 60.69142300020758,
+      "encode_ms": 49.94474099976287,
+      "processing_ms": 373.7921100000676,
+      "translation_submit_snapshot_ms": 0.15163899979597772
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:55.647020+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 93.09616600012305,
+      "detect_ms": 39.74796600004993,
+      "order_ms": 0.004960999831382651,
+      "recognize_ms": 8.100170000034268,
+      "annotate_ms": 11.418910999964282,
+      "encode_ms": 23.691393000262906,
+      "processing_ms": 176.05956700026582,
+      "translation_submit_snapshot_ms": 0.13313999988895375
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:56.024255+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 198.11435999963578,
+      "detect_ms": 41.67517000041698,
+      "order_ms": 0.8919109995986219,
+      "recognize_ms": 25.1737610001328,
+      "annotate_ms": 59.19046000008166,
+      "encode_ms": 49.90106500008551,
+      "processing_ms": 374.94672699995135,
+      "translation_submit_snapshot_ms": 0.14511000017591869
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:56.190713+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 86.21754100022372,
+      "detect_ms": 38.20525099990846,
+      "order_ms": 0.005376999979489483,
+      "recognize_ms": 8.022450999760622,
+      "annotate_ms": 11.108067000350275,
+      "encode_ms": 22.617151999838825,
+      "processing_ms": 166.1758390000614,
+      "translation_submit_snapshot_ms": 0.1297469998462475
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:56.567219+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 194.52959599993846,
+      "detect_ms": 39.040640000166604,
+      "order_ms": 0.8411819999309955,
+      "recognize_ms": 30.983719999767345,
+      "annotate_ms": 59.476570000242646,
+      "encode_ms": 49.78772399999798,
+      "processing_ms": 374.65943200004403,
+      "translation_submit_snapshot_ms": 0.12069000013070763
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:56.735766+00:00",
+    "sample_id": "mohanbari",
+    "timings_ms": {
+      "decode_resize_ms": 85.15767000017149,
+      "detect_ms": 41.18320199995651,
+      "order_ms": 0.004417000127432402,
+      "recognize_ms": 8.164968000073713,
+      "annotate_ms": 11.148104999847419,
+      "encode_ms": 22.612864000166155,
+      "processing_ms": 168.27122600034272,
+      "translation_submit_snapshot_ms": 0.13637299980473472
+    },
+    "translation_ready": 1,
+    "translation_error": null
+  },
+  {
+    "timestamp": "2026-11-25T16:46:57.107913+00:00",
+    "sample_id": "shop_signs",
+    "timings_ms": {
+      "decode_resize_ms": 194.89931599991905,
+      "detect_ms": 38.44560700008515,
+      "order_ms": 0.9480779999648803,
+      "recognize_ms": 25.693518000025506,
+      "annotate_ms": 60.01104999995732,
+      "encode_ms": 49.95501299981697,
+      "processing_ms": 369.9525819997689,
+      "translation_submit_snapshot_ms": 0.1427419997526158
+    },
+    "translation_ready": 3,
+    "translation_error": null
+  }
+]

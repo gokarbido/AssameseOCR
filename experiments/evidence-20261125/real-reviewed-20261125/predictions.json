@@ -1,0 +1,70 @@
+{
+  "mohanbari": {
+    "sample_id": "mohanbari",
+    "source_width": 2560,
+    "source_height": 1920,
+    "input_width": 1536,
+    "input_height": 1152,
+    "boxes": [
+      [
+        499,
+        296,
+        864,
+        408
+      ]
+    ],
+    "scores": [
+      0.9336244463920593
+    ],
+    "texts": [
+      "মোহনবাৰী"
+    ],
+    "recognition_errors": [],
+    "crop_recognition_ms": [
+      153.90488199955144
+    ]
+  },
+  "shop_signs": {
+    "sample_id": "shop_signs",
+    "source_width": 2252,
+    "source_height": 4000,
+    "input_width": 1536,
+    "input_height": 2728,
+    "boxes": [
+      [
+        1004,
+        128,
+        1203,
+        234
+      ],
+      [
+        372,
+        802,
+        718,
+        956
+      ],
+      [
+        763,
+        824,
+        1146,
+        982
+      ]
+    ],
+    "scores": [
+      0.6242527961730957,
+      0.9034220576286316,
+      0.9262384176254272
+    ],
+    "texts": [
+      "|ং",
+      "টিবেট",
+      "কিচেন"
+    ],
+    "recognition_errors": [],
+    "crop_recognition_ms": [
+      8.917646000554669,
+      8.293617999697744,
+      8.217677000175172
+    ]
+  }
+}

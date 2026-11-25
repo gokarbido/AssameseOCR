@@ -1,0 +1,105 @@
+{
+  "start_utc": "2026-11-25T16:45:56.573168+00:00",
+  "end_utc": "2026-11-25T16:46:57.107969+00:00",
+  "elapsed_s": 60.534806941999705,
+  "frames": 198,
+  "throughput_fps": 3.2708454854693763,
+  "stages_ms": {
+    "decode_resize_ms": {
+      "n": 198,
+      "mean": 153.34383055052757,
+      "p50": 159.60848949998763,
+      "p95": 207.1641185501676,
+      "minimum": 83.85033400008979,
+      "maximum": 2037.1819380002307
+    },
+    "detect_ms": {
+      "n": 198,
+      "mean": 59.54233522725236,
+      "p50": 41.22837499994603,
+      "p95": 47.55808239974613,
+      "minimum": 34.928927999771986,
+      "maximum": 2640.446496000095
+    },
+    "order_ms": {
+      "n": 198,
+      "mean": 0.4518683232333268,
+      "p50": 0.4123964997688745,
+      "p95": 0.9574922999036061,
+      "minimum": 0.004417000127432402,
+      "maximum": 1.4045369998711976
+    },
+    "recognize_ms": {
+      "n": 198,
+      "mean": 17.81996296465124,
+      "p50": 24.086428999908094,
+      "p95": 26.60412935022123,
+      "minimum": 7.9981369999586605,
+      "maximum": 83.93680900007894
+    },
+    "annotate_ms": {
+      "n": 198,
+      "mean": 36.739771494949586,
+      "p50": 58.842778000098406,
+      "p95": 64.34160219978367,
+      "minimum": 10.879127999942284,
+      "maximum": 91.93884499973137
+    },
+    "encode_ms": {
+      "n": 198,
+      "mean": 36.631668010110815,
+      "p50": 49.67772349982624,
+      "p95": 51.72277445008149,
+      "minimum": 22.52796499988108,
+      "maximum": 54.13829200006148
+    },
+    "processing_ms": {
+      "n": 198,
+      "mean": 304.5294365707249,
+      "p50": 368.43770500013306,
+      "p95": 394.2526244499277,
+      "minimum": 162.89111299965953,
+      "maximum": 4823.487989000114
+    },
+    "translation_submit_snapshot_ms": {
+      "n": 198,
+      "mean": 0.13789953535559457,
+      "p50": 0.13769299994237372,
+      "p95": 0.1552901499280778,
+      "minimum": 0.06168100026116008,
+      "maximum": 0.24701599977561273
+    }
+  },
+  "uncached_generation_ms": {
+    "n": 4,
+    "mean": 138.57398250013375,
+    "p50": 132.03990150009304,
+    "p95": 187.34484125025116,
+    "minimum": 95.50785400006134,
+    "maximum": 194.7082730002876
+  },
+  "cache_snapshot_ms": {
+    "n": 100,
+    "mean": 0.0046425899881796795,
+    "p50": 0.004608999915944878,
+    "p95": 0.004738549932881142,
+    "minimum": 0.0044809999053541105,
+    "maximum": 0.006976999884500401
+  },
+  "unique_sources": 4,
+  "translations": [
+    [
+      "Mohanbari",
+      ".",
+      "Tibet",
+      "Kitchen"
+    ],
+    null
+  ],
+  "manifest": {
+    "bytes": 798,
+    "sha256": "48fe9b93fcbe1709fd3a4b5023bd422bd4780d63554780ba78ae2971ace40ca5"
+  },
+  "scope": "CUDA OCR with production asynchronous CPU translation. Generation drain is outside measured OCR interval. Annotation is Assamese-only; English overlay cost is excluded.",
+  "accuracy": "Unscored: no reviewed references. Cache timings measure lookup, not generation."
+}

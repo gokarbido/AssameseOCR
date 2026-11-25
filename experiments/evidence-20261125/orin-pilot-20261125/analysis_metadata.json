@@ -1,0 +1,16 @@
+{
+  "created_at": "2026-11-25T16:48:38.437869+00:00",
+  "method": "Recomputed from unchanged frames.csv, summary.json, and timestamped raw tegrastats records.",
+  "analysis_source_revision": {
+    "command": [
+      "git",
+      "-c",
+      "safe.directory=D:\\GU-Project_Fellow\\Repo\\AssameseOCR",
+      "rev-parse",
+      "HEAD"
+    ],
+    "returncode": 0,
+    "stdout": "e7c6e27fd6f0912f938e8ef5f8b498f1a59c718c",
+    "stderr": ""
+  }
+}

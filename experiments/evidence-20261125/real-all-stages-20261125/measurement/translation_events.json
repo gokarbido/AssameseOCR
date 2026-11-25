@@ -1,0 +1,35 @@
+[
+  {
+    "kind": "model_load",
+    "timestamp": "2026-11-25T16:46:03.938084+00:00",
+    "elapsed_ms": 6243.199818999983
+  },
+  {
+    "kind": "generation",
+    "timestamp": "2026-11-25T16:46:03.938139+00:00",
+    "source": "মোহনবাৰী",
+    "english": "Mohanbari",
+    "elapsed_ms": 194.7082730002876
+  },
+  {
+    "kind": "generation",
+    "timestamp": "2026-11-25T16:46:04.700518+00:00",
+    "source": "|ং",
+    "english": ".",
+    "elapsed_ms": 118.46107500014114
+  },
+  {
+    "kind": "generation",
+    "timestamp": "2026-11-25T16:46:05.319296+00:00",
+    "source": "টিবেট",
+    "english": "Tibet",
+    "elapsed_ms": 95.50785400006134
+  },
+  {
+    "kind": "generation",
+    "timestamp": "2026-11-25T16:46:05.915071+00:00",
+    "source": "কিচেন",
+    "english": "Kitchen",
+    "elapsed_ms": 145.61872800004494
+  }
+]

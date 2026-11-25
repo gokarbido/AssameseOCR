@@ -1,0 +1,64 @@
+{
+  "accuracy": {
+    "status": "scored_reviewed_subset_only",
+    "reviewed_images": 2,
+    "unreviewed_images": 0,
+    "matching": "Greedy descending IoU, one-to-one, IoU >= 0.5",
+    "normalization": "NFC and collapsed whitespace; Unicode code points",
+    "detection": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "hmean": 1.0
+    },
+    "spotting": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "hmean": 1.0
+    },
+    "crop_exact_region_accuracy": 1.0,
+    "crop_cer_percent": 0.0,
+    "reference_regions": 3,
+    "reference_code_points": 18,
+    "note": "Each reviewed source image scored once using its first measured prediction; repeated timing frames are not independent accuracy samples."
+  },
+  "translation": {
+    "status": "visible_bilingual_reference_consistency_only",
+    "samples": [
+      {
+        "source": "মোহনবাৰী",
+        "reference": "MOHANBARI",
+        "output": "Mohanbari",
+        "exact_match": true,
+        "generation_ms": 194.7082730002876
+      },
+      {
+        "source": "টিবেট",
+        "reference": "TIBET",
+        "output": "Tibet",
+        "exact_match": true,
+        "generation_ms": 95.50785400006134
+      },
+      {
+        "source": "কিচেন",
+        "reference": "KITCHEN",
+        "output": "Kitchen",
+        "exact_match": true,
+        "generation_ms": 145.61872800004494
+      }
+    ],
+    "exact_matches": 3,
+    "reference_count": 3,
+    "reference_provenance": "Visible paired English sign text in the two user-supplied photos; Assamese labels and three-word scoring scope confirmed by user in chat.",
+    "normalization": "NFC, collapsed whitespace and casefold",
+    "limitations": "Three proper-name/loanword outputs only; not human-rated semantic quality, BLEU, or a translation corpus. Spurious OCR source |ং is excluded from quality scoring, but included in four-generation latency."
+  },
+  "camera_age": {
+    "frames": 763,
+    "mean_ms": 124.54421631323723,
+    "p50_ms": 123.679734,
+    "p95_ms": 143.44121729999998,
+    "max_ms": 932.851939,
+    "regions": 0,
+    "scope": "Three consecutive 20 s camera repeats, no warmup; zero detected regions. Instrumented GStreamer source PTS to shared JPEG publication. Translation disabled; excludes calibrated exposure and browser display."
+  }
+}
