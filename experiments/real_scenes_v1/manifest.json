@@ -2,9 +2,70 @@
   "schema_version": 1,
   "name": "User-supplied real natural scenes v1",
   "synthetic": false,
-  "limitations": ["Two user-supplied photographs; a qualitative pilot, not a representative benchmark.", "Mixed-script text and partially visible background text require an explicit annotation policy before accuracy scoring."],
+  "limitations": [
+    "Two user-supplied photographs; a qualitative pilot, not a representative benchmark.",
+    "Mixed-script text and partially visible background text require an explicit annotation policy before accuracy scoring."
+  ],
   "samples": [
-    {"id":"mohanbari","image":"images/mohanbari.jpg","condition":"Outdoor bilingual road sign with background clutter","annotation_status":"unreviewed","regions":null,"provenance":"User supplied in chat on 2026-11-25"},
-    {"id":"shop_signs","image":"images/shop_signs.jpg","condition":"Dense multilingual commercial signs and partially visible text","annotation_status":"unreviewed","regions":null,"provenance":"User supplied in chat on 2026-11-25"}
-  ]
+    {
+      "id": "mohanbari",
+      "image": "images/mohanbari.jpg",
+      "condition": "Outdoor bilingual road sign with background clutter",
+      "annotation_status": "reviewed",
+      "regions": [
+        {
+          "box": [
+            830,
+            496,
+            1450,
+            683
+          ],
+          "text": "মোহনবাৰী"
+        }
+      ],
+      "provenance": "User supplied in chat on 2026-11-25",
+      "reviewer": "User confirmed labels and scoring scope in chat on 2026-11-25; boxes manually proposed by assistant",
+      "evaluation_region": [
+        800,
+        450,
+        1470,
+        700
+      ]
+    },
+    {
+      "id": "shop_signs",
+      "image": "images/shop_signs.jpg",
+      "condition": "Dense multilingual commercial signs and partially visible text",
+      "annotation_status": "reviewed",
+      "regions": [
+        {
+          "box": [
+            540,
+            1170,
+            1055,
+            1415
+          ],
+          "text": "টিবেট"
+        },
+        {
+          "box": [
+            1115,
+            1200,
+            1690,
+            1450
+          ],
+          "text": "কিচেন"
+        }
+      ],
+      "provenance": "User supplied in chat on 2026-11-25",
+      "reviewer": "User confirmed labels and scoring scope in chat on 2026-11-25; boxes manually proposed by assistant",
+      "evaluation_region": [
+        500,
+        1120,
+        1710,
+        1480
+      ]
+    }
+  ],
+  "scoring_policy": "Three user-confirmed readable words only. Predictions with at least 50% of their area within the declared evaluation region are scored. Latin and tiny/partial background text are excluded. This is a scoped pilot, not whole-image multilingual accuracy."
 }

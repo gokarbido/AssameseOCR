@@ -227,6 +227,16 @@ def evaluate_reviewed(pipeline, samples, predictions, max_width):
             characters += len(reference)
             edits += edit_distance(reference, prediction)
         detected = predictions[sample['id']]
+        if sample.get('evaluation_region'):
+            x1, y1, x2, y2 = sample['evaluation_region']
+            roi = [x1*xscale, y1*yscale, x2*xscale, y2*yscale]
+            keep = []
+            for index, box in enumerate(detected['boxes']):
+                intersection = max(0,min(box[2],roi[2])-max(box[0],roi[0])) * max(0,min(box[3],roi[3])-max(box[1],roi[1]))
+                area = max(0,box[2]-box[0])*max(0,box[3]-box[1])
+                if area and intersection/area >= .5:
+                    keep.append(index)
+            detected = dict(boxes=[detected['boxes'][i] for i in keep], texts=[detected['texts'][i] for i in keep])
         matches = match_boxes(boxes, detected['boxes'])
         tp += len(matches)
         fp += len(detected['boxes']) - len(matches)
