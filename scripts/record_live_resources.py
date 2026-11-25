@@ -24,15 +24,12 @@ def command(*args):
     return subprocess.check_output(args, text=True, timeout=15).strip()
 
 
-def python_worker(init_pid):
-    pending, found = [init_pid], []
-    while pending:
-        pid = pending.pop()
-        argv = Path(f'/proc/{pid}/cmdline').read_bytes().split(b'\0')
-        if Path(argv[0].decode()).name.startswith('python') and b'web_app.py' in argv:
-            found.append(pid)
-        children = Path(f'/proc/{pid}/task/{pid}/children').read_text().split()
-        pending.extend(map(int, children))
+def python_worker(container):
+    found = []
+    for line in command('docker', 'top', container, '-eo', 'pid,comm,args').splitlines()[1:]:
+        fields = line.split(None,2)
+        if len(fields)==3 and fields[1].startswith('python') and 'web_app.py' in fields[2]:
+            found.append(int(fields[0]))
     if len(found) != 1:
         raise RuntimeError(f'Expected one live Python OCR worker, found {found}')
     return found[0]
@@ -48,8 +45,9 @@ def main():
     if args.seconds <= 0:
         parser.error('seconds must be positive')
     args.output.mkdir(parents=True, exist_ok=False)
-    pid = python_worker(int(command('docker', 'inspect', '--format', '{{.State.Pid}}', args.container)))
-    metadata = dict(start_utc=utc(), worker_pid=pid, source_revision=command('git', 'rev-parse', 'HEAD'),
+    pid = python_worker(args.container)
+    root = Path(__file__).resolve().parents[1]
+    metadata = dict(start_utc=utc(), worker_pid=pid, source_revision=command('git', '-c', f'safe.directory={root}', 'rev-parse', 'HEAD'),
                     container=args.container, image=command('docker', 'inspect', '--format', '{{.Image}}', args.container),
                     power_mode=command('nvpmodel', '-q'), requested_seconds=args.seconds,
                     protocol='Already-running viewer; translation required and enabled, existing translation cache retained. No service restart, cold-start measurement or forced cache misses. Displayed-photo camera test; scene changes are not controlled.',
