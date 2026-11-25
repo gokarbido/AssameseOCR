@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "name": "User-supplied real natural scenes v1",
+  "synthetic": false,
+  "limitations": ["Two user-supplied photographs; a qualitative pilot, not a representative benchmark.", "Mixed-script text and partially visible background text require an explicit annotation policy before accuracy scoring."],
+  "samples": [
+    {"id":"mohanbari","image":"images/mohanbari.jpg","condition":"Outdoor bilingual road sign with background clutter","annotation_status":"unreviewed","regions":null,"provenance":"User supplied in chat on 2026-11-25"},
+    {"id":"shop_signs","image":"images/shop_signs.jpg","condition":"Dense multilingual commercial signs and partially visible text","annotation_status":"unreviewed","regions":null,"provenance":"User supplied in chat on 2026-11-25"}
+  ]
+}
