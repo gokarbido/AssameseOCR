@@ -1,0 +1,125 @@
+{
+  "verified_date": "2026-11-26",
+  "scope": "Supplied IEEE Transactions template and IEEE ESL manuscript-format checks; audit of the delivered workstation files.",
+  "pdf_sha256": "2435c2fca12ea12616d94ffe121ffc258fe1fe7a88e2aede903ed47bb2907c67",
+  "source_sha256": "e1b306b5eb66a4b40ecad145a2fea55673331670a9cafeb042e3b05b3afd623f",
+  "class_sha256": "b0eb3567b81aec7fe98144a3ad283eeac2d31035bb19e0d9dcba7da190f18d9d",
+  "supplied_template_class_sha256": "b0eb3567b81aec7fe98144a3ad283eeac2d31035bb19e0d9dcba7da190f18d9d",
+  "class_identical_to_supplied_template": true,
+  "class_options": [
+    "cspaper",
+    "journal",
+    "10pt"
+  ],
+  "page_count": 4,
+  "page_sizes_pdf_points": [
+    [
+      567.0,
+      774.0
+    ],
+    [
+      567.0,
+      774.0
+    ],
+    [
+      567.0,
+      774.0
+    ],
+    [
+      567.0,
+      774.0
+    ]
+  ],
+  "page_size_inches": [
+    7.875,
+    10.75
+  ],
+  "two_column_journal_layout": true,
+  "body_font_points": 10,
+  "manual_margin_or_font_reductions": false,
+  "abstract_word_count": 128,
+  "index_terms": [
+    "Assamese scene text",
+    "embedded vision",
+    "Jetson Orin Nano",
+    "offline translation",
+    "ONNX Runtime"
+  ],
+  "citation_count": 13,
+  "bibliography_order_matches_first_citation": true,
+  "figure_count": 3,
+  "table_count": 1,
+  "fonts": {
+    "/UCFQWK+NimbusRomNo9L-Regu": {
+      "type": "/Type1",
+      "descendant_type": null,
+      "embedded": true
+    },
+    "/LREKMX+NimbusRomNo9L-MediItal": {
+      "type": "/Type1",
+      "descendant_type": null,
+      "embedded": true
+    },
+    "/PYMMBV+NimbusRomNo9L-Medi": {
+      "type": "/Type1",
+      "descendant_type": null,
+      "embedded": true
+    },
+    "/LNKBYV+NimbusMonL-Regu": {
+      "type": "/Type1",
+      "descendant_type": null,
+      "embedded": true
+    },
+    "/AGQGPG+CMMI10": {
+      "type": "/Type1",
+      "descendant_type": null,
+      "embedded": true
+    },
+    "/DWBNMG+CMSY10": {
+      "type": "/Type1",
+      "descendant_type": null,
+      "embedded": true
+    },
+    "/BDXXNM+CMR10": {
+      "type": "/Type1",
+      "descendant_type": null,
+      "embedded": true
+    },
+    "/EWXPEE+CMMI7": {
+      "type": "/Type1",
+      "descendant_type": null,
+      "embedded": true
+    },
+    "/QMCRDD+CMR7": {
+      "type": "/Type1",
+      "descendant_type": null,
+      "embedded": true
+    },
+    "/WCWQNC+NimbusRomNo9L-ReguItal": {
+      "type": "/Type1",
+      "descendant_type": null,
+      "embedded": true
+    },
+    "/RAFNRP+CMMI5": {
+      "type": "/Type1",
+      "descendant_type": null,
+      "embedded": true
+    },
+    "/YQJSDJ+CMEX10": {
+      "type": "/Type1",
+      "descendant_type": null,
+      "embedded": true
+    },
+    "/BMQQDV+DejaVuSans": {
+      "type": "/Type0",
+      "descendant_type": "/CIDFontType2",
+      "embedded": true
+    }
+  },
+  "type3_font_count": 0,
+  "all_fonts_embedded": true,
+  "blocking_latex_warnings": [],
+  "ai_tool_disclosure_in_acknowledgment": true,
+  "visual_review": "All four pages rendered and inspected; captions, photographs, diagram labels and resource legend checked.",
+  "journal_instructions": "https://ieee-ceda.org/publication/esl/esl-author-instructions"
+}

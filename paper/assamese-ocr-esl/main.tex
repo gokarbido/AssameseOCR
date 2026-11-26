@@ -1,6 +1,8 @@
-\documentclass[journal,10pt]{IEEEtran}
+% ESL trim size; journal mode retains the supplied class's 10-point styling.
+\documentclass[cspaper,journal,10pt]{IEEEtran}
 \usepackage{amsmath,amssymb}
 \usepackage{graphicx,array,url}
+\usepackage{cite}
 \usepackage{balance}
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta,fit,backgrounds}
@@ -8,14 +10,14 @@
 \begin{document}
 \title{Embedded Assamese Scene-Text Recognition\\and English Translation on Jetson}
 \author{Monor~Enghi, Anjan~Kumar~Talukdar, and Navajit~Saikia%
-\thanks{M. Enghi and A. K. Talukdar are with the Department of Electronics and Communication Engineering, Gauhati University, Gopinath Bordoloi Nagar, Guwahati 781014, Assam, India (e-mail: monorenghi@gmail.com; anjantalukdar@gauhati.ac.in).}%
-\thanks{N. Saikia is with Assam Engineering College, Jalukbari, Guwahati 781013, Assam, India (e-mail: navajit.ete@aec.ac.in).}}
+\thanks{Monor Enghi and Anjan Kumar Talukdar are with the Department of Electronics and Communication Engineering, Gauhati University, Gopinath Bordoloi Nagar, Guwahati 781014, Assam, India (e-mail: monorenghi@gmail.com; anjantalukdar@gauhati.ac.in).}%
+\thanks{Navajit Saikia is with Assam Engineering College, Jalukbari, Guwahati 781013, Assam, India (e-mail: navajit.ete@aec.ac.in).}}
 \maketitle
 \begin{abstract}
-Deploying Assamese scene-text reading on an embedded device requires coordinated detection, recognition, translation, and camera processing within a shared resource budget. This letter extends our accepted conference framework through a Jetson Orin Nano implementation with CUDA-accelerated ONNX inference, latest-frame selection, and asynchronous offline English translation. A translation-enabled live camera observation achieves 8.367 processed frames/s, with 1651.92~MiB peak sampled application RSS and 9.18~W mean module power under an existing-cache workload. An OCR-only replay of four synthetic scenes achieves $4.601\pm0.011$ frames/s across three repeats, providing a 5.09-fold throughput increase over CPU execution. Functional checks on three words in two real photographs verify localization, transcription, and bilingual-consistent English output. The results characterize embedded execution, memory use, and translation behavior, complementing the model-development study with measured device-level evidence.
+Deploying Assamese scene-text reading on an embedded device requires coordinated detection, recognition, translation, and camera processing within a shared resource budget. This letter extends our accepted conference framework through a Jetson Orin Nano implementation with CUDA-accelerated ONNX inference, latest-frame selection, and asynchronous offline English translation. A translation-enabled live camera observation achieves 8.367 processed frames/s, with 1651.92~MiB peak sampled application RSS and 9.18~W mean module power under an existing-cache workload. An OCR-only replay of four synthetic scenes achieves 4.601 frames/s (sample standard deviation 0.011) across three repeats, providing a 5.09-fold throughput increase over CPU execution. Functional checks on three words in two real photographs verify localization, transcription, and bilingual-consistent English output. The results characterize embedded execution, memory use, and translation behavior, complementing the model-development study with measured device-level evidence.
 \end{abstract}
 \begin{IEEEkeywords}
-Assamese scene text, embedded vision, Jetson Orin Nano, ONNX Runtime, offline translation.
+Assamese scene text, embedded vision, Jetson Orin Nano, offline translation, ONNX Runtime.
 \end{IEEEkeywords}
 
 \section{Introduction}
@@ -40,7 +42,7 @@ The host captures CSI images at $1920\times1080$ and a configured rate of 30~fra
 
 The inference worker decodes the selected image, detects regions, orders crops, recognizes text, submits source strings for translation, and renders the current Assamese and available English outputs. A shared quality-80 JPEG publication buffer serves browser viewers. Figure~\ref{fig:architecture} shows these execution boundaries. Host capture and OCR are decoupled, and multiple viewers share one inference worker.
 
-\begin{figure}[t]
+\begin{figure}[!t]
 \centering
 \input{figures/architecture}
 \caption{Embedded scene-text reading and translation pipeline. Dashed arrows denote asynchronous translation and cache lookup; recognition continues while English results become available.}
@@ -93,7 +95,7 @@ Two real photographs (Fig.~\ref{fig:real-scenes}) exercise a bilingual road sign
 
 All three regions were detected and correctly spotted, giving precision, recall and H-mean of 1.00 within this scope. Ground-truth crops gave zero code-point CER over 18 reference code points and 3/3 exact words. The translated outputs matched the visible English MOHANBARI, TIBET and KITCHEN after casefolding. These checks verify the deployed components on the selected examples; they do not replace the corpus-level evaluation in the preceding model-development study. A spurious detection on Latin text falls outside the declared scope.
 
-\begin{figure}[t]
+\begin{figure}[!t]
 \centering
 \begin{minipage}[b]{0.56\columnwidth}
 \centering
@@ -116,7 +118,7 @@ An instrumented CSI test attached source-buffer presentation timestamps (PTS), m
 
 For the translation-enabled live observation, the Mohanbari photograph was displayed to the CSI camera while the viewer remained running. All 60 one-second status snapshots contained text and an English output, with the existing translation cache retained. The processed-frame counter advanced by 496 over 59.28~s (8.367 frames/s). Peak sampled Python-worker RSS was 1651.92~MiB; mean CPU and GPU utilization were 50.60\% and 29.48\%, and mean module power was 9.18~W (Fig.~\ref{fig:live-resources}). This observation includes camera processing and English rendering. Table~\ref{tab:evidence} summarizes the embedded measurements.
 
-\begin{table}[t]
+\begin{table}[!t]
 \caption{Embedded execution and functional verification. The three-word accuracy check is scoped to two real photographs.}
 \label{tab:evidence}
 \centering\small
@@ -137,7 +139,7 @@ Jetson regression tests & 57 passed\\
 \end{tabular}
 \end{table}
 
-\begin{figure}[t]
+\begin{figure}[!t]
 \centering
 \includegraphics[width=\columnwidth]{figures/live_resources.pdf}
 \caption{Live CSI resource observation with English translation enabled and the existing cache retained. CPU utilization is averaged across reported cores; RSS is the Python application worker; VDD\_IN is module power. This is a single warm-session observation, not a cold-start or sustained uncached-generation benchmark.}
@@ -149,12 +151,13 @@ The controlled replay quantifies the throughput advantage of CUDA for the same O
 
 The evaluation boundaries are specific: synthetic replay characterizes resource use; three real-image words provide functional checks; camera timing describes source PTS to publication; and live telemetry characterizes an existing-cache workload. Correlated frames and status snapshots are not independent accuracy samples. Generalization to unseen scenes, broader translation meaning preservation and oblique or curved text require a scene-disjoint annotated evaluation. The deployment uses direct resizing of approximately horizontal text crops, rather than the morphological/deskew preprocessing described in the conference manuscript.
 
-\begin{samepage}
-\section{Conclusion}
-This letter extends our Assamese scene-text framework from model development to measured Jetson execution, combining ONNX detection and recognition with offline English translation and a continuous camera viewer. CUDA increases controlled OCR-replay throughput by 5.09 times over CPU execution. The translation-enabled live observation achieves 8.367 frames/s with 1651.92~MiB peak sampled worker RSS and 9.18~W mean module power under the recorded cache conditions. Together with real-scene functional checks and timestamped publication measurements, these results provide a reproducible characterization of the embedded reading system.
-
-\end{samepage}
 \balance
+\section{Conclusion}
+This letter extends our Assamese scene-text framework from model development to measured Jetson execution, combining ONNX detection and recognition with offline English translation and a continuous camera viewer. CUDA increases controlled OCR-replay throughput by 5.09 times over CPU execution. The translation-enabled live observation achieves 8.367 frames/s with 1651.92~MiB peak sampled worker RSS and 9.18~W mean module power under the recorded cache conditions. These measurements characterize embedded reading performance, resource use, and publication timing.
+
+\section*{Acknowledgment}
+OpenAI ChatGPT/Codex assisted with manuscript drafting and editing, experiment instrumentation, TikZ diagrams, and resource plots. OpenAI's image-generation tool produced the four synthetic replay scenes. Device measurements were obtained from the recorded Jetson runs.
+
 \begin{thebibliography}{13}
 \bibitem{prior} M.~Enghi, A.~K.~Talukdar, and N.~Saikia, ``Design of a natural scene Assamese text recognition system,'' accepted manuscript, 11th National Conference on Computer Vision, Pattern Recognition, Image Processing and Graphics, LNMIIT, Jaipur, India, Jul.~22--24, 2026; proceedings not yet published.
 \bibitem{synthtiger} M.~Yim, Y.~Kim, H.-C.~Cho, and S.~Park, ``SynthTIGER: Synthetic text image generator towards better text recognition models,'' in \emph{Proc. ICDAR}, 2021, pp.~109--124.

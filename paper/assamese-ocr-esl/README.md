@@ -29,6 +29,16 @@ Copy-Item build/main.pdf manuscript.pdf
 
 Compilation uses TikZ/PGF and the supplied graphics; BibTeX is not needed. Build files and rendered previews stay in the ignored `build/` directory. The final letter must remain within four pages including references. Local pdfLaTeX uses the installed MiKTeX settings/cache; a failed app preview is separate from the saved delivery PDF.
 
+## IEEE template verification
+
+The manuscript was checked against `../IEEE-Transactions-LaTeX2e-templates-and-instructions/bare_jrnl_new_sample4.tex` and `New_IEEEtran_how-to.tex`. Its `IEEEtran.cls` is byte-identical to the supplied class (SHA-256 `b0eb3567b81aec7fe98144a3ad283eeac2d31035bb19e0d9dcba7da190f18d9d`). It uses standard 10-point journal typography, two columns, `\author`/`\thanks` affiliations, the `abstract` and `IEEEkeywords` environments, numbered sections/equations, top-of-column figures, a table caption above the table, and the `cite` package for IEEE numeric references. All 13 bibliography entries are cited in first-appearance order.
+
+The generic sample uses letter-size paper. The [ESL-specific author instructions](https://ieee-ceda.org/publication/esl/esl-author-instructions), checked on 26 November 2026, instead specify a 7.875 × 10.75 inch trim size. The manuscript selects the supplied class's native `cspaper` option together with `journal,10pt`; it retains the journal fonts and class-calculated layout. The class file, margins and font sizes have not been edited to force a page count.
+
+Affiliation footnotes use full names matching the byline. There are five alphabetized index terms. The unnumbered Acknowledgment identifies the AI tools and their actual roles, including generation of the four synthetic replay scenes, as requested by ESL's current instructions. The real test photographs and recorded measurements remain separately identified.
+
+The resource plot is exported with embedded TrueType text (`pdf.fonttype=42`). The delivery PDF is checked for four pages at 567 × 774 PDF points and contains Type 1 / embedded CID TrueType fonts, with no Type 3 fonts. `format_verification.json` records the delivery-file and class hashes, page sizes, citation count and font audit. Every final page is rendered for visual inspection; final validation also checks for unresolved references and overflowing boxes.
+
 ## Figures
 
 - Figure 1: native TikZ source `figures/architecture.tex`; the Loopback TCP label is offset from its arrow.

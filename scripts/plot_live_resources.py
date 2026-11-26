@@ -23,7 +23,8 @@ def main():
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
     plt.rcParams.update({'font.family':'DejaVu Sans','font.size':7,
-                         'axes.spines.top':False,'axes.spines.right':False})
+                         'axes.spines.top':False,'axes.spines.right':False,
+                         'pdf.fonttype':42,'ps.fonttype':42})
     figure,axes = plt.subplots(3,1,figsize=(3.5,2.85),sharex=True,constrained_layout=True)
     for key,label,color in [('cpu_percent','CPU','#276c8e'),('gpu_percent','GPU','#bb7342')]:
         records = [r for r in telemetry if key in r]
