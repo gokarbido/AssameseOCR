@@ -91,7 +91,7 @@ Four AI-generated scene images provided a fixed computational workload for compa
 Full-size ($1536\times1024$) CUDA replay achieved $4.601\pm0.011$ frames/s, compared with $0.904\pm0.003$ on CPU, a 5.09-fold throughput increase. Reducing replay size to $960\times640$ raised CUDA throughput to $5.096\pm0.022$ frames/s, a 10.8\% increase. Values are means and sample standard deviations across repeats. The means of repeat-level processing p95 values were 258.19~ms for full-size CUDA, 231.24~ms for reduced-size CUDA, and 1468.39~ms for CPU. Full-size CUDA peak process RSS was 1283.75~MiB and mean sampled module power was 8.95~W. This comparison measures the complete OCR/rendering loop rather than detector inference alone.
 
 \subsection{Real-Scene Functional Verification}
-Two real photographs (Fig.~\ref{fig:real-scenes}) exercise a bilingual road sign and commercial signs. Manually specified bounding boxes and author-confirmed transcriptions define three readable Assamese/shared-script words. Latin and tiny or partial background text are excluded. A prediction is in scope when at least half its area lies inside a declared evaluation rectangle; one-to-one greedy matching uses IoU~$\geq0.5$. Exact-text spotting additionally requires an exact transcription after NFC normalization and whitespace collapse.
+Two real-scene photographs (Fig.~\ref{fig:real-scenes}), depicting a bilingual road sign and commercial signs, were used for functional verification. Three target text regions were annotated with bounding boxes and reference transcriptions. Latin text and small or partially visible background text were excluded from scoring. A prediction is included when at least half its area lies within a specified evaluation rectangle. One-to-one greedy matching uses IoU~$\geq0.5$; exact-text spotting additionally requires the predicted and reference transcriptions to match after NFC normalization and whitespace collapse.
 
 All three regions were detected and correctly spotted, giving precision, recall and H-mean of 1.00 within this scope. Ground-truth crops gave zero code-point CER over 18 reference code points and 3/3 exact words. The translated outputs matched the visible English MOHANBARI, TIBET and KITCHEN after casefolding. These checks verify the deployed components on the selected examples; they do not replace the corpus-level evaluation in the preceding model-development study. A spurious detection on Latin text falls outside the declared scope.
 
@@ -107,7 +107,7 @@ All three regions were detected and correctly spotted, giving precision, recall 
 \includegraphics[width=\linewidth,height=1.45in,keepaspectratio]{figures/shop_signs_test1.jpg}\\
 \small (b)
 \end{minipage}
-\caption{Real-scene examples: (a) Mohanbari road sign; (b) cropped view of the commercial signs. No prediction overlays are shown. Scoring used the original test images and only the three confirmed Assamese/shared-script words; Latin and tiny or partial background text were excluded.}
+\caption{Real-scene examples: (a) Mohanbari road sign; (b) cropped view of the commercial signs. No prediction overlays are shown. Scoring used the original test images and the three annotated target words; Latin and small or partially visible background text were excluded.}
 \label{fig:real-scenes}
 \end{figure}
 
