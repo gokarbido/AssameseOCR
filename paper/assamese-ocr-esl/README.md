@@ -20,6 +20,8 @@ The letter makes an embedded integration contribution. It does not claim the ori
 
 `main.tex` is the editable source. `IEEEtran.cls` is the unchanged class from the user's supplied IEEE template. The delivery PDF is `manuscript.pdf`. Run twice from this directory:
 
+Select **pdfLaTeX** as the compiler in your editor. The source includes a `% !TeX program = pdflatex` hint for editors that support it. A XeLaTeX build without Unicode font configuration falls back from the class's Times font definitions and can lose bold and italic styling; the verified delivery uses pdfLaTeX. The commands below write `build/main.pdf`; a PDF in the project root can be from a different editor build.
+
 ```powershell
 New-Item -ItemType Directory -Force build | Out-Null
 pdflatex -interaction=nonstopmode -halt-on-error -output-directory=build main.tex

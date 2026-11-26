@@ -1,8 +1,8 @@
 {
   "verified_date": "2026-11-26",
   "scope": "Supplied IEEE Transactions template and IEEE ESL manuscript-format checks; audit of the delivered workstation files.",
-  "pdf_sha256": "6ba2c3ec01341948f73c6b5ec5552f1537f367b61a6fb0451e2f5be18b1716fd",
-  "source_sha256": "76e3a6cd0f316d7e7b52c38b88616661cd788fda22a4bf44a545d7b42b37d107",
+  "pdf_sha256": "ec97ed53f1db8a7af705ba97612a3f1bc535d6d3a0c3a46a613051f902461a83",
+  "source_sha256": "2d3bf984d2c7d1224f694a62d5df5f2d17d69934948a3ee7dd64d1d1e9cc140b",
   "class_sha256": "b0eb3567b81aec7fe98144a3ad283eeac2d31035bb19e0d9dcba7da190f18d9d",
   "supplied_template_class_sha256": "b0eb3567b81aec7fe98144a3ad283eeac2d31035bb19e0d9dcba7da190f18d9d",
   "class_identical_to_supplied_template": true,
